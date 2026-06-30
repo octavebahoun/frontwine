@@ -13,8 +13,8 @@ export default function Header({ title, onAddTaskClick, notificationsCount = 2, 
   const [showNotifications, setShowNotifications] = useState(false);
   
   const notifications = [
-    { id: 1, text: "Julian Pierce a déplacé 'API d'intégration' vers En cours", time: "Il y a 5 min" },
-    { id: 2, text: "Elara Vance vous a assigné 'Refonte Dashboard'", time: "Il y a 1 h" },
+    { id: 1, text: "Octave a déplacé 'Design System' vers En cours", time: "Il y a 5 min" },
+    { id: 2, text: "Mourchid vous a assigné 'Refonte Dashboard'", time: "Il y a 1 h" },
     { id: 3, text: "Nouveau post planifié avec succès pour LinkedIn", time: "Il y a 2 h" },
   ];
 
@@ -94,21 +94,19 @@ export default function Header({ title, onAddTaskClick, notificationsCount = 2, 
         {/* Team Avatars Group */}
         <div className="hidden lg:flex items-center -space-x-2">
           <img 
-            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" 
-            alt="Julian" 
-            title="Julian Pierce (Tech Lead)"
+            src="/team/octave.webp" 
+            alt="Octave" 
+            title="Octave BAHOUN-HOUTOUKPE (Cofondateur)"
             className="w-7 h-7 rounded-full border border-border-main object-cover"
-            referrerPolicy="no-referrer"
           />
           <img 
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop" 
-            alt="Maya" 
-            title="Maya Lin (Talent Manager)"
+            src="/team/ezechiel.webp" 
+            alt="Ezechiel" 
+            title="Ezechiel TADAGBE (Ingénieur Cloud)"
             className="w-7 h-7 rounded-full border border-border-main object-cover"
-            referrerPolicy="no-referrer"
           />
           <div className="w-7 h-7 rounded-full bg-bg-card border border-border-main flex items-center justify-center text-[10px] text-text-dim font-bold">
-            +3
+            +4
           </div>
         </div>
       </div>

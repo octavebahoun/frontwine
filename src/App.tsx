@@ -42,8 +42,8 @@ export default function App() {
       priority: "high",
       dueDate: "Auj. 18:00",
       assignee: {
-        name: "Elara Vance",
-        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop"
+        name: "Mourchid FOLARIN",
+        avatar: "/team/mourchid.webp"
       },
       tags: ["Sprint Alpha"]
     },
@@ -55,8 +55,8 @@ export default function App() {
       priority: "high",
       dueDate: "Demain 12:00",
       assignee: {
-        name: "Julian Pierce",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
+        name: "Octave BAHOUN-HOUTOUKPE",
+        avatar: "/team/octave.webp"
       },
       tags: ["Sprint Alpha"]
     },
@@ -68,8 +68,8 @@ export default function App() {
       priority: "medium",
       dueDate: "30 Juin",
       assignee: {
-        name: "Maya Lin",
-        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop"
+        name: "Ezechiel TADAGBE",
+        avatar: "/team/ezechiel.webp"
       },
       tags: ["Sprint Alpha"]
     },
@@ -81,8 +81,8 @@ export default function App() {
       priority: "low",
       dueDate: "Hier",
       assignee: {
-        name: "Maya Lin",
-        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop"
+        name: "Jean-Baptiste VIGNONFODE",
+        avatar: "/team/jean-baptiste.webp"
       },
       tags: ["Sprint Alpha"]
     }
@@ -124,18 +124,18 @@ export default function App() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "m1",
-      sender: "julian",
-      senderName: "Julian Pierce",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
-      content: "Salut l'équipe ! J'ai poussé l'architecture de la nouvelle API d'intégration sur GitHub. Vos retours sur les schémas ?",
+      sender: "octave",
+      senderName: "Octave BAHOUN-HOUTOUKPE",
+      avatar: "/team/octave.webp",
+      content: "Salut l'équipe ! J'ai poussé l'architecture du nouveau design system sur GitHub. Vos retours ?",
       timestamp: "10:15"
     },
     {
       id: "m2",
-      sender: "maya",
-      senderName: "Maya Lin",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop",
-      content: "Super Julian ! C'est super propre. J'en ai profité pour mettre à jour les fiches RH des collaborateurs concernés.",
+      sender: "ezechiel",
+      senderName: "Ezechiel TADAGBE",
+      avatar: "/team/ezechiel.webp",
+      content: "Super Octave ! C'est propre. J'ai déployé l'infrastructure cloud pour accueillir tout ça.",
       timestamp: "10:18"
     }
   ]);
@@ -187,8 +187,8 @@ export default function App() {
     const userMsg: ChatMessage = {
       id: `msg_${Math.random().toString(36).substr(2, 9)}`,
       sender: "user",
-      senderName: "Elara Vance",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop",
+      senderName: "Mourchid FOLARIN",
+      avatar: "/team/mourchid.webp",
       content: content,
       timestamp: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
     };
@@ -361,8 +361,8 @@ export default function App() {
             priority: "medium",
             dueDate: "Auj. 18:00",
             assignee: {
-              name: "Julian Pierce",
-              avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
+              name: "Wasfade TONOUKOIN",
+              avatar: "/team/wasfade.webp"
             },
             tags: ["Sprint Alpha"]
           }) : undefined}

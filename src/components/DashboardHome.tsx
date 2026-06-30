@@ -37,7 +37,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
           <div className="space-y-1">
             <span className="text-[10px] text-accent font-mono font-bold uppercase tracking-wider">WORKSPACE ACTIF • SPRINT ALPHA</span>
             <h1 className="text-xl sm:text-2xl font-black text-text-main tracking-tight font-sans">
-              Bonjour, Elara Vance !
+              Bonjour, Mourchid FOLARIN !
             </h1>
             <p className="text-xs sm:text-sm text-text-sub max-w-2xl">
               Votre tableau de bord WINE est configuré et prêt. Votre équipe de développement au Bénin vient de pousser la branche d'intégration API.

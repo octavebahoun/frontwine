@@ -17,12 +17,15 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState<Task['priority']>("medium");
-  const [assigneeName, setAssigneeName] = useState("Julian Pierce");
+  const [assigneeName, setAssigneeName] = useState("Octave BAHOUN-HOUTOUKPE");
 
   const assignees = [
-    { name: "Julian Pierce", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" },
-    { name: "Elara Vance", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" },
-    { name: "Maya Lin", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop" }
+    { name: "Octave BAHOUN-HOUTOUKPE", avatar: "/team/octave.webp" },
+    { name: "Mourchid FOLARIN", avatar: "/team/mourchid.webp" },
+    { name: "Ezechiel TADAGBE", avatar: "/team/ezechiel.webp" },
+    { name: "Jean-Baptiste VIGNONFODE", avatar: "/team/jean-baptiste.webp" },
+    { name: "Wasfade TONOUKOIN", avatar: "/team/wasfade.webp" },
+    { name: "Cosme MISSIKPODE", avatar: "/team/cosme.webp" }
   ];
 
   const columns: { id: Task['status']; title: string; borderClass: string; textClass: string; bgClass: string }[] = [

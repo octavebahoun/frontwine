@@ -8,37 +8,70 @@ export default function RHTalents() {
 
   const team: TeamMember[] = [
     {
-      id: "elara",
-      name: "Elara Vance",
-      role: "Project Director",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop",
-      leaveBalance: 18,
+      id: "mourchid",
+      name: "Mourchid FOLARIN",
+      role: "Fondateur & Directeur technique",
+      avatar: "/team/mourchid.webp",
+      leaveBalance: 15,
       contractType: "CDI • Temps Plein",
-      entryDate: "12 Oct. 2024",
-      recentActivity: "A validé le sprint planning de la semaine 2",
-      email: "elara.vance@wine-saas.com"
+      entryDate: "01 Jan. 2024",
+      recentActivity: "A supervisé l'architecture globale de la plateforme",
+      email: "mourchid.folarin@wine-saas.com"
     },
     {
-      id: "julian",
-      name: "Julian Pierce",
-      role: "Tech Lead",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
-      leaveBalance: 12,
+      id: "octave",
+      name: "Octave BAHOUN-HOUTOUKPE",
+      role: "Cofondateur / Ingénieur IA",
+      avatar: "/team/octave.webp",
+      leaveBalance: 10,
       contractType: "CDI • Temps Plein",
-      entryDate: "05 Janv. 2025",
-      recentActivity: "A poussé la refonte de la base de données SQL",
-      email: "julian.pierce@wine-saas.com"
+      entryDate: "15 Jan. 2024",
+      recentActivity: "A implémenté le design system et l'UX premium",
+      email: "octave.bahoun@wine-saas.com"
     },
     {
-      id: "maya",
-      name: "Maya Lin",
-      role: "Talent Manager",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop",
-      leaveBalance: 24,
+      id: "ezechiel",
+      name: "Ezechiel TADAGBE",
+      role: "Ingénieur Cloud & Infrastructure",
+      avatar: "/team/ezechiel.webp",
+      leaveBalance: 8,
       contractType: "CDI • Temps Plein",
-      entryDate: "15 Mai 2025",
-      recentActivity: "A finalisé l'onboarding de 2 nouveaux stagiaires",
-      email: "maya.lin@wine-saas.com"
+      entryDate: "01 Fév. 2024",
+      recentActivity: "A déployé la nouvelle infrastructure cloud",
+      email: "ezechiel.tadagbe@wine-saas.com"
+    },
+    {
+      id: "jeanbaptiste",
+      name: "Jean-Baptiste VIGNONFODE",
+      role: "Architecte Cybersécurité",
+      avatar: "/team/jean-baptiste.webp",
+      leaveBalance: 20,
+      contractType: "CDI • Temps Plein",
+      entryDate: "01 Mars 2024",
+      recentActivity: "A audité la sécurité des API backend",
+      email: "jb.vignonfode@wine-saas.com"
+    },
+    {
+      id: "wasfade",
+      name: "Wasfade TONOUKOIN",
+      role: "Développeur Senior Fullstack",
+      avatar: "/team/wasfade.webp",
+      leaveBalance: 14,
+      contractType: "CDI • Temps Plein",
+      entryDate: "01 Avr. 2024",
+      recentActivity: "A livré le module de gestion des talents",
+      email: "wasfade.tonoukoin@wine-saas.com"
+    },
+    {
+      id: "cosme",
+      name: "Cosme MISSIKPODE",
+      role: "Architecte Cybersécurité / Réseau",
+      avatar: "/team/cosme.webp",
+      leaveBalance: 6,
+      contractType: "CDI • Temps Plein",
+      entryDate: "15 Avr. 2024",
+      recentActivity: "A réalisé les tests d'intrusion mensuels",
+      email: "cosme.missikpode@wine-saas.com"
     }
   ];
 

@@ -397,12 +397,14 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
               <p className="text-xs font-black text-accent mb-2 uppercase tracking-widest">L'Équipe</p>
               <h2 className="text-2xl sm:text-4xl tracking-[-0.03em] font-black text-text-main">Ceux qui construisent WINE</h2>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {[
-                { name: "Précieux", role: "Fondateur & CEO", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" },
-                { name: "Elara Vance", role: "Product Manager", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop" },
-                { name: "Julian Pierce", role: "Tech Lead", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop" },
-                { name: "Maya Lin", role: "Design Lead", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop" }
+                { name: "Mourchid FOLARIN", role: "Fondateur & Directeur technique", img: "/team/mourchid.webp" },
+                { name: "Octave BAHOUN-HOUTOUKPE", role: "Cofondateur / Ingénieur IA & Fullstack", img: "/team/octave.webp" },
+                { name: "Ezechiel TADAGBE", role: "Ingénieur Cloud / Infrastructure & IA", img: "/team/ezechiel.webp" },
+                { name: "Jean-Baptiste VIGNONFODE", role: "Architecte Cybersécurité", img: "/team/jean-baptiste.webp" },
+                { name: "Wasfade TONOUKOIN", role: "Développeur Senior Fullstack", img: "/team/wasfade.webp" },
+                { name: "Cosme MISSIKPODE", role: "Architecte Cybersécurité / Réseau", img: "/team/cosme.webp" }
               ].map((member, i) => (
                 <div key={i} className="text-center group">
                   <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden border-2 border-border-main mb-4 group-hover:border-accent transition-colors">

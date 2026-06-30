@@ -31,7 +31,7 @@ export default function ChatCollaboration({
   const quickPrompts = [
     "Rédige un post LinkedIn sur notre vélocité active de 84 pts",
     "Synthétise les tâches restantes du Sprint Alpha",
-    "Aide Julian Pierce à concevoir l'architecture API",
+    "Aide Octave sur l'architecture du design system",
     "Quels sont les congés restants d'Elara et Julian ?"
   ];
 

@@ -117,14 +117,13 @@ export default function Sidebar({
         {!isCollapsed && (
           <div className="mb-3 px-3 py-2 rounded-xl bg-bg-card border border-border-main flex items-center gap-3">
             <img 
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" 
+              src="/team/mourchid.webp" 
               alt="User profile" 
               className="w-8 h-8 rounded-full border border-accent/40 object-cover"
-              referrerPolicy="no-referrer"
             />
             <div className="flex-1 min-w-0">
-              <p className="text-[13px] font-medium text-text-main truncate">Elara Vance</p>
-              <p className="text-xs text-text-dim truncate font-mono font-normal">Project Director</p>
+              <p className="text-[13px] font-medium text-text-main truncate">Mourchid FOLARIN</p>
+              <p className="text-xs text-text-dim truncate font-mono font-normal">Fondateur & Directeur technique</p>
             </div>
           </div>
         )}

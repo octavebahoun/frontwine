@@ -407,9 +407,9 @@ export default function RapportsAnalytics() {
 
       // Data Row items
       const perfData = [
-        { rang: "1", name: "Julian Pierce", role: "Tech Lead", velocity: "34 pts", tasks: "14 tâches" },
-        { rang: "2", name: "Elara Vance", role: "Director", velocity: "28 pts", tasks: "11 tâches" },
-        { rang: "3", name: "Maya Lin", role: "Talent Mgr", velocity: "22 pts", tasks: "8 tâches" },
+        { rang: "1", name: "Mourchid FOLARIN", role: "Fondateur & Directeur tech", velocity: "34 pts", tasks: "14 tâches" },
+        { rang: "2", name: "Octave BAHOUN-HOUTOUKPE", role: "Cofondateur IA", velocity: "28 pts", tasks: "11 tâches" },
+        { rang: "3", name: "Wasfade TONOUKOIN", role: "Dev Fullstack", velocity: "22 pts", tasks: "8 tâches" },
       ];
 
       perfData.forEach((row, i) => {
@@ -608,13 +608,12 @@ export default function RapportsAnalytics() {
             <div className="flex items-center gap-3">
               <span className="font-bold text-text-dim font-mono w-4">1.</span>
               <img 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" 
-                alt="Julian" 
+                src="/team/mourchid.webp" 
+                alt="Mourchid" 
                 className="w-6 h-6 rounded-full object-cover"
-                referrerPolicy="no-referrer"
               />
-              <span className="font-bold text-text-sub">Julian Pierce</span>
-              <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-mono">Tech Lead</span>
+              <span className="font-bold text-text-sub">Mourchid FOLARIN</span>
+              <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-mono">Fondateur & Directeur tech</span>
             </div>
             <div className="flex items-center gap-4 text-text-dim font-mono text-[11px]">
               <span>Velocity: 34 pts</span>
@@ -627,13 +626,12 @@ export default function RapportsAnalytics() {
             <div className="flex items-center gap-3">
               <span className="font-bold text-text-dim font-mono w-4">2.</span>
               <img 
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" 
-                alt="Elara" 
+                src="/team/octave.webp" 
+                alt="Octave" 
                 className="w-6 h-6 rounded-full object-cover"
-                referrerPolicy="no-referrer"
               />
-              <span className="font-bold text-text-sub">Elara Vance</span>
-              <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-mono">Director</span>
+              <span className="font-bold text-text-sub">Octave BAHOUN-HOUTOUKPE</span>
+              <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-mono">Cofondateur IA</span>
             </div>
             <div className="flex items-center gap-4 text-text-dim font-mono text-[11px]">
               <span>Velocity: 28 pts</span>
@@ -646,13 +644,12 @@ export default function RapportsAnalytics() {
             <div className="flex items-center gap-3">
               <span className="font-bold text-text-dim font-mono w-4">3.</span>
               <img 
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop" 
-                alt="Maya" 
+                src="/team/wasfade.webp" 
+                alt="Wasfade" 
                 className="w-6 h-6 rounded-full object-cover"
-                referrerPolicy="no-referrer"
               />
-              <span className="font-bold text-text-sub">Maya Lin</span>
-              <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-mono">Talent Mgr</span>
+              <span className="font-bold text-text-sub">Wasfade TONOUKOIN</span>
+              <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-mono">Dev Fullstack</span>
             </div>
             <div className="flex items-center gap-4 text-text-dim font-mono text-[11px]">
               <span>Velocity: 22 pts</span>
