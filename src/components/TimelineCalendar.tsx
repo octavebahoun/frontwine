@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Plus, Clock, Image as ImageIcon, Sparkles, Radio, Send, TrendingUp } from "lucide-react";
+import { Plus, Clock, Image as ImageIcon, Sparkles, Radio, Send, TrendingUp, ChevronLeft, ChevronRight } from "lucide-react";
 import { CalendarEvent } from "../types";
 
 interface TimelineCalendarProps {
@@ -13,6 +13,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
   const [platform, setPlatform] = useState<CalendarEvent['platform']>("linkedin");
   const [scheduledTime, setScheduledTime] = useState("11:00");
   const [selectedDay, setSelectedDay] = useState(13);
+  const [visibleStartIndex, setVisibleStartIndex] = useState(0);
 
   // Focus schedule days as shown in mockups
   const days = [
@@ -224,10 +225,30 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
         </div>
       </div>
 
-      {/* Main Grid: Days Columns */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 items-start">
-        {days.map((d) => {
-          const dayEvents = events.filter(e => e.day === d.day);
+      {/* Main Grid: Days Columns Slider */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h4 className="text-sm font-bold text-text-main">Vues journalières</h4>
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => setVisibleStartIndex(prev => Math.max(prev - 2, 0))}
+              disabled={visibleStartIndex === 0}
+              className="p-1.5 rounded-lg bg-bg-card border border-border-main text-text-sub hover:text-text-main hover:bg-bg-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => setVisibleStartIndex(prev => Math.min(prev + 2, Math.max(0, days.length - 2)))}
+              disabled={visibleStartIndex >= days.length - 2}
+              className="p-1.5 rounded-lg bg-bg-card border border-border-main text-text-sub hover:text-text-main hover:bg-bg-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+          {days.slice(visibleStartIndex, visibleStartIndex + 2).map((d) => {
+            const dayEvents = events.filter(e => e.day === d.day);
           return (
             <div key={d.day} className="rounded-xl border border-border-main bg-bg-card p-3 flex flex-col gap-3 min-h-[350px]">
               {/* Day Header */}
@@ -295,6 +316,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
             </div>
           );
         })}
+        </div>
       </div>
     </div>
   );

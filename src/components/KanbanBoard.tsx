@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { Plus, Trash2, ArrowLeft, ArrowRight } from "lucide-react";
 import { Task } from "../types";
+import TaskModal from "./TaskModal";
 
 interface KanbanBoardProps {
   tasks: Task[];
   onAddTask: (task: Omit<Task, 'id'>) => void;
   onUpdateTaskStatus: (id: string, newStatus: Task['status']) => void;
   onDeleteTask: (id: string) => void;
+  onUpdateFullTask: (updatedTask: Task) => void;
 }
 
-export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDeleteTask }: KanbanBoardProps) {
+export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDeleteTask, onUpdateFullTask }: KanbanBoardProps) {
   const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState<Task['priority']>("medium");
@@ -173,7 +176,8 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
                   colTasks.map((task) => (
                     <div
                       key={task.id}
-                      className="p-4 rounded-xl bg-bg-card border border-border-main hover:border-border-main/80 transition-all duration-200 group relative"
+                      onClick={() => setSelectedTask(task)}
+                      className="p-4 rounded-xl bg-bg-card border border-border-main hover:border-accent/40 transition-all duration-200 group relative cursor-pointer shadow-sm hover:shadow-md"
                     >
                       {/* Priority Dot and Tag */}
                       <div className="flex items-center justify-between mb-2">
@@ -208,7 +212,7 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
                         </div>
 
                         {/* Interactive flow switches */}
-                        <div className="flex items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity">
+                        <div className="flex items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity" onClick={e => e.stopPropagation()}>
                           {col.id !== 'todo' && (
                             <button
                               onClick={() => onUpdateTaskStatus(task.id, col.id === 'done' ? 'inprogress' : 'todo')}
@@ -244,6 +248,18 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
           );
         })}
       </div>
+
+      {/* Render the TaskModal */}
+      {selectedTask && (
+        <TaskModal 
+          task={selectedTask}
+          isOpen={!!selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onSave={(updatedTask) => {
+            onUpdateFullTask(updatedTask);
+          }}
+        />
+      )}
     </div>
   );
 }

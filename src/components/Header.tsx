@@ -19,7 +19,7 @@ export default function Header({ title, onAddTaskClick, notificationsCount = 2, 
   ];
 
   return (
-    <header className="h-16 border-b border-border-main bg-bg-sidebar/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between relative z-30">
+    <header className="h-14 sm:h-16 border border-border-main bg-bg-sidebar/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between relative z-30 mx-2 sm:mx-4 mt-2 sm:mt-4 mb-2 rounded-[10px] shadow-sm">
       {/* Title / Tab Name */}
       <div className="flex items-center gap-3">
         <h2 className="text-sm sm:text-lg font-bold text-text-main tracking-tight font-sans truncate max-w-[50vw] md:max-w-none">{title}</h2>

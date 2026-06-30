@@ -10,6 +10,7 @@ import ChatCollaboration from "./components/ChatCollaboration";
 import TimelineCalendar from "./components/TimelineCalendar";
 import RapportsAnalytics from "./components/RapportsAnalytics";
 import RHTalents from "./components/RHTalents";
+import AgentWineModule from "./components/AgentWineModule";
 import { Task, ChatMessage, CalendarEvent } from "./types";
 
 export default function App() {
@@ -152,6 +153,10 @@ export default function App() {
     setTasks(prev => prev.map(t => t.id === id ? { ...t, status: newStatus } : t));
   };
 
+  const handleUpdateFullTask = (updatedTask: Task) => {
+    setTasks(prev => prev.map(t => t.id === updatedTask.id ? updatedTask : t));
+  };
+
   const handleToggleTaskStatus = (id: string) => {
     setTasks(prev => prev.map(t => {
       if (t.id === id) {
@@ -244,6 +249,7 @@ export default function App() {
             onAddTask={handleAddTask} 
             onUpdateTaskStatus={handleUpdateTaskStatus} 
             onDeleteTask={handleDeleteTask} 
+            onUpdateFullTask={handleUpdateFullTask}
           />
         );
       case "tasks":
@@ -252,6 +258,7 @@ export default function App() {
             tasks={tasks} 
             onToggleTaskStatus={handleToggleTaskStatus} 
             onDeleteTask={handleDeleteTask} 
+            onUpdateFullTask={handleUpdateFullTask}
           />
         );
       case "chat":
@@ -275,6 +282,8 @@ export default function App() {
         return <RapportsAnalytics />;
       case "rh":
         return <RHTalents />;
+      case "agent-wine":
+        return <AgentWineModule />;
       default:
         return <DashboardHome tasks={tasks} onToggleTaskStatus={handleToggleTaskStatus} setActiveTab={setActiveTab} />;
     }
@@ -295,6 +304,7 @@ export default function App() {
       case "timeline": return "Calendrier de Planification";
       case "reports": return "Rapports d'Activité & Statistiques";
       case "rh": return "Ressources Humaines & Talents";
+      case "agent-wine": return "Agent WINE Orchestrateur";
       default: return "WINE Workspace";
     }
   };

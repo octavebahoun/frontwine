@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { Check, Search, Trash2, Calendar } from "lucide-react";
 import { Task } from "../types";
+import TaskModal from "./TaskModal";
 
 interface TaskListProps {
   tasks: Task[];
   onToggleTaskStatus: (id: string) => void;
   onDeleteTask: (id: string) => void;
+  onUpdateFullTask: (updatedTask: Task) => void;
 }
 
-export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: TaskListProps) {
+export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUpdateFullTask }: TaskListProps) {
   const [search, setSearch] = useState("");
   const [priorityFilter, setPriorityFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   const filteredTasks = tasks.filter(task => {
     const matchesSearch = task.title.toLowerCase().includes(search.toLowerCase()) || 
@@ -101,16 +104,20 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
             return (
               <div 
                 key={task.id}
-                className={`p-4 rounded-xl border transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                onClick={() => setSelectedTask(task)}
+                className={`p-4 rounded-xl border transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:shadow-sm ${
                   isDone 
-                    ? 'bg-bg-card/30 border-border-sub opacity-60' 
-                    : 'bg-bg-card border-border-main hover:border-border-main/80'
+                    ? 'bg-bg-card/30 border-border-sub opacity-60 hover:opacity-100' 
+                    : 'bg-bg-card border-border-main hover:border-accent/40'
                 }`}
               >
                 {/* Checkbox & title */}
                 <div className="flex items-start gap-3 min-w-0 flex-1">
                   <button 
-                    onClick={() => onToggleTaskStatus(task.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleTaskStatus(task.id);
+                    }}
                     className={`w-5 h-5 rounded-md border flex items-center justify-center flex-shrink-0 mt-0.5 cursor-pointer transition-all ${
                       isDone 
                         ? 'bg-accent border-accent text-slate-900' 
@@ -174,7 +181,10 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
 
                     {/* Delete action */}
                     <button 
-                      onClick={() => onDeleteTask(task.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDeleteTask(task.id);
+                      }}
                       className="p-1.5 rounded-lg bg-bg-app border border-border-main text-text-dim hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -186,6 +196,17 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
           })
         )}
       </div>
+
+      {selectedTask && (
+        <TaskModal 
+          task={selectedTask}
+          isOpen={!!selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onSave={(updatedTask) => {
+            onUpdateFullTask(updatedTask);
+          }}
+        />
+      )}
     </div>
   );
 }

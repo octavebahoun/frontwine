@@ -68,8 +68,9 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-accent/[0.04] blur-[100px]" />
       </div>
 
-      <nav className="sticky top-0 z-50 bg-bg-app/80 backdrop-blur-xl border-b border-border-main">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+      <div className="sticky top-2 sm:top-4 z-50 px-2 sm:px-6 mt-2 sm:mt-4 mb-2 sm:mb-4">
+        <nav className="max-w-7xl mx-auto bg-bg-app/90 backdrop-blur-xl border border-border-main rounded-[10px] shadow-sm">
+          <div className="px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-bg-card border border-border-main flex items-center justify-center shadow-sm">
               <span className="font-mono font-extrabold text-accent text-base tracking-tighter">W</span>
@@ -80,11 +81,13 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-6 text-xs text-text-sub font-medium">
+          <div className="hidden md:flex items-center gap-5 text-xs text-text-sub font-medium">
             <a href="#product" className="hover:text-accent transition-colors">Produit</a>
             <a href="#formats" className="hover:text-accent transition-colors">Modules</a>
             <a href="#workflow" className="hover:text-accent transition-colors">Méthode</a>
-            <span className="text-text-dim/80">Lokossa • Cotonou • Bénin</span>
+            <a href="#mission" className="hover:text-accent transition-colors">Mission</a>
+            <a href="#roadmap" className="hover:text-accent transition-colors">Roadmap</a>
+            <a href="#equipe" className="hover:text-accent transition-colors">Équipe</a>
           </div>
 
           <div className="flex items-center gap-2">
@@ -109,8 +112,9 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
             </button>
           </div>
-        </div>
-      </nav>
+          </div>
+        </nav>
+      </div>
 
       <main>
         <section className="relative px-4 sm:px-6 pt-12 sm:pt-16 pb-8 text-center">
@@ -332,6 +336,80 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                     <p className="text-text-sub text-xs leading-relaxed truncate">{text}</p>
                   </div>
                   <CheckCircle2 className="w-4 h-4 text-accent ml-auto flex-shrink-0" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Mission Section */}
+        <section id="mission" className="px-4 sm:px-6 py-16 sm:py-24">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-xs font-black text-accent mb-4 uppercase tracking-widest">Notre Mission</p>
+            <h2 className="text-3xl sm:text-5xl leading-tight tracking-[-0.03em] font-black text-text-main mb-6">
+              L'excellence opérationnelle n'est plus un luxe.
+            </h2>
+            <p className="text-base sm:text-lg text-text-sub leading-relaxed max-w-2xl mx-auto">
+              Nous avons créé WINE pour offrir aux équipes ambitieuses une plateforme où l'exécution rencontre la clarté. Fini le chaos des outils dispersés.
+            </p>
+          </div>
+        </section>
+
+        {/* Roadmap Section */}
+        <section id="roadmap" className="px-4 sm:px-6 py-16 sm:py-24 bg-bg-card/30 border-y border-border-main">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <p className="text-xs font-black text-accent mb-2 uppercase tracking-widest">Roadmap</p>
+              <h2 className="text-2xl sm:text-4xl tracking-[-0.03em] font-black text-text-main">La vision WINE</h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {[
+                { phase: "Q1 2026", title: "Fondations & Core", status: "Terminé", items: ["Kanban temps réel", "Gestion des talents", "Design System v1"] },
+                { phase: "Q2 2026", title: "Intelligence WINE", status: "En cours", items: ["Assistant WINE AI", "Génération de rapports", "Automatisations"] },
+                { phase: "Q3 2026", title: "Écosystème", status: "À venir", items: ["App Mobile native", "API Publique", "Intégrations (Slack, Notion)"] }
+              ].map((step, i) => (
+                <div key={i} className="rounded-2xl bg-bg-app border border-border-main p-6 relative overflow-hidden group hover:border-accent/50 transition-colors">
+                  <div className="absolute top-0 right-0 p-4">
+                    <span className={`text-[10px] font-mono font-bold px-2 py-1 rounded-md ${step.status === 'Terminé' ? 'bg-accent/10 text-accent' : step.status === 'En cours' ? 'bg-[#ffd166]/10 text-[#ffd166]' : 'bg-bg-hover text-text-dim'}`}>
+                      {step.status}
+                    </span>
+                  </div>
+                  <p className="text-xs font-mono font-black text-text-sub mb-1">{step.phase}</p>
+                  <h3 className="text-lg font-black text-text-main mb-4">{step.title}</h3>
+                  <ul className="space-y-2">
+                    {step.items.map((item, j) => (
+                      <li key={j} className="flex items-start gap-2 text-sm text-text-sub">
+                        <CheckCircle2 className={`w-4 h-4 flex-shrink-0 mt-0.5 ${step.status === 'Terminé' ? 'text-accent' : 'text-text-dim'}`} />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Team Section */}
+        <section id="equipe" className="px-4 sm:px-6 py-16 sm:py-24">
+          <div className="max-w-7xl mx-auto">
+             <div className="text-center mb-12">
+              <p className="text-xs font-black text-accent mb-2 uppercase tracking-widest">L'Équipe</p>
+              <h2 className="text-2xl sm:text-4xl tracking-[-0.03em] font-black text-text-main">Ceux qui construisent WINE</h2>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+              {[
+                { name: "Précieux", role: "Fondateur & CEO", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" },
+                { name: "Elara Vance", role: "Product Manager", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop" },
+                { name: "Julian Pierce", role: "Tech Lead", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop" },
+                { name: "Maya Lin", role: "Design Lead", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop" }
+              ].map((member, i) => (
+                <div key={i} className="text-center group">
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden border-2 border-border-main mb-4 group-hover:border-accent transition-colors">
+                    <img src={member.img} alt={member.name} className="w-full h-full object-cover" />
+                  </div>
+                  <h3 className="text-sm font-black text-text-main">{member.name}</h3>
+                  <p className="text-xs text-text-sub font-medium mt-1">{member.role}</p>
                 </div>
               ))}
             </div>
