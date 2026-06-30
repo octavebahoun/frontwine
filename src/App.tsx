@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu } from "lucide-react";
 import LandingPage from "./components/LandingPage";
 import Sidebar from "./components/Sidebar";
@@ -19,6 +19,17 @@ export default function App() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [chatError, setChatError] = useState<string | null>(null);
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+
+  useEffect(() => {
+    if (theme === "light") {
+      document.body.classList.add("light-theme");
+      document.documentElement.classList.add("light-theme");
+    } else {
+      document.body.classList.remove("light-theme");
+      document.documentElement.classList.remove("light-theme");
+    }
+  }, [theme]);
 
   // Initial High-Fidelity Tasks
   const [tasks, setTasks] = useState<Task[]>([
@@ -271,7 +282,7 @@ export default function App() {
 
   // Switch between Landing Page and App Dashboard
   if (mode === "landing") {
-    return <LandingPage onEnterApp={() => setMode("app")} />;
+    return <LandingPage onEnterApp={() => setMode("app")} theme={theme} setTheme={setTheme} />;
   }
 
   // Find corresponding title for header
@@ -289,7 +300,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-[#080d19] overflow-hidden font-sans text-white">
+    <div className={`flex h-screen w-screen bg-bg-app overflow-hidden font-sans text-text-main transition-colors duration-300 ${theme === "light" ? "light-theme" : ""}`}>
       {isMobileSidebarOpen && (
         <button
           type="button"
@@ -309,26 +320,30 @@ export default function App() {
         isCollapsed={isSidebarCollapsed}
         setIsCollapsed={setIsSidebarCollapsed}
         isMobileOpen={isMobileSidebarOpen}
+        theme={theme}
+        setTheme={setTheme}
       />
 
       <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
-        <div className="md:hidden h-14 px-4 border-b border-gray-800/60 bg-[#080d19]/95 flex items-center justify-between">
+        <div className={`md:hidden h-14 px-4 border-b border-border-sub bg-bg-app/95 flex items-center justify-between`}>
           <button
             type="button"
             aria-label="Ouvrir la navigation"
             onClick={() => setIsMobileSidebarOpen(true)}
-            className="w-10 h-10 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 flex items-center justify-center"
+            className="w-10 h-10 rounded-lg bg-bg-card border border-border-main text-text-sub flex items-center justify-center cursor-pointer"
           >
             <Menu className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#00C969] flex items-center justify-center text-[#070b14] font-mono font-black">W</div>
-            <span className="text-xs font-bold tracking-widest">WINE</span>
+            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-bg-sidebar font-mono font-black">W</div>
+            <span className="text-xs font-bold tracking-widest text-text-main">WINE</span>
           </div>
         </div>
 
         <Header 
           title={getHeaderTitle()} 
+          theme={theme}
+          setTheme={setTheme}
           onAddTaskClick={activeTab === "kanban" || activeTab === "tasks" ? () => handleAddTask({
             title: "Nouvelle tâche urgente",
             description: "Ajoutée depuis le raccourci d'action rapide.",
@@ -344,7 +359,7 @@ export default function App() {
         />
 
         {/* Dynamic Inner view container */}
-        <main className="flex-1 min-h-0 overflow-hidden bg-[#080d19]">
+        <main className="flex-1 min-h-0 overflow-hidden bg-bg-app">
           {renderActiveView()}
         </main>
       </div>

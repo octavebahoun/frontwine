@@ -1,9 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
+
+:root {
+  --bg-app: #080d19;
+  --bg-card: #0c1220;
+  --bg-sidebar: #070b14;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-muted: rgba(255, 255, 255, 0.04);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.65);
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --bg-hover: rgba(255, 255, 255, 0.05);
+  --accent: #00C969;
+  --accent-hover: #3fe08f;
+  --accent-muted: rgba(0, 201, 105, 0.08);
+}
+
+.light-theme {
+  --bg-app: #f4f6f9;
+  --bg-card: #ffffff;
+  --bg-sidebar: #ffffff;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-muted: rgba(0, 0, 0, 0.04);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --bg-hover: rgba(0, 0, 0, 0.04);
+  --accent: #00A854;
+  --accent-hover: #00C969;
+  --accent-muted: rgba(0, 168, 84, 0.08);
+}
 
 @theme {
   --font-sans: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Global scale down of spacing (margins, padding, heights, widths, gaps) - adjusted for legibility */
+  --spacing: 0.22rem;
+
+  /* Standard font sizes for crisp legibility and professional design */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+
+  /* Standard font weights to ensure that bold, semibold, and medium headings/navigation are readable */
+  --font-weight-black: 900;
+  --font-weight-extrabold: 800;
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --font-weight-light: 300;
+  --font-weight-thin: 200;
+
+  /* Custom variables mapped to theme colors */
+  --color-bg-app: var(--bg-app);
+  --color-bg-card: var(--bg-card);
+  --color-bg-sidebar: var(--bg-sidebar);
+  --color-border-main: var(--border-color);
+  --color-border-sub: var(--border-muted);
+  --color-text-main: var(--text-primary);
+  --color-text-sub: var(--text-secondary);
+  --color-text-dim: var(--text-muted);
+  --color-bg-hover: var(--bg-hover);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-muted: var(--accent-muted);
 }
 
 html,
@@ -14,7 +84,18 @@ body,
 
 body {
   margin: 0;
-  background: #080d19;
+  background: var(--bg-app);
+  color: var(--text-primary);
+  font-weight: 300;
+  font-family: var(--font-sans);
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+/* Ensure smooth theme transitions */
+div, aside, header, main, section, nav, button, input, select, textarea {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button,
