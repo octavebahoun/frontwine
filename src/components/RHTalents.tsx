@@ -78,7 +78,7 @@ export default function RHTalents() {
   return (
     <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto text-text-main relative">
       {notice && (
-        <div className="p-3 rounded-xl bg-accent-muted border border-accent/20 text-accent text-xs flex items-center justify-between gap-3">
+        <div aria-live="polite" className="p-3 rounded-xl bg-accent-muted border border-accent/20 text-accent text-xs flex items-center justify-between gap-3">
           <span>{notice}</span>
           <button
             type="button"
@@ -86,7 +86,7 @@ export default function RHTalents() {
             className="p-1 rounded text-emerald-300 hover:text-text-main"
             aria-label="Masquer le message"
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-3.5 h-3.5" aria-hidden="true" />
           </button>
         </div>
       )}
@@ -94,24 +94,34 @@ export default function RHTalents() {
       {/* Upper action bar */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-sm text-text-sub">Ressources Humaines / Annuaire</h3>
-          <p className="text-lg font-bold text-text-main font-sans">Gestion des Talents & Collaborateurs</p>
+          <nav aria-label="Fil d'Ariane">
+            <ol className="flex items-center gap-1 text-sm text-text-sub">
+              <li><span>Ressources Humaines</span></li>
+              <li><span className="mx-1">/</span></li>
+              <li aria-current="page"><span>Annuaire</span></li>
+            </ol>
+          </nav>
+          <h2 className="text-lg font-bold text-text-main font-sans">Gestion des Talents & Collaborateurs</h2>
         </div>
         <button
           onClick={() => setNotice("Invitation prête: cette action sera reliée au module administrateur.")}
-          className="h-9 px-4 rounded-lg bg-accent-muted hover:bg-accent/20 text-accent font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer border border-accent/20"
+          aria-label="Inviter un collaborateur"
+          className="h-11 sm:h-9 px-4 rounded-lg bg-accent-muted hover:bg-accent/20 text-accent font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer border border-accent/20"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4" aria-hidden="true" />
           <span>Inviter un collaborateur</span>
         </button>
       </div>
 
       {/* Grid containing Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
         {team.map((member) => (
           <div
             key={member.id}
             onClick={() => setSelectedMember(member)}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setSelectedMember(member); e.preventDefault(); } }}
+            role="button"
+            tabIndex={0}
             className="p-5 rounded-2xl bg-bg-card border border-border-main hover:border-accent/40 transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-4"
           >
             <div className="space-y-4">
@@ -153,20 +163,21 @@ export default function RHTalents() {
 
       {/* Side Profile Drawer Overlay */}
       {selectedMember && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex justify-end">
-          <div className="w-full max-w-md bg-bg-card h-full p-6 border-l border-border-main flex flex-col justify-between overflow-y-auto shadow-2xl">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex justify-end" role="dialog" aria-modal="true" aria-label="Détails du membre" onKeyDown={(e) => { if (e.key === 'Escape') setSelectedMember(null); }}>
+          <div className="w-full max-w-md bg-bg-card h-full p-4 sm:p-6 border-l border-border-main flex flex-col justify-between overflow-y-auto shadow-2xl">
             <div className="space-y-6">
               {/* Drawer header */}
               <div className="flex items-center justify-between border-b border-border-main pb-4">
                 <div className="flex items-center gap-2">
-                  <Users2 className="w-5 h-5 text-accent" />
+                  <Users2 className="w-5 h-5 text-accent" aria-hidden="true" />
                   <span className="text-xs uppercase font-mono tracking-wider font-bold text-accent">Fiche Collaborateur</span>
                 </div>
                 <button
                   onClick={() => setSelectedMember(null)}
+                  aria-label="Fermer"
                   className="p-1.5 rounded-lg bg-bg-card border border-border-main text-text-sub hover:text-text-main cursor-pointer"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-4 h-4" aria-hidden="true" />
                 </button>
               </div>
 
@@ -187,7 +198,7 @@ export default function RHTalents() {
               {/* Data specifications list */}
               <div className="space-y-3">
                 <div className="p-3.5 rounded-xl bg-bg-hover border border-border-sub flex items-center gap-3">
-                  <Mail className="w-4 h-4 text-text-dim" />
+                  <Mail className="w-4 h-4 text-text-dim" aria-hidden="true" />
                   <div className="text-xs">
                     <span className="text-text-dim block text-[9px] uppercase font-mono">E-mail Professionnel</span>
                     <span className="text-text-sub font-bold">{selectedMember.email}</span>
@@ -195,7 +206,7 @@ export default function RHTalents() {
                 </div>
 
                 <div className="p-3.5 rounded-xl bg-bg-hover border border-border-sub flex items-center gap-3">
-                  <Calendar className="w-4 h-4 text-text-dim" />
+                  <Calendar className="w-4 h-4 text-text-dim" aria-hidden="true" />
                   <div className="text-xs">
                     <span className="text-text-dim block text-[9px] uppercase font-mono">Date d'Entrée</span>
                     <span className="text-text-sub font-bold">{selectedMember.entryDate}</span>
@@ -203,7 +214,7 @@ export default function RHTalents() {
                 </div>
 
                 <div className="p-3.5 rounded-xl bg-bg-hover border border-border-sub flex items-center gap-3">
-                  <FileText className="w-4 h-4 text-text-dim" />
+                  <FileText className="w-4 h-4 text-text-dim" aria-hidden="true" />
                   <div className="text-xs">
                     <span className="text-text-dim block text-[9px] uppercase font-mono">Régime de contrat</span>
                     <span className="text-text-sub font-bold">{selectedMember.contractType}</span>
@@ -216,13 +227,15 @@ export default function RHTalents() {
             <div className="pt-6 border-t border-border-main flex gap-3">
               <button
                 onClick={() => setNotice(`Message préparé pour ${selectedMember.name}.`)}
-                className="flex-1 h-10 rounded-xl bg-accent text-[#070b14] font-bold text-xs"
+                aria-label="Envoyer un e-mail"
+                className="flex-1 h-12 sm:h-10 rounded-xl bg-accent text-[#070b14] font-bold text-xs"
               >
                 Envoyer un e-mail
               </button>
               <button
                 onClick={() => setNotice("La modification RH sera disponible pour les administrateurs.")}
-                className="flex-1 h-10 rounded-xl bg-bg-card border border-border-main text-text-sub font-bold text-xs"
+                aria-label="Modifier le profil"
+                className="flex-1 h-12 sm:h-10 rounded-xl bg-bg-card border border-border-main text-text-sub font-bold text-xs"
               >
                 Modifier
               </button>

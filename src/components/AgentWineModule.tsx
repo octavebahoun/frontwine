@@ -89,7 +89,7 @@ export default function AgentWineModule() {
           {/* Terminal header bar */}
           <div className="px-4 py-3 bg-bg-sidebar border-b border-border-sub flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2">
-              <Terminal className="w-4 h-4 text-text-dim" />
+              <Terminal className="w-4 h-4 text-text-dim" aria-hidden="true" />
               <span className="font-mono text-xs font-medium text-text-dim uppercase tracking-widest">Terminal de Commande</span>
             </div>
             <div className="flex gap-1.5">
@@ -100,7 +100,7 @@ export default function AgentWineModule() {
           </div>
 
           {/* Logs area — scrollable */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 font-mono text-sm">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 font-mono text-sm" role="log" aria-live="polite" aria-label="Terminal de logs Agent WINE">
             {logs.map((log) => (
               <div key={log.id} className="flex gap-3 items-start">
                 <span className="text-text-dim whitespace-nowrap text-xs shrink-0 pt-0.5">[{log.timestamp}]</span>
@@ -119,7 +119,7 @@ export default function AgentWineModule() {
             ))}
             {isProcessing && (
               <div className="flex gap-2 items-center text-accent font-mono text-xs">
-                <span className="animate-pulse">▋</span>
+                <span className="animate-pulse" aria-hidden="true">▋</span>
                 <span className="text-text-dim">Traitement en cours...</span>
               </div>
             )}
@@ -137,20 +137,22 @@ export default function AgentWineModule() {
               </div>
               <input
                 type="text"
+                aria-label="Commande"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isProcessing}
                 placeholder="Dites à l'agent WINE quoi faire..."
-                className="w-full h-11 pl-10 pr-4 bg-bg-card border border-border-main rounded-xl text-text-main text-sm placeholder:text-text-dim focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/40 transition-all disabled:opacity-50"
+                className="w-full h-12 pl-10 pr-4 bg-bg-card border border-border-main rounded-xl text-text-main text-sm placeholder:text-text-dim focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/40 transition-all disabled:opacity-50"
               />
             </div>
             <button
               type="submit"
+              aria-label="Exécuter la commande"
               disabled={!input.trim() || isProcessing}
               className="shrink-0 flex items-center gap-2 px-4 h-11 rounded-xl bg-accent text-bg-sidebar text-sm font-semibold hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <span className="hidden sm:inline">Exécuter</span>
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4" aria-hidden="true" />
             </button>
           </form>
         </div>
@@ -159,27 +161,29 @@ export default function AgentWineModule() {
         <div className="shrink-0 lg:w-64 flex flex-col border-t lg:border-t-0 border-border-main bg-bg-sidebar">
           <div className="px-4 py-3 border-b border-border-sub shrink-0">
             <h3 className="text-xs font-semibold text-text-dim uppercase tracking-widest flex items-center gap-2">
-              <Code className="w-3.5 h-3.5 text-accent" />
+              <Code className="w-3.5 h-3.5 text-accent" aria-hidden="true" />
               Suggestions
             </h3>
           </div>
 
           <div className="flex-1 overflow-y-auto p-3 space-y-2">
-            {suggestedPrompts.map((prompt, i) => (
-              <button
-                key={i}
-                onClick={() => setInput(prompt)}
-                className="w-full text-left px-3 py-3 rounded-xl bg-bg-card border border-border-sub hover:border-accent/40 hover:bg-accent/5 transition-all text-xs text-text-sub hover:text-text-main leading-relaxed"
-              >
-                {prompt}
-              </button>
-            ))}
+              {suggestedPrompts.map((prompt, i) => (
+                <button
+                  key={i}
+                  onClick={() => setInput(prompt)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setInput(prompt); e.preventDefault(); } }}
+                  aria-label={`Suggestion: ${prompt}`}
+                  className="w-full text-left px-3 py-3 rounded-xl bg-bg-card border border-border-sub hover:border-accent/40 hover:bg-accent/5 transition-all text-xs text-text-sub hover:text-text-main leading-relaxed"
+                >
+                  {prompt}
+                </button>
+              ))}
           </div>
 
           <div className="shrink-0 px-4 py-3 border-t border-border-sub">
             <div className="flex items-center justify-between text-xs text-text-dim">
               <span className="flex items-center gap-1.5">
-                <Clock className="w-3 h-3" />
+                <Clock className="w-3 h-3" aria-hidden="true" />
                 Uptime 99.9%
               </span>
               <span className="font-mono">v1.2.0</span>

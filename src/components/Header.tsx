@@ -19,10 +19,10 @@ export default function Header({ title, onAddTaskClick, notificationsCount = 2, 
   ];
 
   return (
-    <header className="h-14 sm:h-16 border border-border-main bg-bg-sidebar/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between relative z-30 mx-2 sm:mx-4 mt-2 sm:mt-4 mb-2 rounded-[10px] shadow-sm">
+    <header role="banner" className="h-14 sm:h-16 border border-border-main bg-bg-sidebar/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between relative z-30 mx-0 sm:mx-4 mt-2 sm:mt-4 mb-2 rounded-[10px] shadow-sm">
       {/* Title / Tab Name */}
       <div className="flex items-center gap-3">
-        <h2 className="text-sm sm:text-lg font-bold text-text-main tracking-tight font-sans truncate max-w-[50vw] md:max-w-none">{title}</h2>
+        <p className="text-sm sm:text-lg font-bold text-text-main tracking-tight font-sans truncate max-w-[60vw] md:max-w-none">{title}</p>
         <div className="hidden sm:flex items-center h-5 px-2 rounded-full bg-accent-muted border border-accent/25 text-[10px] text-accent font-semibold uppercase tracking-wider">
           Sprint Actuel
         </div>
@@ -32,9 +32,10 @@ export default function Header({ title, onAddTaskClick, notificationsCount = 2, 
       <div className="flex items-center gap-2 sm:gap-4">
         {/* Search */}
         <div className="relative hidden md:block">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-dim" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-dim" aria-hidden="true" />
           <input 
             type="text" 
+            aria-label="Rechercher"
             placeholder="Rechercher une tâche, un projet..." 
             className="w-56 h-9 bg-bg-card border border-border-main rounded-lg pl-9 pr-4 text-xs text-text-main placeholder-text-dim focus:outline-none focus:border-accent/50 transition-all duration-200"
           />
@@ -43,19 +44,21 @@ export default function Header({ title, onAddTaskClick, notificationsCount = 2, 
         {/* Theme Toggle */}
         <button 
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+          aria-label="Basculer le thème"
           className="p-2 rounded-lg bg-bg-card border border-border-main text-text-sub hover:text-text-main hover:bg-bg-hover transition-all cursor-pointer flex items-center justify-center"
           title={theme === "light" ? "Mode sombre" : "Mode clair"}
         >
-          {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+          {theme === "light" ? <Moon className="w-4 h-4" aria-hidden="true" /> : <Sun className="w-4 h-4" aria-hidden="true" />}
         </button>
 
         {/* Quick Task Add Button */}
         {onAddTaskClick && (
           <button 
             onClick={onAddTaskClick}
+            aria-label="Ajouter une tâche rapide"
             className="h-9 px-3.5 rounded-lg bg-accent text-bg-sidebar font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(0,201,105,0.25)] hover:scale-[1.01] active:scale-95 transition-all cursor-pointer"
           >
-            <Plus className="w-3.5 h-3.5 stroke-[3px]" />
+            <Plus className="w-3.5 h-3.5 stroke-[3px]" aria-hidden="true" />
             <span className="hidden sm:inline">Nouvelle Tâche</span>
           </button>
         )}
@@ -64,9 +67,11 @@ export default function Header({ title, onAddTaskClick, notificationsCount = 2, 
         <div className="relative">
           <button 
             onClick={() => setShowNotifications(!showNotifications)}
+            aria-label={`Notifications (${notificationsCount} non lues)`}
+            aria-expanded={showNotifications}
             className="p-2 rounded-lg bg-bg-card border border-border-main text-text-sub hover:text-text-main hover:bg-bg-hover transition-all relative cursor-pointer"
           >
-            <Bell className="w-4 h-4" />
+            <Bell className="w-4 h-4" aria-hidden="true" />
             {notificationsCount > 0 && (
               <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-bg-sidebar" />
             )}
@@ -74,7 +79,7 @@ export default function Header({ title, onAddTaskClick, notificationsCount = 2, 
 
           {/* Notifications Dropdown */}
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] max-w-80 rounded-xl bg-bg-card border border-border-main p-4 shadow-[0_10px_30px_rgba(0,0,0,0.15)] z-50">
+            <div role="region" aria-label="Notifications" className="absolute right-0 mt-2 w-[calc(100vw-2rem)] max-w-80 rounded-xl bg-bg-card border border-border-main p-4 shadow-[0_10px_30px_rgba(0,0,0,0.15)] z-50">
               <div className="flex items-center justify-between mb-3 pb-2 border-b border-border-sub">
                 <span className="text-xs font-bold text-text-main">Notifications</span>
                 <span className="text-[10px] text-accent font-semibold cursor-pointer hover:underline">Marquer comme lu</span>
@@ -95,13 +100,13 @@ export default function Header({ title, onAddTaskClick, notificationsCount = 2, 
         <div className="hidden lg:flex items-center -space-x-2">
           <img 
             src="/team/octave.webp" 
-            alt="Octave" 
+            alt="Octave BAHOUN-HOUTOUKPE" 
             title="Octave BAHOUN-HOUTOUKPE (Cofondateur)"
             className="w-7 h-7 rounded-full border border-border-main object-cover"
           />
           <img 
             src="/team/ezechiel.webp" 
-            alt="Ezechiel" 
+            alt="Ezechiel TADAGBE" 
             title="Ezechiel TADAGBE (Ingénieur Cloud)"
             className="w-7 h-7 rounded-full border border-border-main object-cover"
           />

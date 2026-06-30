@@ -64,16 +64,24 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
       {/* Header bar */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-sm text-text-sub">Marketing & Diffusion / Calendrier Editorial</h3>
-          <p className="text-lg font-bold text-text-main font-sans">Planification Réseaux Sociaux</p>
+          <nav aria-label="Fil d'Ariane">
+            <ol className="flex items-center gap-1 text-sm text-text-sub">
+              <li><span>Marketing & Diffusion</span></li>
+              <li><span className="mx-1">/</span></li>
+              <li aria-current="page"><span>Calendrier Editorial</span></li>
+            </ol>
+          </nav>
+          <h2 className="text-lg font-bold text-text-main font-sans">Planification Réseaux Sociaux</h2>
         </div>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="h-9 px-4 rounded-lg bg-accent-muted hover:bg-accent/20 text-accent font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer border border-accent/20"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Planifier un post</span>
-        </button>
+            <button 
+              onClick={() => setShowForm(!showForm)}
+              aria-expanded={showForm}
+              aria-label="Planifier un post"
+              className="h-11 sm:h-9 px-4 rounded-lg bg-accent-muted hover:bg-accent/20 text-accent font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer border border-accent/20"
+            >
+              <Plus className="w-4 h-4" aria-hidden="true" />
+              <span>Planifier un post</span>
+            </button>
       </div>
 
       {/* Creation form */}
@@ -82,8 +90,9 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
           <h4 className="text-sm font-bold text-text-main">Planifier un nouveau post</h4>
           <div className="space-y-3">
             <div>
-              <label className="text-[10px] uppercase font-mono text-text-dim">Contenu du post</label>
+              <label className="text-[10px] uppercase font-mono text-text-dim" htmlFor="post-content">Contenu du post</label>
               <textarea
+                id="post-content"
                 required
                 placeholder="Rédigez le texte du post..."
                 value={title}
@@ -93,8 +102,9 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1">Réseau Social</label>
+                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="post-platform">Réseau Social</label>
                 <select
+                  id="post-platform"
                   value={platform}
                   onChange={e => setPlatform(e.target.value as CalendarEvent['platform'])}
                   className="w-full h-9 bg-bg-card border border-border-main rounded-lg px-2 text-xs text-text-main"
@@ -106,18 +116,19 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
                 </select>
               </div>
               <div>
-                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1">Heure de publication</label>
+                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="post-time">Heure de publication</label>
                 <input
-                  type="text"
-                  placeholder="ex: 11:00"
+                  id="post-time"
+                  type="time"
                   value={scheduledTime}
                   onChange={e => setScheduledTime(e.target.value)}
                   className="w-full h-9 bg-bg-card border border-border-main rounded-lg px-3 text-xs text-text-main"
                 />
               </div>
               <div>
-                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1">Jour du mois</label>
+                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="post-day">Jour du mois</label>
                 <select
+                  id="post-day"
                   value={selectedDay}
                   onChange={e => setSelectedDay(parseInt(e.target.value))}
                   className="w-full h-9 bg-bg-card border border-border-main rounded-lg px-2 text-xs text-text-main"
@@ -133,13 +144,13 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
             <button
               type="button"
               onClick={() => setShowForm(false)}
-              className="px-3.5 h-8 rounded-lg bg-bg-card border border-border-main text-xs text-text-sub hover:text-text-main"
+              className="px-3.5 h-10 rounded-lg bg-bg-card border border-border-main text-xs text-text-sub hover:text-text-main"
             >
               Annuler
             </button>
             <button
               type="submit"
-              className="px-4 h-8 rounded-lg bg-accent text-[#070b14] font-bold text-xs"
+              className="px-4 h-10 rounded-lg bg-accent text-[#070b14] font-bold text-xs"
             >
               Planifier
             </button>
@@ -154,7 +165,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
           <div className="flex items-start justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-accent font-bold mb-3">
-                <Sparkles className="w-3.5 h-3.5" />
+                  <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
                 Campagne active
               </div>
               <h4 className="text-xl font-black text-text-main leading-tight">Présence digitale WINE</h4>
@@ -163,11 +174,11 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
               </p>
             </div>
             <div className="w-12 h-12 rounded-xl bg-accent-muted border border-accent/20 flex items-center justify-center text-accent">
-              <Radio className="w-5 h-5" />
+              <Radio className="w-5 h-5" aria-hidden="true" />
             </div>
           </div>
 
-          <div className="mt-5 grid grid-cols-3 gap-2">
+          <div className="mt-5 grid grid-cols-3 gap-3 sm:gap-2">
             <div className="rounded-lg bg-white/[0.045] border border-white/10 px-3 py-3">
               <p className="text-2xl font-black font-mono text-text-main">{scheduledEvents.length}</p>
               <p className="text-[10px] text-text-dim font-mono uppercase">Planifiés</p>
@@ -191,7 +202,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
                 {nextEvent ? `${nextEvent.day} Juin • ${nextEvent.scheduledTime}` : "À planifier"}
               </h4>
             </div>
-            <Send className="w-4 h-4 text-accent" />
+            <Send className="w-4 h-4 text-accent" aria-hidden="true" />
           </div>
           <div className="rounded-lg border border-border-main bg-bg-hover p-3 min-h-24">
             {nextEvent ? (
@@ -213,7 +224,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
               <p className="text-[10px] uppercase font-mono text-text-dim font-bold">WINE AI</p>
               <h4 className="text-sm font-bold text-text-main mt-1">Meilleur créneau</h4>
             </div>
-            <TrendingUp className="w-4 h-4 text-emerald-400" />
+            <TrendingUp className="w-4 h-4 text-emerald-400" aria-hidden="true" />
           </div>
           <div>
             <p className="text-3xl font-black font-mono text-text-main">11:00</p>
@@ -233,16 +244,18 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
             <button 
               onClick={() => setVisibleStartIndex(prev => Math.max(prev - 2, 0))}
               disabled={visibleStartIndex === 0}
+              aria-label="Voir les jours précédents"
               className="p-1.5 rounded-lg bg-bg-card border border-border-main text-text-sub hover:text-text-main hover:bg-bg-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-4 h-4" aria-hidden="true" />
             </button>
             <button 
               onClick={() => setVisibleStartIndex(prev => Math.min(prev + 2, Math.max(0, days.length - 2)))}
               disabled={visibleStartIndex >= days.length - 2}
+              aria-label="Voir les jours suivants"
               className="p-1.5 rounded-lg bg-bg-card border border-border-main text-text-sub hover:text-text-main hover:bg-bg-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -250,7 +263,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
           {days.slice(visibleStartIndex, visibleStartIndex + 2).map((d) => {
             const dayEvents = events.filter(e => e.day === d.day);
           return (
-            <div key={d.day} className="rounded-xl border border-border-main bg-bg-card p-3 flex flex-col gap-3 min-h-[350px]">
+            <div key={d.day} role="region" aria-label={`Colonne du ${d.date}`} className="rounded-xl border border-border-main bg-bg-card p-4 sm:p-3 flex flex-col gap-3 min-h-[250px] min-h-[350px] md:min-h-[350px]">
               {/* Day Header */}
               <div className="flex items-center justify-between border-b border-border-sub pb-2">
                 <div className="flex flex-col">
@@ -274,6 +287,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
                     return (
                       <div
                         key={evt.id}
+                        aria-label={`Événement: ${evt.title}`}
                         className="p-3 rounded-lg bg-bg-hover border border-border-main hover:border-border-sub transition-all flex flex-col gap-2 relative group"
                       >
                         {/* Title details / Time */}
@@ -282,7 +296,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
                             {evt.platform === 'whatsapp' ? 'WA' : evt.platform === 'linkedin' ? 'LI' : evt.platform === 'instagram' ? 'IG' : 'FB'}
                           </span>
                           <div className="flex items-center gap-1 text-text-dim font-mono">
-                            <Clock className="w-3 h-3" />
+                            <Clock className="w-3 h-3" aria-hidden="true" />
                             <span>{evt.scheduledTime}</span>
                           </div>
                         </div>
@@ -297,12 +311,12 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
                           <div className="rounded overflow-hidden border border-border-main bg-bg-card aspect-[16/10] mt-1 relative">
                             <img 
                               src={evt.attachments[0]} 
-                              alt="Attachment preview" 
+                              alt="Aperçu de la pièce jointe" 
                               className="w-full h-full object-cover opacity-80"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-1.5">
                               <span className="text-[8px] text-text-sub flex items-center gap-1 font-mono">
-                                <ImageIcon className="w-2.5 h-2.5" />
+                                <ImageIcon className="w-2.5 h-2.5" aria-hidden="true" />
                                 1 Image
                               </span>
                             </div>

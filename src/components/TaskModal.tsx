@@ -22,11 +22,12 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center" role="dialog" aria-modal="true" aria-label="Détails de la tâche" onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}>
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
+        tabIndex={-1}
       />
       
       {/* Modal Content */}
@@ -43,8 +44,8 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
               {editedTask.status === 'done' ? 'Terminé' : editedTask.status === 'inprogress' ? 'En cours' : 'À faire'}
             </span>
           </div>
-          <button onClick={onClose} className="p-2 text-text-dim hover:text-text-main rounded-lg hover:bg-bg-hover transition-colors">
-            <X className="w-5 h-5" />
+          <button onClick={onClose} aria-label="Fermer" className="p-3 sm:p-2 text-text-dim hover:text-text-main rounded-lg hover:bg-bg-hover transition-colors">
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
@@ -53,8 +54,9 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
           {isEditing ? (
             <div className="space-y-4">
               <div>
-                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1">Titre</label>
+                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="task-title">Titre</label>
                 <input 
+                  id="task-title"
                   type="text" 
                   value={editedTask.title}
                   onChange={e => setEditedTask({...editedTask, title: e.target.value})}
@@ -62,8 +64,9 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
                 />
               </div>
               <div>
-                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1">Description</label>
+                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="task-desc">Description</label>
                 <textarea 
+                  id="task-desc"
                   value={editedTask.description}
                   onChange={e => setEditedTask({...editedTask, description: e.target.value})}
                   className="w-full bg-bg-card border border-border-main rounded-lg p-3 text-sm text-text-main min-h-[150px] focus:outline-none focus:border-accent/50"
@@ -72,8 +75,9 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] uppercase font-mono text-text-dim block mb-1">Priorité</label>
+                  <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="task-priority">Priorité</label>
                   <select
+                    id="task-priority"
                     value={editedTask.priority}
                     onChange={e => setEditedTask({...editedTask, priority: e.target.value as Task['priority']})}
                     className="w-full h-10 bg-bg-card border border-border-main rounded-lg px-3 text-sm text-text-main focus:outline-none"
@@ -84,8 +88,9 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
                   </select>
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase font-mono text-text-dim block mb-1">Statut</label>
+                  <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="task-status">Statut</label>
                   <select
+                    id="task-status"
                     value={editedTask.status}
                     onChange={e => setEditedTask({...editedTask, status: e.target.value as Task['status']})}
                     className="w-full h-10 bg-bg-card border border-border-main rounded-lg px-3 text-sm text-text-main focus:outline-none"
@@ -103,13 +108,13 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
               
               <div className="flex flex-wrap items-center gap-4 text-xs">
                 <div className="flex items-center gap-2 bg-bg-card border border-border-main px-3 py-1.5 rounded-lg">
-                  <User className="w-4 h-4 text-text-dim" />
+                  <User className="w-4 h-4 text-text-dim" aria-hidden="true" />
                   <img src={task.assignee.avatar} alt="" className="w-5 h-5 rounded-full object-cover" />
                   <span className="font-medium text-text-main">{task.assignee.name}</span>
                 </div>
                 
                 <div className="flex items-center gap-2 bg-bg-card border border-border-main px-3 py-1.5 rounded-lg">
-                  <AlertCircle className="w-4 h-4 text-text-dim" />
+                  <AlertCircle className="w-4 h-4 text-text-dim" aria-hidden="true" />
                   <div className="flex items-center gap-1.5">
                     <span className={`w-2 h-2 rounded-full ${
                       task.priority === 'high' ? 'bg-red-500' : task.priority === 'medium' ? 'bg-yellow-500' : 'bg-emerald-500'
@@ -121,7 +126,7 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
                 </div>
 
                 <div className="flex items-center gap-2 bg-bg-card border border-border-main px-3 py-1.5 rounded-lg">
-                  <Calendar className="w-4 h-4 text-text-dim" />
+                  <Calendar className="w-4 h-4 text-text-dim" aria-hidden="true" />
                   <span className="font-medium text-text-main">{task.dueDate}</span>
                 </div>
               </div>
@@ -139,7 +144,7 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
                   <div className="flex flex-wrap gap-2">
                     {task.tags.map(tag => (
                       <span key={tag} className="flex items-center gap-1.5 bg-bg-card border border-border-main px-2.5 py-1 rounded-md text-[11px] font-medium text-text-main">
-                        <Tag className="w-3 h-3 text-text-dim" />
+                        <Tag className="w-3 h-3 text-text-dim" aria-hidden="true" />
                         {tag}
                       </span>
                     ))}
@@ -159,13 +164,13 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
                   setEditedTask(task);
                   setIsEditing(false);
                 }}
-                className="px-4 py-2 rounded-lg bg-bg-app border border-border-main text-sm font-medium text-text-dim hover:text-text-main transition-colors"
+                className="px-4 py-2 min-h-[44px] rounded-lg bg-bg-app border border-border-main text-sm font-medium text-text-dim hover:text-text-main transition-colors"
               >
                 Annuler
               </button>
               <button 
                 onClick={handleSave}
-                className="px-5 py-2 rounded-lg bg-accent text-[#070b14] text-sm font-bold shadow-lg shadow-accent/20 transition-all hover:shadow-accent/40"
+                className="px-5 py-2 min-h-[44px] rounded-lg bg-accent text-[#070b14] text-sm font-bold shadow-lg shadow-accent/20 transition-all hover:shadow-accent/40"
               >
                 Sauvegarder
               </button>
@@ -173,7 +178,7 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
           ) : (
             <button 
               onClick={() => setIsEditing(true)}
-              className="px-5 py-2 rounded-lg bg-bg-app border border-border-main text-sm font-medium text-text-main hover:border-accent/50 transition-colors"
+              className="px-5 py-2 min-h-[44px] rounded-lg bg-bg-app border border-border-main text-sm font-medium text-text-main hover:border-accent/50 transition-colors"
             >
               Éditer la tâche
             </button>

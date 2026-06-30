@@ -7,6 +7,7 @@ import {
   ChevronRight,
   Clock,
   Layers,
+  Menu,
   MessageSquare,
   Play,
   ShieldCheck,
@@ -64,12 +65,12 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
     <div className="min-h-screen bg-bg-app text-text-main overflow-x-hidden font-sans selection:bg-accent/25">
       {/* ambient glow */}
       <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-accent/[0.06] blur-[120px]" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-accent/[0.04] blur-[100px]" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[90vw] h-[90vw] max-w-[700px] rounded-full bg-accent/[0.06] blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-[90vw] h-[90vw] max-w-[500px] rounded-full bg-accent/[0.04] blur-[100px]" />
       </div>
 
-      <div className="sticky top-2 sm:top-4 z-50 px-2 sm:px-6 mt-2 sm:mt-4 mb-2 sm:mb-4">
-        <nav className="max-w-7xl mx-auto bg-bg-app/90 backdrop-blur-xl border border-border-main rounded-[10px] shadow-sm">
+      <header role="banner" className="sticky top-2 sm:top-4 z-50 px-2 sm:px-6 mt-2 sm:mt-4 mb-2 sm:mb-4">
+        <nav className="max-w-7xl mx-auto bg-bg-app/90 backdrop-blur-xl border border-border-main rounded-[10px] shadow-sm" aria-label="Navigation principale">
           <div className="px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-bg-card border border-border-main flex items-center justify-center shadow-sm">
@@ -77,9 +78,13 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
             </div>
             <div className="leading-none">
               <span className="font-black text-sm tracking-wider uppercase text-text-main">WINE</span>
-              <span className="text-[8px] font-mono block text-accent tracking-widest font-semibold mt-0.5">WORKSPACE</span>
+              <span className="text-[10px] sm:text-[8px] font-mono block text-accent tracking-widest font-semibold mt-0.5">WORKSPACE</span>
             </div>
           </div>
+
+          <button className="md:hidden p-2.5 rounded-lg bg-bg-card border border-border-main text-text-sub hover:text-text-main" aria-label="Menu de navigation" onClick={() => {/* toggle menu */}}>
+            <Menu className="w-5 h-5" />
+          </button>
 
           <div className="hidden md:flex items-center gap-5 text-xs text-text-sub font-medium">
             <a href="#product" className="hover:text-accent transition-colors">Produit</a>
@@ -93,33 +98,35 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
           <div className="flex items-center gap-2">
             <button 
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              aria-label="Basculer le thème"
               className="p-1.5 rounded-lg bg-bg-card border border-border-main text-text-sub hover:text-text-main hover:bg-bg-hover transition-all cursor-pointer flex items-center justify-center"
               title={theme === "light" ? "Mode sombre" : "Mode clair"}
             >
-              {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+              {theme === "light" ? <Moon className="w-4 h-4" aria-hidden="true" /> : <Sun className="w-4 h-4" aria-hidden="true" />}
             </button>
             <button
               onClick={onEnterApp}
-              className="hidden sm:inline-flex h-9 px-3 rounded-lg border border-border-main bg-bg-card text-text-main font-bold text-xs hover:bg-bg-hover transition-colors"
+              className="hidden sm:inline-flex h-11 px-3 rounded-lg border border-border-main bg-bg-card text-text-main font-bold text-xs hover:bg-bg-hover transition-colors"
             >
               Ouvrir la démo
             </button>
             <button
               onClick={onEnterApp}
+              aria-label="Entrer dans l'application"
               className="group h-9 px-3 sm:px-4 rounded-lg bg-accent text-text-main font-bold text-xs transition-all hover:bg-[#3fe08f] flex items-center gap-1.5 cursor-pointer"
             >
               Lancer
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </button>
           </div>
           </div>
         </nav>
-      </div>
+      </header>
 
       <main>
         <section className="relative px-4 sm:px-6 pt-12 sm:pt-16 pb-8 text-center">
           <div className="arcade-fade-up inline-flex items-center gap-1.5 rounded-full border border-border-main bg-bg-card px-2.5 py-1 text-xs font-semibold text-text-sub shadow-sm mb-5">
-            <Sparkles className="w-3 h-3 text-accent" />
+            <Sparkles className="w-3 h-3 text-accent" aria-hidden="true" />
             Le workspace qui rend votre travail présentable en quelques minutes
           </div>
 
@@ -135,38 +142,40 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
           <div className="arcade-fade-up arcade-delay-3 mt-6 flex flex-col sm:flex-row items-center justify-center gap-2">
             <button
               onClick={onEnterApp}
+              aria-label="Entrer dans l'application"
               className="group w-full sm:w-auto h-10 px-5 rounded-lg bg-accent text-text-main font-black text-sm hover:bg-[#3fe08f] transition-all flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(0,201,105,0.15)]"
             >
               Explorer le workspace
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </button>
             <button
               onClick={() => document.getElementById("product")?.scrollIntoView({ behavior: "smooth" })}
+              aria-label="Voir l'illustration"
               className="w-full sm:w-auto h-10 px-5 rounded-lg bg-bg-card border border-border-main text-text-main font-black text-sm hover:bg-bg-hover transition-colors flex items-center justify-center gap-1.5"
             >
-              <Play className="w-3.5 h-3.5 fill-text-main" />
+              <Play className="w-3.5 h-3.5 fill-text-main" aria-hidden="true" />
               Voir l'illustration
             </button>
           </div>
 
           <div className="arcade-fade-up arcade-delay-4 mt-10 max-w-5xl mx-auto">
-            <div className="rounded-[20px] border border-border-main bg-bg-card p-2 shadow-lg">
+            <div className="rounded-[20px] border border-border-main bg-bg-card p-3 sm:p-2 shadow-lg">
               <div id="product" className="rounded-[16px] overflow-hidden border border-border-main bg-bg-app text-text-main">
                 <div className="h-11 px-4 border-b border-border-main flex items-center justify-between bg-bg-card/50">
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#ff6b6b]" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#ffd166]" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-accent" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#ff6b6b]" aria-hidden="true" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#ffd166]" aria-hidden="true" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-accent" aria-hidden="true" />
                     <span className="hidden sm:inline text-[10px] text-text-dim font-mono ml-3">wine.bj/workspace</span>
                   </div>
                   <div className="hidden sm:flex items-center gap-1.5 rounded-full bg-bg-hover px-2 py-1 text-[10px] text-text-sub">
-                    <Zap className="w-3 h-3 text-accent" />
+                    <Zap className="w-3 h-3 text-accent" aria-hidden="true" />
                     Sprint actif
                   </div>
                 </div>
 
                 <div className="grid lg:grid-cols-[180px_1fr] min-h-[380px] text-left">
-                  <aside className="hidden lg:flex flex-col gap-1 border-r border-border-main bg-bg-sidebar p-3">
+                  <div className="hidden lg:flex flex-col gap-1 border-r border-border-main bg-bg-sidebar p-3">
                     {[
                       ["Tableau de bord", Layers],
                       ["Kanban", Trello],
@@ -180,12 +189,12 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                           key={label as string}
                           className={`rounded-lg px-2.5 py-2 flex items-center gap-2 text-xs font-semibold ${index === 2 ? "bg-accent-muted text-accent" : "text-text-sub hover:bg-bg-hover"}`}
                         >
-                          <LucideIcon className="w-3.5 h-3.5" />
+                          <LucideIcon className="w-3.5 h-3.5" aria-hidden="true" />
                           {label as string}
                         </div>
                       );
                     })}
-                  </aside>
+                  </div>
 
                   <div className="bg-bg-card text-text-main p-4 sm:p-5">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
@@ -194,7 +203,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                         <h2 className="text-xl sm:text-2xl font-black tracking-tight text-text-main">Planification réseaux sociaux</h2>
                       </div>
                       <button className="h-8 px-3 rounded-lg bg-accent text-text-main text-xs font-black flex items-center gap-1.5 w-max">
-                        <Calendar className="w-3.5 h-3.5" />
+                        <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
                         Planifier un post
                       </button>
                     </div>
@@ -207,7 +216,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                             <h3 className="mt-1 text-lg font-black tracking-tight text-text-main">Présence digitale WINE</h3>
                             <p className="mt-1.5 text-xs text-text-sub leading-relaxed">Prochaine diffusion à 11:00 pour LinkedIn et WhatsApp Business.</p>
                           </div>
-                          <Sparkles className="w-5 h-5 text-accent" />
+                          <Sparkles className="w-5 h-5 text-accent" aria-hidden="true" />
                         </div>
                         <div className="grid grid-cols-3 gap-2 mt-4">
                           {[
@@ -217,7 +226,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                           ].map(([value, label]) => (
                             <div key={label} className="rounded-lg bg-bg-card border border-border-sub p-2">
                               <p className="font-mono text-lg font-black text-text-main">{value}</p>
-                              <p className="text-[9px] text-text-dim uppercase font-mono">{label}</p>
+                              <p className="text-[10px] sm:text-[9px] text-text-dim uppercase font-mono">{label}</p>
                             </div>
                           ))}
                         </div>
@@ -225,14 +234,14 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
 
                       <div className="lg:col-span-5 grid sm:grid-cols-2 gap-3">
                         <div className="rounded-xl bg-accent-muted border border-accent/20 p-4 flex flex-col justify-between">
-                          <Clock className="w-4 h-4 text-accent mb-2" />
+                          <Clock className="w-4 h-4 text-accent mb-2" aria-hidden="true" />
                           <div>
                             <p className="text-xl font-black font-mono text-text-main">11:00</p>
                             <p className="text-[10px] text-text-sub mt-1 leading-normal">Recommandé par WINE AI.</p>
                           </div>
                         </div>
                         <div className="rounded-xl bg-bg-app border border-border-main p-4 flex flex-col justify-between">
-                          <Users2 className="w-4 h-4 text-text-sub mb-2" />
+                          <Users2 className="w-4 h-4 text-text-sub mb-2" aria-hidden="true" />
                           <div>
                             <p className="text-xl font-black font-mono text-text-main">5</p>
                             <p className="text-[10px] text-text-sub mt-1 leading-normal">collaborateurs actifs.</p>
@@ -243,13 +252,13 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
 
                     <div className="grid md:grid-cols-3 gap-3">
                       {["12 Juin", "13 Juin", "14 Juin"].map((day, index) => (
-                        <div key={day} className="rounded-xl bg-bg-app border border-border-main p-3 min-h-28 flex flex-col justify-between">
+                        <div key={day} className="rounded-xl bg-bg-app border border-border-main p-4 sm:p-3 min-h-28 flex flex-col justify-between">
                           <div className="flex items-center justify-between mb-2">
                             <span className="font-black text-xs text-text-main">{day}</span>
                             <span className="rounded bg-bg-card px-1.5 py-0.5 text-[9px] font-mono text-text-dim">0{index + 1}</span>
                           </div>
                           <div className="rounded-lg border border-border-sub bg-bg-card p-2">
-                            <span className="inline-flex rounded bg-accent text-text-main px-1.5 py-0.5 text-[8px] font-mono mb-1.5 font-bold">
+                            <span className="inline-flex rounded bg-accent text-text-main px-1.5 py-0.5 text-[9px] sm:text-[8px] font-mono mb-1.5 font-bold">
                               {index === 0 ? "WA" : index === 1 ? "LI" : "IG"}
                             </span>
                             <p className="text-[10px] leading-relaxed text-text-sub">
@@ -266,7 +275,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
           </div>
 
           <p className="mt-6 text-xs text-text-dim font-semibold">Conçu pour les équipes qui veulent montrer le vrai état du travail, simplement.</p>
-          <div className="mt-4 overflow-hidden">
+          <div className="mt-4 overflow-hidden max-w-full">
             <div className="arcade-marquee flex w-max items-center gap-2">
               {[...toolLogos, ...toolLogos].map((logo, index) => (
                 <span key={`${logo}-${index}`} className="rounded-lg border border-border-main bg-bg-card px-3.5 py-1.5 text-xs font-black text-text-sub shadow-sm">
@@ -286,14 +295,14 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3" role="list">
               {storyFormats.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <div key={item.title} className="rounded-[16px] bg-bg-card border border-border-main p-5 min-h-56 shadow-sm hover:-translate-y-1 hover:border-[#00C969]/30 transition-all flex flex-col justify-between">
+                  <div key={item.title} role="listitem" className="rounded-[16px] bg-bg-card border border-border-main p-5 min-h-56 shadow-sm hover:-translate-y-1 hover:border-[#00C969]/30 transition-all flex flex-col justify-between" style={{ containerType: 'inline-size' }}>
                     <div>
                       <div className="w-10 h-10 rounded-lg bg-bg-hover flex items-center justify-center mb-5">
-                        <Icon className="w-5 h-5 text-accent" />
+                        <Icon className="w-5 h-5 text-accent" aria-hidden="true" />
                       </div>
                       <span className="text-[10px] font-mono uppercase text-accent font-black">{item.label}</span>
                       <h3 className="text-lg font-black mt-1 mb-2 tracking-tight text-text-main">{item.title}</h3>
@@ -318,10 +327,11 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
               </p>
               <button
                 onClick={onEnterApp}
-                className="mt-5 h-9 px-4 rounded-lg bg-accent text-text-main font-black hover:bg-[#3fe08f] transition-colors inline-flex items-center gap-1 text-xs cursor-pointer"
+                aria-label="Entrer dans l'application"
+                className="mt-5 h-11 px-4 rounded-lg bg-accent text-text-main font-black hover:bg-[#3fe08f] transition-colors inline-flex items-center gap-1 text-xs cursor-pointer"
               >
                 Entrer dans WINE
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
 
@@ -335,7 +345,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                     <h3 className="text-sm font-black mb-0.5 text-text-main">{title}</h3>
                     <p className="text-text-sub text-xs leading-relaxed truncate">{text}</p>
                   </div>
-                  <CheckCircle2 className="w-4 h-4 text-accent ml-auto flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-accent ml-auto flex-shrink-0" aria-hidden="true" />
                 </div>
               ))}
             </div>
@@ -379,7 +389,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                   <ul className="space-y-2">
                     {step.items.map((item, j) => (
                       <li key={j} className="flex items-start gap-2 text-sm text-text-sub">
-                        <CheckCircle2 className={`w-4 h-4 flex-shrink-0 mt-0.5 ${step.status === 'Terminé' ? 'text-accent' : 'text-text-dim'}`} />
+                        <CheckCircle2 className={`w-4 h-4 flex-shrink-0 mt-0.5 ${step.status === 'Terminé' ? 'text-accent' : 'text-text-dim'}`} aria-hidden="true" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -397,7 +407,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
               <p className="text-xs font-black text-accent mb-2 uppercase tracking-widest">L'Équipe</p>
               <h2 className="text-2xl sm:text-4xl tracking-[-0.03em] font-black text-text-main">Ceux qui construisent WINE</h2>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto" role="list">
               {[
                 { name: "Mourchid FOLARIN", role: "Fondateur & Directeur technique", img: "/team/mourchid.webp" },
                 { name: "Octave BAHOUN-HOUTOUKPE", role: "Cofondateur / Ingénieur IA & Fullstack", img: "/team/octave.webp" },
@@ -406,7 +416,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                 { name: "Wasfade TONOUKOIN", role: "Développeur Senior Fullstack", img: "/team/wasfade.webp" },
                 { name: "Cosme MISSIKPODE", role: "Architecte Cybersécurité / Réseau", img: "/team/cosme.webp" }
               ].map((member, i) => (
-                <div key={i} className="text-center group">
+                <div key={i} className="text-center group" role="listitem">
                   <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden border-2 border-border-main mb-4 group-hover:border-accent transition-colors">
                     <img src={member.img} alt={member.name} className="w-full h-full object-cover" />
                   </div>
@@ -419,8 +429,8 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
         </section>
 
         <section className="px-4 sm:px-6 py-12 sm:py-16 text-center">
-          <div className="max-w-3xl mx-auto rounded-[20px] bg-bg-card border border-border-main px-4 py-8 sm:p-10 shadow-md">
-            <ShieldCheck className="w-8 h-8 mx-auto text-accent mb-4" />
+          <div className="max-w-3xl mx-auto rounded-[20px] bg-bg-card border border-border-main px-5 py-10 sm:p-10 shadow-md">
+            <ShieldCheck className="w-8 h-8 mx-auto text-accent mb-4" aria-hidden="true" />
             <h2 className="text-2xl sm:text-4xl leading-tight tracking-[-0.03em] font-black text-text-main">
               Lancez un workspace que votre équipe comprend au premier regard.
             </h2>
@@ -429,16 +439,17 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
             </p>
             <button
               onClick={onEnterApp}
+              aria-label="Entrer dans l'application"
               className="mt-6 h-10 px-6 rounded-lg bg-accent text-text-main font-black hover:bg-[#3fe08f] transition-colors inline-flex items-center gap-2 text-sm cursor-pointer"
             >
               Lancer la démo WINE
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-border-main py-6 text-xs text-text-dim bg-bg-card/30">
+      <footer role="contentinfo" className="border-t border-border-main py-6 text-xs text-text-dim bg-bg-card/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="font-black text-text-main">WINE Workspace</div>
           <div className="flex items-center gap-4 flex-wrap justify-center font-medium">

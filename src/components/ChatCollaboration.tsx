@@ -54,7 +54,7 @@ export default function ChatCollaboration({
   };
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] bg-bg-app overflow-hidden">
+    <div className="flex h-[calc(100dvh-4rem)] bg-bg-app overflow-hidden">
       
       {/* Channels Sidebar List */}
       <div className="w-64 border-r border-border-sub bg-bg-sidebar p-4 flex-col justify-between hidden md:flex">
@@ -66,13 +66,16 @@ export default function ChatCollaboration({
                 <button
                   key={chan.name}
                   onClick={() => setActiveChannel(chan.name)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setActiveChannel(chan.name); e.preventDefault(); } }}
+                  aria-current={activeChannel === chan.name ? "true" : undefined}
+                  aria-label={`Canal ${chan.name}`}
                   className={`w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                     activeChannel === chan.name
                       ? "bg-accent-muted text-accent"
                       : "text-text-sub hover:text-text-main hover:bg-bg-hover"
                   }`}
                 >
-                  <Hash className="w-3.5 h-3.5" />
+                  <Hash className="w-3.5 h-3.5" aria-hidden="true" />
                   <span className="truncate">{chan.name}</span>
                 </button>
               ))}
@@ -83,7 +86,7 @@ export default function ChatCollaboration({
         {/* Gemini Engine Alert indicator */}
         <div className="p-3.5 rounded-xl bg-accent-muted border border-accent/20 space-y-1">
           <div className="flex items-center gap-1.5 text-[10px] font-bold text-accent uppercase font-mono">
-            <Sparkles className="w-3 h-3 animate-pulse" />
+            <Sparkles className="w-3 h-3 animate-pulse" aria-hidden="true" />
             <span>Moteur Gemini 3.5</span>
           </div>
           <p className="text-[10px] text-text-dim leading-relaxed">
@@ -99,20 +102,28 @@ export default function ChatCollaboration({
         <div className="h-14 border-b border-border-sub bg-bg-app/80 backdrop-blur px-4 sm:px-6 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <Hash className="w-4 h-4 text-accent" />
+              <Hash className="w-4 h-4 text-accent" aria-hidden="true" />
               <span className="text-sm font-bold text-text-main font-sans">{activeChannel}</span>
             </div>
             <p className="text-[10px] text-text-dim hidden sm:block">
               {channels.find(c => c.name === activeChannel)?.desc || "Discussion collaborative"}
             </p>
+            </div>
+          <select 
+            className="md:hidden bg-bg-card border border-border-main rounded-lg px-2 py-1.5 text-xs text-text-main"
+            value={activeChannel}
+            onChange={(e) => setActiveChannel(e.target.value)}
+            aria-label="Sélectionner un canal"
+          >
+            {channels.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
+          </select>
           </div>
-        </div>
- 
-        {/* Messages List Area */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+  
+          {/* Messages List Area */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4" role="log" aria-live="polite" aria-label="Messages de chat">
           {errorMessage && (
-            <div className="max-w-3xl mx-auto p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-xs flex items-start gap-3">
-              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+            <div role="alert" className="max-w-3xl mx-auto p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-xs flex items-start gap-3">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" aria-hidden="true" />
               <span className="leading-relaxed flex-1">{errorMessage}</span>
               {onDismissError && (
                 <button
@@ -121,7 +132,7 @@ export default function ChatCollaboration({
                   className="p-0.5 rounded text-red-300 hover:text-text-main"
                   aria-label="Masquer l'erreur"
                 >
-                  <X className="w-3.5 h-3.5" />
+                  <X className="w-3.5 h-3.5" aria-hidden="true" />
                 </button>
               )}
             </div>
@@ -132,6 +143,7 @@ export default function ChatCollaboration({
             return (
               <div 
                 key={msg.id} 
+
                 className={`flex gap-3 sm:gap-4 max-w-3xl ${isUser ? "ml-auto flex-row-reverse" : "mr-auto"}`}
               >
                 {/* Avatar */}
@@ -170,12 +182,12 @@ export default function ChatCollaboration({
           {isGenerating && (
             <div className="flex gap-4 max-w-3xl">
               <div className="w-8 h-8 rounded-full bg-accent-muted border border-accent/20 flex items-center justify-center text-accent">
-                <Sparkles className="w-4 h-4 animate-spin" />
+                <Sparkles className="w-4 h-4 animate-spin" aria-hidden="true" />
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-text-dim">WINE AI</span>
                 <div className="p-3.5 rounded-2xl rounded-tl-none bg-bg-card border border-border-main text-xs text-text-dim flex items-center gap-2">
-                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-accent" />
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-accent" aria-hidden="true" />
                   <span>WINE AI formule votre réponse...</span>
                 </div>
               </div>
@@ -194,17 +206,18 @@ export default function ChatCollaboration({
               <button
                 key={idx}
                 onClick={() => handleQuickPromptClick(p)}
-                className="px-3 py-1.5 rounded-lg bg-bg-card border border-border-sub hover:border-accent/40 text-left text-[10px] font-semibold text-text-sub hover:text-text-main flex-shrink-0 transition-all cursor-pointer"
+                className="px-3 py-2 min-h-[44px] rounded-lg bg-bg-card border border-border-sub hover:border-accent/40 text-left text-[10px] font-semibold text-text-sub hover:text-text-main flex-shrink-0 transition-all cursor-pointer"
               >
                 {p}
               </button>
             ))}
           </div>
  
-          {/* Form message input */}
+        {/* Form message input */}
           <form onSubmit={handleSubmit} className="flex gap-2 relative">
             <input 
               type="text"
+              aria-label="Message"
               placeholder="Envoyer un message ou demander à WINE AI..."
               value={userInput}
               onChange={e => setUserInput(e.target.value)}
@@ -213,10 +226,11 @@ export default function ChatCollaboration({
             />
             <button
               type="submit"
+              aria-label="Envoyer le message"
               disabled={isGenerating || !userInput.trim()}
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-bg-sidebar flex items-center justify-center transition-all cursor-pointer hover:shadow-[0_0_10px_rgba(0,201,105,0.25)] active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-bg-sidebar flex items-center justify-center transition-all cursor-pointer hover:shadow-[0_0_10px_rgba(0,201,105,0.25)] active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
             >
-              <SendHorizontal className="w-4 h-4 stroke-[2.5px]" />
+              <SendHorizontal className="w-4 h-4 stroke-[2.5px]" aria-hidden="true" />
             </button>
           </form>
         </div>

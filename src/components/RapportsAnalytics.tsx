@@ -473,7 +473,7 @@ export default function RapportsAnalytics() {
   return (
     <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto text-text-main">
       {exportSuccess && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center justify-between animate-fade-in">
+        <div aria-live="polite" className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center justify-between animate-fade-in">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
             <span>Le document PDF <strong>BeninTechHub_Rapport_Analytics.pdf</strong> a été généré et téléchargé avec succès !</span>
@@ -484,12 +484,21 @@ export default function RapportsAnalytics() {
       {/* Top Header details */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h3 className="text-sm text-text-dim">Workspace / Bénin Tech Hub / Sprints</h3>
-          <p className="text-lg font-bold text-text-main font-sans">Rapports & Statistiques Sprints</p>
+          <nav aria-label="Fil d'Ariane">
+            <ol className="flex items-center gap-1 text-sm text-text-dim">
+              <li><span>Workspace</span></li>
+              <li><span className="mx-1">/</span></li>
+              <li><span>Bénin Tech Hub</span></li>
+              <li><span className="mx-1">/</span></li>
+              <li aria-current="page"><span>Sprints</span></li>
+            </ol>
+          </nav>
+          <h2 className="text-lg font-bold text-text-main font-sans">Rapports & Statistiques Sprints</h2>
         </div>
         <button
           onClick={exportReport}
           disabled={isExporting}
+          aria-label="Exporter le rapport"
           className={`h-9 px-4 rounded-lg bg-bg-card border border-border-main text-text-sub font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer hover:bg-bg-hover ${
             isExporting ? "opacity-60 cursor-not-allowed" : ""
           }`}
@@ -497,7 +506,7 @@ export default function RapportsAnalytics() {
           {isExporting ? (
             <div className="w-4 h-4 border-2 border-gray-500 border-t-emerald-400 rounded-full animate-spin" />
           ) : (
-            <Download className="w-4 h-4 text-emerald-400" />
+            <Download className="w-4 h-4 text-emerald-400" aria-hidden="true" />
           )}
           <span>{isExporting ? "Génération en cours..." : "Exporter le PDF"}</span>
         </button>
@@ -509,7 +518,7 @@ export default function RapportsAnalytics() {
         <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-2">
           <div className="flex items-center justify-between text-xs text-text-dim font-mono">
             <span>VELOCITE FINALE</span>
-            <Zap className="w-4 h-4 text-accent" />
+            <Zap className="w-4 h-4 text-accent" aria-hidden="true" />
           </div>
           <p className="text-3xl font-black text-text-main font-mono">84 pts</p>
           <span className="text-[10px] text-emerald-400 block">+14% par rapport à l'objectif initial</span>
@@ -519,7 +528,7 @@ export default function RapportsAnalytics() {
         <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-2">
           <div className="flex items-center justify-between text-xs text-text-dim font-mono">
             <span>TAUX D'ACHEVEMENT</span>
-            <TrendingUp className="w-4 h-4 text-emerald-400" />
+            <TrendingUp className="w-4 h-4 text-emerald-400" aria-hidden="true" />
           </div>
           <p className="text-3xl font-black text-accent font-mono">88%</p>
           <span className="text-[10px] text-text-dim block">Sprint Alpha - Semaine 2</span>
@@ -529,7 +538,7 @@ export default function RapportsAnalytics() {
         <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-2">
           <div className="flex items-center justify-between text-xs text-text-dim font-mono">
             <span>TEMPS CYCLE MOYEN</span>
-            <Activity className="w-4 h-4 text-indigo-400" />
+            <Activity className="w-4 h-4 text-indigo-400" aria-hidden="true" />
           </div>
           <p className="text-3xl font-black text-text-main font-mono">3.2 jours</p>
           <span className="text-[10px] text-text-dim block">Durée moyenne d'une tâche critique</span>
@@ -545,9 +554,9 @@ export default function RapportsAnalytics() {
             <p className="text-xs text-text-dim">Points accomplis par sprint de 2 semaines</p>
           </div>
           
-          <div className="h-64 w-full">
+          <div className="h-64 w-full max-w-full overflow-hidden" aria-label="Graphique de vélocité historique des sprints">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={sprintData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <AreaChart data={sprintData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorVelocity" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#00C969" stopOpacity={0.2}/>
@@ -574,9 +583,9 @@ export default function RapportsAnalytics() {
             <p className="text-xs text-text-dim">Volume de travail accompli et en cours</p>
           </div>
 
-          <div className="h-64 w-full">
+          <div className="h-64 w-full max-w-full overflow-hidden" aria-label="Graphique de répartition des tâches par collaborateur">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={contributorData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <BarChart data={contributorData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" opacity={0.3} />
                 <XAxis dataKey="name" stroke="var(--text-muted)" fontSize={10} tickLine={false} />
                 <YAxis stroke="var(--text-muted)" fontSize={10} tickLine={false} />
@@ -599,17 +608,17 @@ export default function RapportsAnalytics() {
             <h4 className="text-sm font-bold text-text-main">Performances de l'Équipe</h4>
             <p className="text-xs text-text-dim">Membres d'équipe les plus actifs ce sprint</p>
           </div>
-          <Award className="w-5 h-5 text-accent" />
+          <Award className="w-5 h-5 text-accent" aria-hidden="true" />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2" role="table" aria-label="Performances de l'équipe">
           {/* Row 1 */}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-bg-app border border-border-sub text-xs">
+          <div className="flex items-center justify-between p-3 rounded-xl bg-bg-app border border-border-sub text-xs" role="row">
             <div className="flex items-center gap-3">
               <span className="font-bold text-text-dim font-mono w-4">1.</span>
               <img 
                 src="/team/mourchid.webp" 
-                alt="Mourchid" 
+                alt="Mourchid FOLARIN" 
                 className="w-6 h-6 rounded-full object-cover"
               />
               <span className="font-bold text-text-sub">Mourchid FOLARIN</span>
@@ -622,12 +631,12 @@ export default function RapportsAnalytics() {
           </div>
 
           {/* Row 2 */}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-bg-app border border-border-sub text-xs">
+          <div className="flex items-center justify-between p-3 rounded-xl bg-bg-app border border-border-sub text-xs" role="row">
             <div className="flex items-center gap-3">
               <span className="font-bold text-text-dim font-mono w-4">2.</span>
               <img 
                 src="/team/octave.webp" 
-                alt="Octave" 
+                alt="Octave BAHOUN-HOUTOUKPE" 
                 className="w-6 h-6 rounded-full object-cover"
               />
               <span className="font-bold text-text-sub">Octave BAHOUN-HOUTOUKPE</span>
@@ -640,12 +649,12 @@ export default function RapportsAnalytics() {
           </div>
 
           {/* Row 3 */}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-bg-app border border-border-sub text-xs">
+          <div className="flex items-center justify-between p-3 rounded-xl bg-bg-app border border-border-sub text-xs" role="row">
             <div className="flex items-center gap-3">
               <span className="font-bold text-text-dim font-mono w-4">3.</span>
               <img 
                 src="/team/wasfade.webp" 
-                alt="Wasfade" 
+                alt="Wasfade TONOUKOIN" 
                 className="w-6 h-6 rounded-full object-cover"
               />
               <span className="font-bold text-text-sub">Wasfade TONOUKOIN</span>

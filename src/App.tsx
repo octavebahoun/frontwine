@@ -310,12 +310,16 @@ export default function App() {
   };
 
   return (
-    <div className={`flex h-screen w-screen bg-bg-app overflow-hidden font-sans text-text-main transition-colors duration-300 ${theme === "light" ? "light-theme" : ""}`}>
+    <div className={`flex h-dvh w-full max-w-[100vw] bg-bg-app overflow-x-hidden font-sans text-text-main transition-colors duration-300 ${theme === "light" ? "light-theme" : ""}`}>
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-bg-sidebar focus:rounded-lg focus:font-bold focus:text-sm">
+        Aller au contenu principal
+      </a>
       {isMobileSidebarOpen && (
-        <button
-          type="button"
-          aria-label="Fermer la navigation"
+        <div
+          aria-hidden="true"
           onClick={() => setIsMobileSidebarOpen(false)}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') { setIsMobileSidebarOpen(false); e.preventDefault(); } }}
+          tabIndex={0}
           className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm md:hidden"
         />
       )}
@@ -339,8 +343,9 @@ export default function App() {
           <button
             type="button"
             aria-label="Ouvrir la navigation"
+            aria-expanded={isMobileSidebarOpen}
             onClick={() => setIsMobileSidebarOpen(true)}
-            className="w-10 h-10 rounded-lg bg-bg-card border border-border-main text-text-sub flex items-center justify-center cursor-pointer"
+            className="w-11 h-11 rounded-lg bg-bg-card border border-border-main text-text-sub flex items-center justify-center cursor-pointer"
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -369,7 +374,7 @@ export default function App() {
         />
 
         {/* Dynamic Inner view container */}
-        <main className="flex-1 min-h-0 overflow-hidden bg-bg-app">
+        <main id="main-content" className="flex-1 min-h-0 overflow-hidden bg-bg-app">
           {renderActiveView()}
         </main>
       </div>

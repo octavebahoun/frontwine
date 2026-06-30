@@ -31,7 +31,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
     <div className="h-full overflow-y-auto p-4 sm:p-5 space-y-5 max-w-7xl mx-auto">
       {/* Top Banner Greeting */}
       <div className="p-5 md:p-6 rounded-2xl bg-bg-card border border-border-main relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-accent/5 rounded-full blur-[90px] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 max-w-full bg-accent/5 rounded-full blur-[90px] pointer-events-none" />
         
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="space-y-1">
@@ -58,12 +58,12 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
             <span className="text-[10px] font-semibold text-text-sub block uppercase font-mono">Vélocité Sprint</span>
             <p className="text-xl font-black text-text-main font-mono">84 pts</p>
             <span className="text-[9px] text-accent flex items-center gap-0.5 font-semibold">
-              <TrendingUp className="w-3 h-3" />
+              <TrendingUp className="w-3 h-3" aria-hidden="true" />
               +12% vs sprint précédent
             </span>
           </div>
           <div className="w-9 h-9 rounded-xl bg-accent-muted border border-accent/20 flex items-center justify-center text-accent">
-            <Flame className="w-4.5 h-4.5 fill-[#00C969]" />
+            <Flame className="w-4.5 h-4.5 fill-[#00C969]" aria-hidden="true" />
           </div>
         </div>
 
@@ -82,7 +82,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
             </div>
           </div>
           <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-accent">
-            <CheckCircle2 className="w-4.5 h-4.5 text-accent" />
+            <CheckCircle2 className="w-4.5 h-4.5 text-accent" aria-hidden="true" />
           </div>
         </div>
 
@@ -96,7 +96,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
             <span className="text-[9px] text-text-dim">Répartition active du backlog</span>
           </div>
           <div className="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
-            <Trello className="w-4.5 h-4.5" />
+            <Trello className="w-4.5 h-4.5" aria-hidden="true" />
           </div>
         </div>
 
@@ -108,7 +108,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
             <span className="text-[9px] text-red-500 font-semibold uppercase">Sprint finit le 5 Juil.</span>
           </div>
           <div className="w-9 h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
-            <Clock className="w-4.5 h-4.5" />
+            <Clock className="w-4.5 h-4.5" aria-hidden="true" />
           </div>
         </div>
       </div>
@@ -117,22 +117,23 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         
         {/* Left column: Urgent checklist */}
-        <div className="lg:col-span-2 p-4 sm:p-5 rounded-2xl bg-bg-card border border-border-main space-y-4">
+        <div className="lg:col-span-2 p-5 rounded-2xl bg-bg-card border border-border-main space-y-4">
           <div className="flex items-center justify-between border-b border-border-sub pb-2.5">
             <div className="space-y-0.5">
-              <h3 className="text-xs sm:text-sm font-black text-text-main">Tâches Urgentes Assignées</h3>
+              <h2 className="text-xs sm:text-sm font-black text-text-main">Tâches Urgentes Assignées</h2>
               <p className="text-[10px] text-text-dim">Agissez rapidement sur vos priorités actuelles</p>
             </div>
             <button 
               onClick={() => setActiveTab("tasks")}
+              aria-label="Voir toutes les tâches"
               className="text-[10px] text-accent hover:underline font-bold flex items-center gap-0.5 cursor-pointer"
             >
               Voir tout
-              <ChevronRight className="w-3 h-3" />
+              <ChevronRight className="w-3 h-3" aria-hidden="true" />
             </button>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2" aria-live="polite" aria-label="Liste des tâches urgentes">
             {urgentTasks.length === 0 ? (
               <p className="text-xs text-text-dim text-center py-6">Aucune tâche urgente en attente. Bon travail !</p>
             ) : (
@@ -144,9 +145,12 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
                   <div className="flex items-center gap-3 min-w-0">
                     <button 
                       onClick={() => onToggleTaskStatus(task.id)}
-                      className="w-4.5 h-4.5 rounded border border-border-main flex items-center justify-center text-transparent hover:border-[#00C969] hover:text-accent transition-all cursor-pointer"
+                      role="checkbox"
+                      aria-checked={task.status === 'done'}
+                      aria-label="Marquer comme terminé"
+                      className="w-11 h-11 rounded flex items-center justify-center border border-border-main text-transparent hover:border-[#00C969] hover:text-accent transition-all cursor-pointer"
                     >
-                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />
                     </button>
                     <div className="min-w-0 space-y-0.5">
                       <span className="text-xs font-black text-text-sub group-hover:text-text-main truncate block">{task.title}</span>
@@ -167,7 +171,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
                       alt={task.assignee.name}
                       title={task.assignee.name}
                       className="w-5.5 h-5.5 rounded-full object-cover border border-border-main"
-                      referrerPolicy="no-referrer"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -177,7 +181,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
         </div>
 
         {/* Right column: Shortcuts & Modules overview */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-bg-card border border-border-main space-y-4 flex flex-col justify-between">
+        <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-4 flex flex-col justify-between">
           <div className="space-y-3">
             <div className="border-b border-border-sub pb-2.5">
               <h3 className="text-xs sm:text-sm font-black text-text-main">Raccourcis du Workspace</h3>
@@ -185,36 +189,40 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
             </div>
 
             {/* Grid shortcut items */}
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3 sm:gap-2">
               <button 
                 onClick={() => setActiveTab("kanban")}
-                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
+                aria-label="Aller au tableau Kanban"
+                className="p-3 min-h-[44px] rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
               >
-                <Trello className="w-4 h-4 text-accent group-hover:scale-105 transition-transform" />
+                <Trello className="w-4 h-4 text-accent group-hover:scale-105 transition-transform" aria-hidden="true" />
                 <span className="text-[11px] font-black text-text-sub group-hover:text-text-main block">Sprint Agile</span>
               </button>
               
               <button 
                 onClick={() => setActiveTab("chat")}
-                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
+                aria-label="Ouvrir le chat collaboratif"
+                className="p-3 min-h-[44px] rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
               >
-                <MessageSquare className="w-4 h-4 text-emerald-500 group-hover:scale-105 transition-transform" />
+                <MessageSquare className="w-4 h-4 text-emerald-500 group-hover:scale-105 transition-transform" aria-hidden="true" />
                 <span className="text-[11px] font-black text-text-sub group-hover:text-text-main block">WINE AI Chat</span>
               </button>
 
               <button 
                 onClick={() => setActiveTab("timeline")}
-                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
+                aria-label="Ouvrir le calendrier de planification"
+                className="p-3 min-h-[44px] rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
               >
-                <Calendar className="w-4 h-4 text-accent group-hover:scale-105 transition-transform" />
+                <Calendar className="w-4 h-4 text-accent group-hover:scale-105 transition-transform" aria-hidden="true" />
                 <span className="text-[11px] font-black text-text-sub group-hover:text-text-main block">Planification</span>
               </button>
 
               <button 
                 onClick={() => setActiveTab("rh")}
-                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
+                aria-label="Ouvrir la gestion des talents"
+                className="p-3 min-h-[44px] rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
               >
-                <Users2 className="w-4 h-4 text-accent group-hover:scale-105 transition-transform" />
+                <Users2 className="w-4 h-4 text-accent group-hover:scale-105 transition-transform" aria-hidden="true" />
                 <span className="text-[11px] font-black text-text-sub group-hover:text-text-main block">Talents / RH</span>
               </button>
             </div>

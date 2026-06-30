@@ -55,6 +55,7 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUp
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-dim" />
             <input 
               type="text" 
+              aria-label="Rechercher une tâche"
               placeholder="Rechercher par mot-clé..."
               value={search}
               onChange={e => setSearch(e.target.value)}
@@ -67,6 +68,7 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUp
             <select
               value={priorityFilter}
               onChange={e => setPriorityFilter(e.target.value)}
+              aria-label="Filtrer par priorité"
               className="w-full h-9 bg-bg-app border border-border-main rounded-lg px-2 text-xs text-text-main focus:outline-none focus:border-accent/50"
             >
               <option value="all">Toutes priorités</option>
@@ -81,6 +83,7 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUp
             <select
               value={statusFilter}
               onChange={e => setStatusFilter(e.target.value)}
+              aria-label="Filtrer par statut"
               className="w-full h-9 bg-bg-app border border-border-main rounded-lg px-2 text-xs text-text-main focus:outline-none focus:border-accent/50"
             >
               <option value="all">Tous statuts</option>
@@ -93,7 +96,7 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUp
       </div>
 
       {/* Task list rows */}
-      <div className="space-y-2">
+      <div className="space-y-2" aria-live="polite" aria-label="Liste des tâches">
         {filteredTasks.length === 0 ? (
           <div className="p-12 text-center rounded-2xl bg-bg-card border border-border-main text-text-dim text-xs">
             Aucune tâche ne correspond à vos critères de recherche.
@@ -105,6 +108,9 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUp
               <div 
                 key={task.id}
                 onClick={() => setSelectedTask(task)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setSelectedTask(task); e.preventDefault(); } }}
+                role="button"
+                tabIndex={0}
                 className={`p-4 rounded-xl border transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:shadow-sm ${
                   isDone 
                     ? 'bg-bg-card/30 border-border-sub opacity-60 hover:opacity-100' 
@@ -113,11 +119,14 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUp
               >
                 {/* Checkbox & title */}
                 <div className="flex items-start gap-3 min-w-0 flex-1">
-                  <button 
+            <button 
                     onClick={(e) => {
                       e.stopPropagation();
                       onToggleTaskStatus(task.id);
                     }}
+                    role="checkbox"
+                    aria-checked={isDone}
+                    aria-label={isDone ? "Marquer comme à faire" : "Marquer comme terminé"}
                     className={`w-5 h-5 rounded-md border flex items-center justify-center flex-shrink-0 mt-0.5 cursor-pointer transition-all ${
                       isDone 
                         ? 'bg-accent border-accent text-slate-900' 
@@ -185,6 +194,7 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUp
                         e.stopPropagation();
                         onDeleteTask(task.id);
                       }}
+                      aria-label="Supprimer la tâche"
                       className="p-1.5 rounded-lg bg-bg-app border border-border-main text-text-dim hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
