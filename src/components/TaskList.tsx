@@ -27,18 +27,18 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
   return (
     <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto">
       {/* Search and Filters Bar */}
-      <div className="p-5 rounded-2xl bg-[#090f1d] border border-gray-800 space-y-4">
+      <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-4">
         {/* Progress Bar Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-gray-800/60 pb-3">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-border-sub pb-3">
           <div>
-            <h3 className="text-sm font-bold text-white">Suivi d'avancement des tâches</h3>
-            <p className="text-xs text-gray-500">Sprints actifs et livrables</p>
+            <h3 className="text-sm font-bold text-text-main">Suivi d'avancement des tâches</h3>
+            <p className="text-xs text-text-dim">Sprints actifs et livrables</p>
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <span className="text-xs font-mono font-bold text-[#00C969]">{doneCount} / {tasks.length} complétées ({progressPercent}%)</span>
-            <div className="w-32 h-2 bg-gray-800 rounded-full overflow-hidden">
+            <span className="text-xs font-mono font-bold text-accent">{doneCount} / {tasks.length} complétées ({progressPercent}%)</span>
+            <div className="w-32 h-2 bg-border-sub rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-[#00C969] to-[#40e682]" 
+                className="h-full bg-gradient-to-r from-accent to-[#40e682]" 
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -49,13 +49,13 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
           {/* Search bar */}
           <div className="md:col-span-2 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-dim" />
             <input 
               type="text" 
               placeholder="Rechercher par mot-clé..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full h-9 bg-gray-950 border border-gray-800 rounded-lg pl-9 pr-4 text-xs text-white focus:outline-none focus:border-[#00C969]/50"
+              className="w-full h-9 bg-bg-app border border-border-main rounded-lg pl-9 pr-4 text-xs text-text-main focus:outline-none focus:border-accent/50"
             />
           </div>
 
@@ -64,7 +64,7 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
             <select
               value={priorityFilter}
               onChange={e => setPriorityFilter(e.target.value)}
-              className="w-full h-9 bg-gray-950 border border-gray-800 rounded-lg px-2 text-xs text-white focus:outline-none focus:border-[#00C969]/50"
+              className="w-full h-9 bg-bg-app border border-border-main rounded-lg px-2 text-xs text-text-main focus:outline-none focus:border-accent/50"
             >
               <option value="all">Toutes priorités</option>
               <option value="high">Haute</option>
@@ -78,7 +78,7 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
             <select
               value={statusFilter}
               onChange={e => setStatusFilter(e.target.value)}
-              className="w-full h-9 bg-gray-950 border border-gray-800 rounded-lg px-2 text-xs text-white focus:outline-none focus:border-[#00C969]/50"
+              className="w-full h-9 bg-bg-app border border-border-main rounded-lg px-2 text-xs text-text-main focus:outline-none focus:border-accent/50"
             >
               <option value="all">Tous statuts</option>
               <option value="todo">À faire</option>
@@ -92,7 +92,7 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
       {/* Task list rows */}
       <div className="space-y-2">
         {filteredTasks.length === 0 ? (
-          <div className="p-12 text-center rounded-2xl bg-[#090f1d] border border-gray-800 text-gray-500 text-xs">
+          <div className="p-12 text-center rounded-2xl bg-bg-card border border-border-main text-text-dim text-xs">
             Aucune tâche ne correspond à vos critères de recherche.
           </div>
         ) : (
@@ -103,8 +103,8 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
                 key={task.id}
                 className={`p-4 rounded-xl border transition-all duration-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
                   isDone 
-                    ? 'bg-[#090f1d]/30 border-gray-900 opacity-60' 
-                    : 'bg-[#090f1d] border-gray-800/80 hover:border-gray-700/80'
+                    ? 'bg-bg-card/30 border-border-sub opacity-60' 
+                    : 'bg-bg-card border-border-main hover:border-border-main/80'
                 }`}
               >
                 {/* Checkbox & title */}
@@ -113,8 +113,8 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
                     onClick={() => onToggleTaskStatus(task.id)}
                     className={`w-5 h-5 rounded-md border flex items-center justify-center flex-shrink-0 mt-0.5 cursor-pointer transition-all ${
                       isDone 
-                        ? 'bg-[#00C969] border-[#00C969] text-slate-900' 
-                        : 'border-gray-700 hover:border-[#00C969]'
+                        ? 'bg-accent border-accent text-slate-900' 
+                        : 'border-border-main hover:border-accent'
                     }`}
                   >
                     {isDone && <Check className="w-3.5 h-3.5 stroke-[3px]" />}
@@ -122,11 +122,11 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
 
                   <div className="min-w-0 space-y-1">
                     <span className={`text-xs font-bold block leading-normal ${
-                      isDone ? 'line-through text-gray-500' : 'text-gray-200'
+                      isDone ? 'line-through text-text-dim' : 'text-text-main'
                     }`}>
                       {task.title}
                     </span>
-                    <p className="text-[11px] text-gray-500 truncate">{task.description}</p>
+                    <p className="text-[11px] text-text-dim truncate">{task.description}</p>
                   </div>
                 </div>
 
@@ -136,10 +136,10 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
                     {/* Status badge */}
                     <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase ${
                       task.status === 'done' 
-                        ? 'bg-emerald-500/10 text-[#00C969]' 
+                        ? 'bg-emerald-500/10 text-accent' 
                         : task.status === 'inprogress' 
-                          ? 'bg-indigo-500/10 text-[#40e682]' 
-                          : 'bg-gray-800 text-gray-400'
+                          ? 'bg-indigo-500/10 text-accent' 
+                          : 'bg-border-sub text-text-sub'
                     }`}>
                       {task.status === 'done' ? 'Terminé' : task.status === 'inprogress' ? 'En cours' : 'À faire'}
                     </span>
@@ -158,7 +158,7 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
 
                   <div className="flex items-center gap-3">
                     {/* Due Date */}
-                    <div className="flex items-center gap-1 text-gray-500 text-[10px]">
+                    <div className="flex items-center gap-1 text-text-dim text-[10px]">
                       <Calendar className="w-3.5 h-3.5" />
                       <span>{task.dueDate}</span>
                     </div>
@@ -168,14 +168,14 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask }: Ta
                       src={task.assignee.avatar} 
                       alt={task.assignee.name}
                       title={task.assignee.name}
-                      className="w-6 h-6 rounded-full object-cover border border-gray-800"
+                      className="w-6 h-6 rounded-full object-cover border border-border-main"
                       referrerPolicy="no-referrer"
                     />
 
                     {/* Delete action */}
                     <button 
                       onClick={() => onDeleteTask(task.id)}
-                      className="p-1.5 rounded-lg bg-gray-950 border border-gray-800 text-gray-500 hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer"
+                      className="p-1.5 rounded-lg bg-bg-app border border-border-main text-text-dim hover:text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>

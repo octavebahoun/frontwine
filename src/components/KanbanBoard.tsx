@@ -23,9 +23,9 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
   ];
 
   const columns: { id: Task['status']; title: string; borderClass: string; textClass: string; bgClass: string }[] = [
-    { id: "todo", title: "À faire", borderClass: "border-gray-800/80", textClass: "text-gray-400", bgClass: "bg-gray-950/20" },
-    { id: "inprogress", title: "En cours", borderClass: "border-indigo-500/20", textClass: "text-[#40e682]", bgClass: "bg-indigo-500/5" },
-    { id: "done", title: "Terminé", borderClass: "border-[#00C969]/20", textClass: "text-[#00C969]", bgClass: "bg-[#00C969]/5" }
+    { id: "todo", title: "À faire", borderClass: "border-border-main", textClass: "text-text-dim", bgClass: "bg-bg-card/40" },
+    { id: "inprogress", title: "En cours", borderClass: "border-indigo-500/20", textClass: "text-indigo-600 dark:text-accent", bgClass: "bg-indigo-500/5" },
+    { id: "done", title: "Terminé", borderClass: "border-accent/20", textClass: "text-emerald-600 dark:text-accent", bgClass: "bg-emerald-500/5" }
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -62,12 +62,12 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
       {/* Kanban Actions bar */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-sm text-gray-400">Workspace / Bénin Tech Hub / Sprints</h3>
-          <p className="text-lg font-bold text-white font-sans">Sprint Alpha Board</p>
+          <h3 className="text-sm text-text-sub">Workspace / Bénin Tech Hub / Sprints</h3>
+          <p className="text-lg font-bold text-text-main font-sans">Sprint Alpha Board</p>
         </div>
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="h-9 px-4 rounded-lg bg-[#00C969]/10 hover:bg-[#00C969]/20 text-[#00C969] font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer border border-[#00C969]/20"
+          className="h-9 px-4 rounded-lg bg-accent/10 hover:bg-accent/20 text-accent font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer border border-accent/20"
         >
           <Plus className="w-4 h-4" />
           <span>Créer une tâche</span>
@@ -76,36 +76,36 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
 
       {/* Form inline overlay */}
       {showAddForm && (
-        <form onSubmit={handleSubmit} className="p-5 rounded-2xl bg-[#0b1220] border border-gray-800 space-y-4 max-w-xl">
-          <h4 className="text-sm font-bold text-white">Ajouter une tâche au backlog</h4>
+        <form onSubmit={handleSubmit} className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-4 max-w-xl">
+          <h4 className="text-sm font-bold text-text-main">Ajouter une tâche au backlog</h4>
           <div className="space-y-3">
             <div>
-              <label className="text-[10px] uppercase font-mono text-gray-500">Titre de la tâche</label>
+              <label className="text-[10px] uppercase font-mono text-text-dim">Titre de la tâche</label>
               <input
                 type="text"
                 required
                 placeholder="ex: Refonte Dashboard ou Intégration API"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
-                className="w-full h-9 bg-gray-950 border border-gray-800 rounded-lg px-3 text-xs text-white focus:outline-none focus:border-[#00C969]/50"
+                className="w-full h-9 bg-bg-app border border-border-main rounded-lg px-3 text-xs text-text-main focus:outline-none focus:border-accent/50"
               />
             </div>
             <div>
-              <label className="text-[10px] uppercase font-mono text-gray-500">Description</label>
+              <label className="text-[10px] uppercase font-mono text-text-dim">Description</label>
               <textarea
                 placeholder="Précisez les critères d'acceptation..."
                 value={description}
                 onChange={e => setDescription(e.target.value)}
-                className="w-full p-3 bg-gray-950 border border-gray-800 rounded-lg text-xs text-white h-20 focus:outline-none focus:border-[#00C969]/50"
+                className="w-full p-3 bg-bg-app border border-border-main rounded-lg text-xs text-text-main h-20 focus:outline-none focus:border-accent/50"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-[10px] uppercase font-mono text-gray-500 block mb-1">Priorité</label>
+                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1">Priorité</label>
                 <select
                   value={priority}
                   onChange={e => setPriority(e.target.value as Task['priority'])}
-                  className="w-full h-9 bg-gray-950 border border-gray-800 rounded-lg px-2 text-xs text-white"
+                  className="w-full h-9 bg-bg-app border border-border-main rounded-lg px-2 text-xs text-text-main"
                 >
                   <option value="low">Basse</option>
                   <option value="medium">Moyenne</option>
@@ -113,11 +113,11 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
                 </select>
               </div>
               <div>
-                <label className="text-[10px] uppercase font-mono text-gray-500 block mb-1">Responsable</label>
+                <label className="text-[10px] uppercase font-mono text-text-dim block mb-1">Responsable</label>
                 <select
                   value={assigneeName}
                   onChange={e => setAssigneeName(e.target.value)}
-                  className="w-full h-9 bg-gray-950 border border-gray-800 rounded-lg px-2 text-xs text-white"
+                  className="w-full h-9 bg-bg-app border border-border-main rounded-lg px-2 text-xs text-text-main"
                 >
                   {assignees.map(a => (
                     <option key={a.name} value={a.name}>{a.name}</option>
@@ -130,13 +130,13 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
             <button
               type="button"
               onClick={() => setShowAddForm(false)}
-              className="px-3.5 h-8 rounded-lg bg-gray-900 border border-gray-800 text-xs text-gray-400 hover:text-white"
+              className="px-3.5 h-8 rounded-lg bg-bg-app border border-border-main text-xs text-text-dim hover:text-text-main"
             >
               Annuler
             </button>
             <button
               type="submit"
-              className="px-4 h-8 rounded-lg bg-[#00C969] text-[#070b14] font-bold text-xs"
+              className="px-4 h-8 rounded-lg bg-accent text-[#070b14] font-bold text-xs"
             >
               Ajouter
             </button>
@@ -151,14 +151,14 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
           return (
             <div key={col.id} className={`rounded-2xl border ${col.borderClass} ${col.bgClass} p-4 flex flex-col gap-4 min-h-[450px]`}>
               {/* Column Header */}
-              <div className="flex items-center justify-between border-b border-gray-800/40 pb-2">
+              <div className="flex items-center justify-between border-b border-border-sub pb-2">
                 <div className="flex items-center gap-2">
                   <span className={`w-2 h-2 rounded-full ${
-                    col.id === 'done' ? 'bg-[#00C969]' : col.id === 'inprogress' ? 'bg-indigo-400' : 'bg-gray-600'
+                    col.id === 'done' ? 'bg-accent' : col.id === 'inprogress' ? 'bg-indigo-400' : 'bg-gray-400'
                   }`} />
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-white">{col.title}</h4>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-text-main">{col.title}</h4>
                 </div>
-                <span className="text-[10px] font-mono bg-gray-900 border border-gray-800 px-2 py-0.5 rounded text-gray-400">
+                <span className="text-[10px] font-mono bg-bg-card border border-border-main px-2 py-0.5 rounded text-text-sub">
                   {colTasks.length}
                 </span>
               </div>
@@ -166,45 +166,45 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
               {/* Tasks Cards Container */}
               <div className="space-y-3 flex-1">
                 {colTasks.length === 0 ? (
-                  <div className="h-28 rounded-xl border border-dashed border-gray-800/60 flex items-center justify-center text-center text-xs text-gray-600">
+                  <div className="h-28 rounded-xl border border-dashed border-border-main flex items-center justify-center text-center text-xs text-text-dim">
                     Déposez des tâches ici
                   </div>
                 ) : (
                   colTasks.map((task) => (
                     <div
                       key={task.id}
-                      className="p-4 rounded-xl bg-[#090f1d] border border-gray-800 hover:border-gray-700/80 transition-all duration-200 group relative"
+                      className="p-4 rounded-xl bg-bg-card border border-border-main hover:border-border-main/80 transition-all duration-200 group relative"
                     >
                       {/* Priority Dot and Tag */}
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-1.5">
                           <span className={`w-2 h-2 rounded-full ${getPriorityColor(task.priority)}`} />
-                          <span className="text-[9px] uppercase font-mono text-gray-500 font-bold">
+                          <span className="text-[9px] uppercase font-mono text-text-dim font-bold">
                             {task.priority === 'high' ? 'prioritaire' : task.priority === 'medium' ? 'important' : 'secondaire'}
                           </span>
                         </div>
-                        <span className="text-[9px] font-mono text-gray-500">{task.dueDate}</span>
+                        <span className="text-[9px] font-mono text-text-dim">{task.dueDate}</span>
                       </div>
 
                       {/* Task Info */}
-                      <h5 className="text-xs font-bold text-gray-200 mb-1 group-hover:text-white leading-normal">
+                      <h5 className="text-xs font-bold text-text-main mb-1 group-hover:text-text-main leading-normal">
                         {task.title}
                       </h5>
-                      <p className="text-[11px] text-gray-500 line-clamp-2 leading-relaxed mb-4">
+                      <p className="text-[11px] text-text-dim line-clamp-2 leading-relaxed mb-4">
                         {task.description || "Aucune description fournie."}
                       </p>
 
                       {/* Footer: User profile and Action triggers */}
-                      <div className="flex items-center justify-between pt-3 border-t border-gray-800/40">
+                      <div className="flex items-center justify-between pt-3 border-t border-border-sub">
                         <div className="flex items-center gap-2">
                           <img
                             src={task.assignee.avatar}
                             alt={task.assignee.name}
                             title={task.assignee.name}
-                            className="w-5 h-5 rounded-full object-cover border border-gray-800"
+                            className="w-5 h-5 rounded-full object-cover border border-border-main"
                             referrerPolicy="no-referrer"
                           />
-                          <span className="text-[10px] text-gray-400 font-mono truncate max-w-[80px]">{task.assignee.name}</span>
+                          <span className="text-[10px] text-text-sub font-mono truncate max-w-[80px]">{task.assignee.name}</span>
                         </div>
 
                         {/* Interactive flow switches */}
@@ -212,7 +212,7 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
                           {col.id !== 'todo' && (
                             <button
                               onClick={() => onUpdateTaskStatus(task.id, col.id === 'done' ? 'inprogress' : 'todo')}
-                              className="p-1 rounded bg-gray-900 border border-gray-800 text-gray-500 hover:text-[#00C969] text-[10px] cursor-pointer font-mono"
+                              className="p-1 rounded bg-bg-app border border-border-main text-text-dim hover:text-accent text-[10px] cursor-pointer font-mono"
                               title="Reculer d'un état"
                             >
                               <ArrowLeft className="w-3 h-3" />
@@ -221,7 +221,7 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
                           {col.id !== 'done' && (
                             <button
                               onClick={() => onUpdateTaskStatus(task.id, col.id === 'todo' ? 'inprogress' : 'done')}
-                              className="p-1 rounded bg-gray-900 border border-gray-800 text-gray-400 hover:text-[#00C969] text-[10px] cursor-pointer font-mono"
+                              className="p-1 rounded bg-bg-app border border-border-main text-text-dim hover:text-accent text-[10px] cursor-pointer font-mono"
                               title="Avancer d'un état"
                             >
                               <ArrowRight className="w-3 h-3" />
@@ -229,7 +229,7 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
                           )}
                           <button
                             onClick={() => onDeleteTask(task.id)}
-                            className="p-1 rounded bg-gray-900 border border-gray-800 text-gray-500 hover:text-red-500 hover:bg-red-500/10 cursor-pointer"
+                            className="p-1 rounded bg-bg-app border border-border-main text-text-dim hover:text-red-500 hover:bg-red-500/10 cursor-pointer"
                             title="Supprimer la tâche"
                           >
                             <Trash2 className="w-3 h-3" />

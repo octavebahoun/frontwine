@@ -31,11 +31,11 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
     <div className="h-full overflow-y-auto p-4 sm:p-5 space-y-5 max-w-7xl mx-auto">
       {/* Top Banner Greeting */}
       <div className="p-5 md:p-6 rounded-2xl bg-bg-card border border-border-main relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#00C969]/5 rounded-full blur-[90px] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-accent/5 rounded-full blur-[90px] pointer-events-none" />
         
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="space-y-1">
-            <span className="text-[10px] text-[#00C969] font-mono font-bold uppercase tracking-wider">WORKSPACE ACTIF • SPRINT ALPHA</span>
+            <span className="text-[10px] text-accent font-mono font-bold uppercase tracking-wider">WORKSPACE ACTIF • SPRINT ALPHA</span>
             <h1 className="text-xl sm:text-2xl font-black text-text-main tracking-tight font-sans">
               Bonjour, Elara Vance !
             </h1>
@@ -44,7 +44,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
             </p>
           </div>
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-bg-app border border-border-main text-[11px] font-mono text-text-sub">
-            <Calendar className="w-3.5 h-3.5 text-[#00C969]" />
+            <Calendar className="w-3.5 h-3.5 text-accent" />
             <span>{today}</span>
           </div>
         </div>
@@ -57,12 +57,12 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
           <div className="space-y-0.5">
             <span className="text-[10px] font-semibold text-text-sub block uppercase font-mono">Vélocité Sprint</span>
             <p className="text-xl font-black text-text-main font-mono">84 pts</p>
-            <span className="text-[9px] text-[#00C969] flex items-center gap-0.5 font-semibold">
+            <span className="text-[9px] text-accent flex items-center gap-0.5 font-semibold">
               <TrendingUp className="w-3 h-3" />
               +12% vs sprint précédent
             </span>
           </div>
-          <div className="w-9 h-9 rounded-xl bg-[#00C969]/10 border border-[#00C969]/20 flex items-center justify-center text-[#00C969]">
+          <div className="w-9 h-9 rounded-xl bg-accent-muted border border-accent/20 flex items-center justify-center text-accent">
             <Flame className="w-4.5 h-4.5 fill-[#00C969]" />
           </div>
         </div>
@@ -81,8 +81,8 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
               />
             </div>
           </div>
-          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-[#00C969]">
-            <CheckCircle2 className="w-4.5 h-4.5 text-[#00C969]" />
+          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-accent">
+            <CheckCircle2 className="w-4.5 h-4.5 text-accent" />
           </div>
         </div>
 
@@ -125,7 +125,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
             </div>
             <button 
               onClick={() => setActiveTab("tasks")}
-              className="text-[10px] text-[#00C969] hover:underline font-bold flex items-center gap-0.5 cursor-pointer"
+              className="text-[10px] text-accent hover:underline font-bold flex items-center gap-0.5 cursor-pointer"
             >
               Voir tout
               <ChevronRight className="w-3 h-3" />
@@ -144,7 +144,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
                   <div className="flex items-center gap-3 min-w-0">
                     <button 
                       onClick={() => onToggleTaskStatus(task.id)}
-                      className="w-4.5 h-4.5 rounded border border-border-main flex items-center justify-center text-transparent hover:border-[#00C969] hover:text-[#00C969] transition-all cursor-pointer"
+                      className="w-4.5 h-4.5 rounded border border-border-main flex items-center justify-center text-transparent hover:border-[#00C969] hover:text-accent transition-all cursor-pointer"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                     </button>
@@ -188,15 +188,15 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
             <div className="grid grid-cols-2 gap-2">
               <button 
                 onClick={() => setActiveTab("kanban")}
-                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-[#00C969]/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
+                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
               >
-                <Trello className="w-4 h-4 text-[#00C969] group-hover:scale-105 transition-transform" />
+                <Trello className="w-4 h-4 text-accent group-hover:scale-105 transition-transform" />
                 <span className="text-[11px] font-black text-text-sub group-hover:text-text-main block">Sprint Agile</span>
               </button>
               
               <button 
                 onClick={() => setActiveTab("chat")}
-                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-[#00C969]/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
+                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4 text-emerald-500 group-hover:scale-105 transition-transform" />
                 <span className="text-[11px] font-black text-text-sub group-hover:text-text-main block">WINE AI Chat</span>
@@ -204,17 +204,17 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
 
               <button 
                 onClick={() => setActiveTab("timeline")}
-                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-[#00C969]/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
+                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
               >
-                <Calendar className="w-4 h-4 text-[#00C969] group-hover:scale-105 transition-transform" />
+                <Calendar className="w-4 h-4 text-accent group-hover:scale-105 transition-transform" />
                 <span className="text-[11px] font-black text-text-sub group-hover:text-text-main block">Planification</span>
               </button>
 
               <button 
                 onClick={() => setActiveTab("rh")}
-                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-[#00C969]/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
+                className="p-3 rounded-xl bg-bg-app border border-border-sub hover:border-accent/40 text-left space-y-1.5 group transition-all duration-200 cursor-pointer"
               >
-                <Users2 className="w-4 h-4 text-[#40e682] group-hover:scale-105 transition-transform" />
+                <Users2 className="w-4 h-4 text-accent group-hover:scale-105 transition-transform" />
                 <span className="text-[11px] font-black text-text-sub group-hover:text-text-main block">Talents / RH</span>
               </button>
             </div>
@@ -223,7 +223,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
           <div className="pt-3 border-t border-border-sub flex items-center justify-between text-[11px] font-semibold text-text-sub">
             <span>Collaborateurs Actifs</span>
             <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#00C969] ring-2 ring-emerald-500/20" title="En ligne" />
+              <span className="w-2 h-2 rounded-full bg-accent ring-2 ring-emerald-500/20" title="En ligne" />
               <span className="text-[10px] text-text-dim font-mono">5 en ligne</span>
             </div>
           </div>

@@ -43,14 +43,14 @@ export default function RHTalents() {
   ];
 
   return (
-    <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto text-white relative">
+    <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto text-text-main relative">
       {notice && (
-        <div className="p-3 rounded-xl bg-[#00C969]/10 border border-[#00C969]/20 text-[#40e682] text-xs flex items-center justify-between gap-3">
+        <div className="p-3 rounded-xl bg-accent-muted border border-accent/20 text-accent text-xs flex items-center justify-between gap-3">
           <span>{notice}</span>
           <button
             type="button"
             onClick={() => setNotice(null)}
-            className="p-1 rounded text-emerald-300 hover:text-white"
+            className="p-1 rounded text-emerald-300 hover:text-text-main"
             aria-label="Masquer le message"
           >
             <X className="w-3.5 h-3.5" />
@@ -61,12 +61,12 @@ export default function RHTalents() {
       {/* Upper action bar */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-sm text-gray-400">Ressources Humaines / Annuaire</h3>
-          <p className="text-lg font-bold text-white font-sans">Gestion des Talents & Collaborateurs</p>
+          <h3 className="text-sm text-text-sub">Ressources Humaines / Annuaire</h3>
+          <p className="text-lg font-bold text-text-main font-sans">Gestion des Talents & Collaborateurs</p>
         </div>
         <button
           onClick={() => setNotice("Invitation prête: cette action sera reliée au module administrateur.")}
-          className="h-9 px-4 rounded-lg bg-[#00C969]/10 hover:bg-[#00C969]/20 text-[#00C969] font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer border border-[#00C969]/20"
+          className="h-9 px-4 rounded-lg bg-accent-muted hover:bg-accent/20 text-accent font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer border border-accent/20"
         >
           <Plus className="w-4 h-4" />
           <span>Inviter un collaborateur</span>
@@ -79,7 +79,7 @@ export default function RHTalents() {
           <div
             key={member.id}
             onClick={() => setSelectedMember(member)}
-            className="p-5 rounded-2xl bg-[#090f1d] border border-gray-800 hover:border-[#00C969]/40 transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-4"
+            className="p-5 rounded-2xl bg-bg-card border border-border-main hover:border-accent/40 transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-4"
           >
             <div className="space-y-4">
               {/* Profile details */}
@@ -87,32 +87,32 @@ export default function RHTalents() {
                 <img
                   src={member.avatar}
                   alt={member.name}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-gray-800 group-hover:border-[#00C969]/50 transition-colors"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-border-main group-hover:border-accent/50 transition-colors"
                   referrerPolicy="no-referrer"
                 />
                 <div>
-                  <h4 className="text-sm font-bold text-gray-200 group-hover:text-white truncate">{member.name}</h4>
-                  <p className="text-xs text-gray-500 font-mono">{member.role}</p>
+                  <h4 className="text-sm font-bold text-text-main group-hover:text-text-main truncate">{member.name}</h4>
+                  <p className="text-xs text-text-dim font-mono">{member.role}</p>
                 </div>
               </div>
 
               {/* Badges/Leave details */}
               <div className="grid grid-cols-2 gap-3 pt-2">
-                <div className="p-3 rounded-xl bg-gray-950/40 border border-gray-800/60 space-y-1">
-                  <span className="text-[9px] text-gray-500 uppercase font-mono block">Solde Congés</span>
-                  <span className="text-sm font-black text-white font-mono">{member.leaveBalance} jours</span>
+                <div className="p-3 rounded-xl bg-bg-hover border border-border-sub space-y-1">
+                  <span className="text-[9px] text-text-dim uppercase font-mono block">Solde Congés</span>
+                  <span className="text-sm font-black text-text-main font-mono">{member.leaveBalance} jours</span>
                 </div>
-                <div className="p-3 rounded-xl bg-gray-950/40 border border-gray-800/60 space-y-1">
-                  <span className="text-[9px] text-gray-500 uppercase font-mono block">Type de Contrat</span>
-                  <span className="text-xs font-bold text-[#00C969]">{member.contractType.split("•")[0]}</span>
+                <div className="p-3 rounded-xl bg-bg-hover border border-border-sub space-y-1">
+                  <span className="text-[9px] text-text-dim uppercase font-mono block">Type de Contrat</span>
+                  <span className="text-xs font-bold text-accent">{member.contractType.split("•")[0]}</span>
                 </div>
               </div>
             </div>
 
             {/* Footer recent actions */}
-            <div className="pt-3 border-t border-gray-800/40 text-[10px] text-gray-500 flex items-center justify-between">
+            <div className="pt-3 border-t border-border-sub text-[10px] text-text-dim flex items-center justify-between">
               <span className="truncate max-w-[200px]">Dernière act: {member.recentActivity}</span>
-              <span className="text-[#00C969] opacity-0 group-hover:opacity-100 transition-opacity font-bold">Détails ➔</span>
+              <span className="text-accent opacity-0 group-hover:opacity-100 transition-opacity font-bold">Détails ➔</span>
             </div>
           </div>
         ))}
@@ -121,17 +121,17 @@ export default function RHTalents() {
       {/* Side Profile Drawer Overlay */}
       {selectedMember && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex justify-end">
-          <div className="w-full max-w-md bg-[#0b1220] h-full p-6 border-l border-gray-800 flex flex-col justify-between overflow-y-auto shadow-2xl">
+          <div className="w-full max-w-md bg-bg-card h-full p-6 border-l border-border-main flex flex-col justify-between overflow-y-auto shadow-2xl">
             <div className="space-y-6">
               {/* Drawer header */}
-              <div className="flex items-center justify-between border-b border-gray-800 pb-4">
+              <div className="flex items-center justify-between border-b border-border-main pb-4">
                 <div className="flex items-center gap-2">
-                  <Users2 className="w-5 h-5 text-[#00C969]" />
-                  <span className="text-xs uppercase font-mono tracking-wider font-bold text-[#00C969]">Fiche Collaborateur</span>
+                  <Users2 className="w-5 h-5 text-accent" />
+                  <span className="text-xs uppercase font-mono tracking-wider font-bold text-accent">Fiche Collaborateur</span>
                 </div>
                 <button
                   onClick={() => setSelectedMember(null)}
-                  className="p-1.5 rounded-lg bg-gray-900 border border-gray-800 text-gray-400 hover:text-white cursor-pointer"
+                  className="p-1.5 rounded-lg bg-bg-card border border-border-main text-text-sub hover:text-text-main cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -142,54 +142,54 @@ export default function RHTalents() {
                 <img
                   src={selectedMember.avatar}
                   alt={selectedMember.name}
-                  className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-gray-800/80 shadow-lg"
+                  className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-border-main shadow-lg"
                   referrerPolicy="no-referrer"
                 />
                 <div>
-                  <h3 className="text-lg font-bold text-white">{selectedMember.name}</h3>
+                  <h3 className="text-lg font-bold text-text-main">{selectedMember.name}</h3>
                   <p className="text-xs text-emerald-400 font-mono">{selectedMember.role}</p>
                 </div>
               </div>
 
               {/* Data specifications list */}
               <div className="space-y-3">
-                <div className="p-3.5 rounded-xl bg-gray-950/40 border border-gray-800/60 flex items-center gap-3">
-                  <Mail className="w-4 h-4 text-gray-500" />
+                <div className="p-3.5 rounded-xl bg-bg-hover border border-border-sub flex items-center gap-3">
+                  <Mail className="w-4 h-4 text-text-dim" />
                   <div className="text-xs">
-                    <span className="text-gray-500 block text-[9px] uppercase font-mono">E-mail Professionnel</span>
-                    <span className="text-gray-300 font-bold">{selectedMember.email}</span>
+                    <span className="text-text-dim block text-[9px] uppercase font-mono">E-mail Professionnel</span>
+                    <span className="text-text-sub font-bold">{selectedMember.email}</span>
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-gray-950/40 border border-gray-800/60 flex items-center gap-3">
-                  <Calendar className="w-4 h-4 text-gray-500" />
+                <div className="p-3.5 rounded-xl bg-bg-hover border border-border-sub flex items-center gap-3">
+                  <Calendar className="w-4 h-4 text-text-dim" />
                   <div className="text-xs">
-                    <span className="text-gray-500 block text-[9px] uppercase font-mono">Date d'Entrée</span>
-                    <span className="text-gray-300 font-bold">{selectedMember.entryDate}</span>
+                    <span className="text-text-dim block text-[9px] uppercase font-mono">Date d'Entrée</span>
+                    <span className="text-text-sub font-bold">{selectedMember.entryDate}</span>
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-gray-950/40 border border-gray-800/60 flex items-center gap-3">
-                  <FileText className="w-4 h-4 text-gray-500" />
+                <div className="p-3.5 rounded-xl bg-bg-hover border border-border-sub flex items-center gap-3">
+                  <FileText className="w-4 h-4 text-text-dim" />
                   <div className="text-xs">
-                    <span className="text-gray-500 block text-[9px] uppercase font-mono">Régime de contrat</span>
-                    <span className="text-gray-300 font-bold">{selectedMember.contractType}</span>
+                    <span className="text-text-dim block text-[9px] uppercase font-mono">Régime de contrat</span>
+                    <span className="text-text-sub font-bold">{selectedMember.contractType}</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Actions inside drawer */}
-            <div className="pt-6 border-t border-gray-800 flex gap-3">
+            <div className="pt-6 border-t border-border-main flex gap-3">
               <button
                 onClick={() => setNotice(`Message préparé pour ${selectedMember.name}.`)}
-                className="flex-1 h-10 rounded-xl bg-[#00C969] text-[#070b14] font-bold text-xs"
+                className="flex-1 h-10 rounded-xl bg-accent text-[#070b14] font-bold text-xs"
               >
                 Envoyer un e-mail
               </button>
               <button
                 onClick={() => setNotice("La modification RH sera disponible pour les administrateurs.")}
-                className="flex-1 h-10 rounded-xl bg-gray-900 border border-gray-800 text-gray-300 font-bold text-xs"
+                className="flex-1 h-10 rounded-xl bg-bg-card border border-border-main text-text-sub font-bold text-xs"
               >
                 Modifier
               </button>

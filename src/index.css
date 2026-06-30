@@ -76,33 +76,35 @@
   --color-accent-muted: var(--accent-muted);
 }
 
-html,
-body,
-#root {
-  min-height: 100%;
-}
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
 
-body {
-  margin: 0;
-  background: var(--bg-app);
-  color: var(--text-primary);
-  font-weight: 300;
-  font-family: var(--font-sans);
-  transition: background-color 300ms ease, color 300ms ease;
-}
+  body {
+    margin: 0;
+    background: var(--bg-app);
+    color: var(--text-primary);
+    font-weight: 300;
+    font-family: var(--font-sans);
+    transition: background-color 300ms ease, color 300ms ease;
+  }
 
-/* Ensure smooth theme transitions */
-div, aside, header, main, section, nav, button, input, select, textarea {
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
+  /* Ensure smooth theme transitions */
+  div, aside, header, main, section, nav, button, input, select, textarea {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
-button,
-input,
-textarea,
-select {
-  font: inherit;
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
 }
 
 /* Custom styles to hide default scrollbars */

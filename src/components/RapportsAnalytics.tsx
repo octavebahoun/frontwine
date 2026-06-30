@@ -471,11 +471,11 @@ export default function RapportsAnalytics() {
   };
 
   return (
-    <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto text-white">
+    <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto text-text-main">
       {exportSuccess && (
         <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center justify-between animate-fade-in">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#00C969] animate-ping" />
+            <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
             <span>Le document PDF <strong>BeninTechHub_Rapport_Analytics.pdf</strong> a été généré et téléchargé avec succès !</span>
           </div>
         </div>
@@ -484,13 +484,13 @@ export default function RapportsAnalytics() {
       {/* Top Header details */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h3 className="text-sm text-gray-400">Workspace / Bénin Tech Hub / Sprints</h3>
-          <p className="text-lg font-bold text-white font-sans">Rapports & Statistiques Sprints</p>
+          <h3 className="text-sm text-text-dim">Workspace / Bénin Tech Hub / Sprints</h3>
+          <p className="text-lg font-bold text-text-main font-sans">Rapports & Statistiques Sprints</p>
         </div>
         <button
           onClick={exportReport}
           disabled={isExporting}
-          className={`h-9 px-4 rounded-lg bg-gray-900 border border-gray-800 text-gray-300 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer hover:bg-gray-800 ${
+          className={`h-9 px-4 rounded-lg bg-bg-card border border-border-main text-text-sub font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer hover:bg-bg-hover ${
             isExporting ? "opacity-60 cursor-not-allowed" : ""
           }`}
         >
@@ -506,43 +506,43 @@ export default function RapportsAnalytics() {
       {/* Analytics KPI Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* Metric 1 */}
-        <div className="p-5 rounded-2xl bg-[#090f1d] border border-gray-800/80 space-y-2">
-          <div className="flex items-center justify-between text-xs text-gray-400 font-mono">
+        <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-2">
+          <div className="flex items-center justify-between text-xs text-text-dim font-mono">
             <span>VELOCITE FINALE</span>
-            <Zap className="w-4 h-4 text-[#00C969]" />
+            <Zap className="w-4 h-4 text-accent" />
           </div>
-          <p className="text-3xl font-black text-white font-mono">84 pts</p>
+          <p className="text-3xl font-black text-text-main font-mono">84 pts</p>
           <span className="text-[10px] text-emerald-400 block">+14% par rapport à l'objectif initial</span>
         </div>
 
         {/* Metric 2 */}
-        <div className="p-5 rounded-2xl bg-[#090f1d] border border-gray-800/80 space-y-2">
-          <div className="flex items-center justify-between text-xs text-gray-400 font-mono">
+        <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-2">
+          <div className="flex items-center justify-between text-xs text-text-dim font-mono">
             <span>TAUX D'ACHEVEMENT</span>
             <TrendingUp className="w-4 h-4 text-emerald-400" />
           </div>
-          <p className="text-3xl font-black text-[#00C969] font-mono">88%</p>
-          <span className="text-[10px] text-gray-500 block">Sprint Alpha - Semaine 2</span>
+          <p className="text-3xl font-black text-accent font-mono">88%</p>
+          <span className="text-[10px] text-text-dim block">Sprint Alpha - Semaine 2</span>
         </div>
 
         {/* Metric 3 */}
-        <div className="p-5 rounded-2xl bg-[#090f1d] border border-gray-800/80 space-y-2">
-          <div className="flex items-center justify-between text-xs text-gray-400 font-mono">
+        <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-2">
+          <div className="flex items-center justify-between text-xs text-text-dim font-mono">
             <span>TEMPS CYCLE MOYEN</span>
             <Activity className="w-4 h-4 text-indigo-400" />
           </div>
-          <p className="text-3xl font-black text-white font-mono">3.2 jours</p>
-          <span className="text-[10px] text-gray-500 block">Durée moyenne d'une tâche critique</span>
+          <p className="text-3xl font-black text-text-main font-mono">3.2 jours</p>
+          <span className="text-[10px] text-text-dim block">Durée moyenne d'une tâche critique</span>
         </div>
       </div>
 
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Sprint Velocity Area Chart */}
-        <div className="p-5 rounded-2xl bg-[#090f1d] border border-gray-800/80 space-y-4">
+        <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-4">
           <div>
-            <h4 className="text-sm font-bold text-white">Vélocité Historique des Sprints</h4>
-            <p className="text-xs text-gray-500">Points accomplis par sprint de 2 semaines</p>
+            <h4 className="text-sm font-bold text-text-main">Vélocité Historique des Sprints</h4>
+            <p className="text-xs text-text-dim">Points accomplis par sprint de 2 semaines</p>
           </div>
           
           <div className="h-64 w-full">
@@ -554,12 +554,12 @@ export default function RapportsAnalytics() {
                     <stop offset="95%" stopColor="#00C969" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" opacity={0.3} />
-                <XAxis dataKey="name" stroke="#6b7280" fontSize={10} tickLine={false} />
-                <YAxis stroke="#6b7280" fontSize={10} tickLine={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" opacity={0.3} />
+                <XAxis dataKey="name" stroke="var(--text-muted)" fontSize={10} tickLine={false} />
+                <YAxis stroke="var(--text-muted)" fontSize={10} tickLine={false} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: "#0b1220", borderColor: "#1f2937", borderRadius: "12px", fontSize: "11px" }}
-                  labelStyle={{ color: "#fff", fontWeight: "bold" }}
+                  contentStyle={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)", borderRadius: "12px", fontSize: "11px", color: "var(--text-primary)" }}
+                  labelStyle={{ color: "var(--text-primary)", fontWeight: "bold" }}
                 />
                 <Area type="monotone" dataKey="velocity" stroke="#00C969" strokeWidth={2} fillOpacity={1} fill="url(#colorVelocity)" name="Vélocité (pts)" />
               </AreaChart>
@@ -568,21 +568,21 @@ export default function RapportsAnalytics() {
         </div>
 
         {/* Contributor Task Contribution Bar Chart */}
-        <div className="p-5 rounded-2xl bg-[#090f1d] border border-gray-800/80 space-y-4">
+        <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-4">
           <div>
-            <h4 className="text-sm font-bold text-white">Répartition des Tâches par Collaborateur</h4>
-            <p className="text-xs text-gray-500">Volume de travail accompli et en cours</p>
+            <h4 className="text-sm font-bold text-text-main">Répartition des Tâches par Collaborateur</h4>
+            <p className="text-xs text-text-dim">Volume de travail accompli et en cours</p>
           </div>
 
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={contributorData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" opacity={0.3} />
-                <XAxis dataKey="name" stroke="#6b7280" fontSize={10} tickLine={false} />
-                <YAxis stroke="#6b7280" fontSize={10} tickLine={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" opacity={0.3} />
+                <XAxis dataKey="name" stroke="var(--text-muted)" fontSize={10} tickLine={false} />
+                <YAxis stroke="var(--text-muted)" fontSize={10} tickLine={false} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: "#0b1220", borderColor: "#1f2937", borderRadius: "12px", fontSize: "11px" }}
-                  labelStyle={{ color: "#fff", fontWeight: "bold" }}
+                  contentStyle={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-color)", borderRadius: "12px", fontSize: "11px", color: "var(--text-primary)" }}
+                  labelStyle={{ color: "var(--text-primary)", fontWeight: "bold" }}
                 />
                 <Bar dataKey="done" fill="#00C969" radius={[4, 4, 0, 0]} name="Terminé" />
                 <Bar dataKey="inprogress" fill="#4f46e5" radius={[4, 4, 0, 0]} name="En cours" />
@@ -593,70 +593,70 @@ export default function RapportsAnalytics() {
       </div>
 
       {/* Activity table / Top Performers */}
-      <div className="p-5 rounded-2xl bg-[#090f1d] border border-gray-800/80 space-y-4">
-        <div className="flex items-center justify-between border-b border-gray-800/40 pb-3">
+      <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-4">
+        <div className="flex items-center justify-between border-b border-border-sub pb-3">
           <div>
-            <h4 className="text-sm font-bold text-white">Performances de l'Équipe</h4>
-            <p className="text-xs text-gray-500">Membres d'équipe les plus actifs ce sprint</p>
+            <h4 className="text-sm font-bold text-text-main">Performances de l'Équipe</h4>
+            <p className="text-xs text-text-dim">Membres d'équipe les plus actifs ce sprint</p>
           </div>
-          <Award className="w-5 h-5 text-[#00C969]" />
+          <Award className="w-5 h-5 text-accent" />
         </div>
 
         <div className="space-y-2">
           {/* Row 1 */}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-gray-900/40 border border-gray-800/40 text-xs">
+          <div className="flex items-center justify-between p-3 rounded-xl bg-bg-app border border-border-sub text-xs">
             <div className="flex items-center gap-3">
-              <span className="font-bold text-gray-500 font-mono w-4">1.</span>
+              <span className="font-bold text-text-dim font-mono w-4">1.</span>
               <img 
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" 
                 alt="Julian" 
                 className="w-6 h-6 rounded-full object-cover"
                 referrerPolicy="no-referrer"
               />
-              <span className="font-bold text-gray-200">Julian Pierce</span>
+              <span className="font-bold text-text-sub">Julian Pierce</span>
               <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-mono">Tech Lead</span>
             </div>
-            <div className="flex items-center gap-4 text-gray-400 font-mono text-[11px]">
+            <div className="flex items-center gap-4 text-text-dim font-mono text-[11px]">
               <span>Velocity: 34 pts</span>
-              <span className="text-[#00C969] font-bold">14 tâches</span>
+              <span className="text-accent font-bold">14 tâches</span>
             </div>
           </div>
 
           {/* Row 2 */}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-gray-900/40 border border-gray-800/40 text-xs">
+          <div className="flex items-center justify-between p-3 rounded-xl bg-bg-app border border-border-sub text-xs">
             <div className="flex items-center gap-3">
-              <span className="font-bold text-gray-500 font-mono w-4">2.</span>
+              <span className="font-bold text-text-dim font-mono w-4">2.</span>
               <img 
                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop" 
                 alt="Elara" 
                 className="w-6 h-6 rounded-full object-cover"
                 referrerPolicy="no-referrer"
               />
-              <span className="font-bold text-gray-200">Elara Vance</span>
+              <span className="font-bold text-text-sub">Elara Vance</span>
               <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-mono">Director</span>
             </div>
-            <div className="flex items-center gap-4 text-gray-400 font-mono text-[11px]">
+            <div className="flex items-center gap-4 text-text-dim font-mono text-[11px]">
               <span>Velocity: 28 pts</span>
-              <span className="text-[#00C969] font-bold">11 tâches</span>
+              <span className="text-accent font-bold">11 tâches</span>
             </div>
           </div>
 
           {/* Row 3 */}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-gray-900/40 border border-gray-800/40 text-xs">
+          <div className="flex items-center justify-between p-3 rounded-xl bg-bg-app border border-border-sub text-xs">
             <div className="flex items-center gap-3">
-              <span className="font-bold text-gray-500 font-mono w-4">3.</span>
+              <span className="font-bold text-text-dim font-mono w-4">3.</span>
               <img 
                 src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop" 
                 alt="Maya" 
                 className="w-6 h-6 rounded-full object-cover"
                 referrerPolicy="no-referrer"
               />
-              <span className="font-bold text-gray-200">Maya Lin</span>
+              <span className="font-bold text-text-sub">Maya Lin</span>
               <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded font-mono">Talent Mgr</span>
             </div>
-            <div className="flex items-center gap-4 text-gray-400 font-mono text-[11px]">
+            <div className="flex items-center gap-4 text-text-dim font-mono text-[11px]">
               <span>Velocity: 22 pts</span>
-              <span className="text-[#00C969] font-bold">8 tâches</span>
+              <span className="text-accent font-bold">8 tâches</span>
             </div>
           </div>
         </div>

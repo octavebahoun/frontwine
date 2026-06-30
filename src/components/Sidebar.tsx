@@ -62,7 +62,7 @@ export default function Sidebar({
             </div>
             {!isCollapsed && (
               <div className="flex flex-col">
-                <span className="font-bold text-sm tracking-widest text-text-main uppercase">WINE</span>
+                <span className="font-black text-base tracking-wider text-text-main uppercase">WINE</span>
                 <span className="text-[8px] font-mono text-accent tracking-widest font-semibold uppercase">WORKSPACE</span>
               </div>
             )}
@@ -84,7 +84,7 @@ export default function Sidebar({
               <span>Workspace Actif</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm font-bold text-text-main truncate">Bénin Tech Hub 🇧🇯</span>
+              <span className="text-base font-bold text-text-main truncate">Bénin Tech Hub 🇧🇯</span>
               <span className="text-[10px] bg-accent-muted text-accent px-1.5 py-0.5 rounded font-mono font-medium">Sprints</span>
             </div>
           </div>
@@ -105,7 +105,7 @@ export default function Sidebar({
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-base font-semibold transition-all duration-200 cursor-pointer ${
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-lg font-bold transition-all duration-200 cursor-pointer ${
                   isActive
                     ? "bg-accent-muted text-accent"
                     : "text-text-sub hover:text-text-main hover:bg-bg-hover"
@@ -139,7 +139,7 @@ export default function Sidebar({
               referrerPolicy="no-referrer"
             />
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold text-text-main truncate">Elara Vance</p>
+              <p className="text-base font-bold text-text-main truncate">Elara Vance</p>
               <p className="text-xs text-text-dim truncate font-mono">Project Director</p>
             </div>
           </div>
