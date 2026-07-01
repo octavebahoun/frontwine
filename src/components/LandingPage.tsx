@@ -16,7 +16,18 @@ import {
   Users2,
   Zap,
   Sun,
-  Moon
+  Moon,
+  Eye,
+  DollarSign,
+  FolderKanban,
+  Briefcase,
+  Users,
+  Check,
+  TrendingUp,
+  Share2,
+  Lock,
+  Globe,
+  Award
 } from "lucide-react";
 
 interface LandingPageProps {
@@ -62,6 +73,7 @@ const steps = [
 
 export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPageProps) {
   const [activeMockupTab, setActiveMockupTab] = React.useState<number>(2);
+  const [billingPeriod, setBillingPeriod] = React.useState<'monthly' | 'yearly'>('monthly');
 
   const renderMockupDashboard = () => (
     <div className="space-y-4 animate-fade-in text-left">
@@ -215,7 +227,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
   );
 
   return (
-    <div className="min-h-screen bg-bg-app text-text-main overflow-x-hidden font-sans selection:bg-accent/25">
+    <div className="min-h-screen bg-bg-app text-text-main overflow-x-hidden font-sans selection:bg-accent/25 new-landing-body">
       {/* ambient glow */}
       <div className="pointer-events-none fixed inset-0 -z-10">
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[90vw] h-[90vw] max-w-[700px] rounded-full bg-accent/[0.06] blur-[120px]" />
@@ -342,7 +354,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                         <button
                           key={label as string}
                           onClick={() => setActiveMockupTab(index)}
-                          className={`w-full text-left rounded-lg px-2.5 py-2 flex items-center gap-2 text-xs font-semibold cursor-pointer transition-colors ${isActive ? "bg-accent-muted text-accent" : "text-text-sub hover:bg-bg-hover"}`}
+                          className={`w-full text-left rounded-lg px-2.5 py-2 flex items-center gap-2 text-xs font-semibold cursor-pointer transition-colors min-h-[44px] ${isActive ? "bg-accent-muted text-accent" : "text-text-sub hover:bg-bg-hover"}`}
                         >
                           <LucideIcon className="w-3.5 h-3.5" aria-hidden="true" />
                           {label as string}
@@ -449,178 +461,550 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
           </div>
         </section>
 
-        <section id="formats" className="px-4 sm:px-6 py-12 sm:py-16">
-          <div className="max-w-7xl mx-auto">
-            <div className="max-w-2xl mb-8">
-              <p className="text-xs font-black text-accent mb-2">Chaque module devient lisible.</p>
-              <h2 className="text-2xl sm:text-4xl leading-tight tracking-[-0.03em] font-black text-text-main">
-                Vous pilotez. WINE transforme l'exécution en histoire claire.
-              </h2>
+        <section className="section-padding reveal active">
+          <div className="container">
+            <div className="section-header">
+              <span className="section-tag">Le Constat</span>
+              <h2 className="section-title">Votre énergie créative mérite mieux que le chaos.</h2>
+              <p>Piloter une équipe de développement ou une agence en Afrique francophone impose des défis uniques de coût, d'organisation et de connectivité.</p>
             </div>
+            <div className="problem-grid">
+              <div className="problem-card">
+                <div className="problem-icon-wrapper">
+                  <MessageSquare className="w-6 h-6" aria-hidden="true" />
+                </div>
+                <h3>Dispersion &amp; Pertes</h3>
+                <p>Les informations, décisions et retours clients s'éparpillent continuellement entre les groupes WhatsApp, les chaînes d'emails et les notes personnelles.</p>
+              </div>
+              <div className="problem-card">
+                <div className="problem-icon-wrapper">
+                  <Eye className="w-6 h-6" aria-hidden="true" />
+                </div>
+                <h3>Zéro Visibilité</h3>
+                <p>Impossible d'obtenir une vue d'ensemble fiable sur l'avancement global des sprints. Vos collaborateurs et clients manquent de transparence.</p>
+              </div>
+              <div className="problem-card">
+                <div className="problem-icon-wrapper">
+                  <DollarSign className="w-6 h-6" aria-hidden="true" />
+                </div>
+                <h3>Abonnements prohibitifs</h3>
+                <p>Notion, Slack, Trello, Jira : des prix en devises étrangères inadaptés, des fonctionnalités superflues et aucun support de paiement local.</p>
+              </div>
+            </div>
+            <div className="problem-conclusion">"Les outils existent. Le problème, c'est leur <span>éparpillement</span>."</div>
+          </div>
+        </section>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3" role="list">
-              {storyFormats.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.title} role="listitem" className="rounded-[16px] bg-bg-card border border-border-main p-5 min-h-56 shadow-sm hover:-translate-y-1 hover:border-[#00C969]/30 transition-all flex flex-col justify-between" style={{ containerType: 'inline-size' }}>
-                    <div>
-                      <div className="w-10 h-10 rounded-lg bg-bg-hover flex items-center justify-center mb-5">
-                        <Icon className="w-5 h-5 text-accent" aria-hidden="true" />
-                      </div>
-                      <span className="text-[10px] font-mono uppercase text-accent font-black">{item.label}</span>
-                      <h3 className="text-lg font-black mt-1 mb-2 tracking-tight text-text-main">{item.title}</h3>
-                    </div>
-                    <p className="text-xs leading-relaxed text-text-sub">{item.text}</p>
-                  </div>
-                );
-              })}
+        <section className="section-padding reveal active" id="features" style={{ background: "rgba(20, 23, 38, 0.3)" }}>
+          <div className="container">
+            <div className="solution-grid">
+              <div className="solution-left">
+                <span className="section-tag">La Solution</span>
+                <h2 className="section-title">Un hub ouvert. Natif ou connecté. Toujours unifié.</h2>
+                <p className="solution-desc">WINE ne vous force pas à choisir. Soit vous utilisez nos outils natifs ultra-performants et légers, soit vous importez vos tableaux et espaces de travail existants en un clic.</p>
+                <p className="solution-accent-text">Un système d'exploitation de travail pensé pour minimiser la consommation de bande passante et maximiser l'efficacité.</p>
+                <div className="solution-pills">
+                  <span className="solution-pill">
+                    <FolderKanban className="w-3.5 h-3.5" aria-hidden="true" />Gestion de projets
+                  </span>
+                  <span className="solution-pill">
+                    <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />Suivi de tâches
+                  </span>
+                  <span className="solution-pill">
+                    <MessageSquare className="w-3.5 h-3.5" aria-hidden="true" />Collaboration directe
+                  </span>
+                  <span className="solution-pill">
+                    <Share2 className="w-3.5 h-3.5" aria-hidden="true" />Planification réseaux
+                  </span>
+                  <span className="solution-pill">
+                    <BarChart3 className="w-3.5 h-3.5" aria-hidden="true" />Rapports analytiques
+                  </span>
+                  <span className="solution-pill">
+                    <Briefcase className="w-3.5 h-3.5" aria-hidden="true" />Modules RH &amp; Talents
+                  </span>
+                </div>
+              </div>
+              <div className="solution-right">
+                <div className="solution-feature-box">
+                  <Zap className="w-6 h-6 feature-box-icon" aria-hidden="true" />
+                  <h3>Rapidité extrême</h3>
+                  <p>Architecture optimisée pour les connexions mobiles instables et chargement instantané.</p>
+                </div>
+                <div className="solution-feature-box">
+                  <Lock className="w-6 h-6 feature-box-icon" aria-hidden="true" />
+                  <h3>Sécurité &amp; RGPD</h3>
+                  <p>Authentification robuste par tokens JWT cryptés et hébergement cloud ultra-sécurisé.</p>
+                </div>
+                <div className="solution-feature-box">
+                  <Globe className="w-6 h-6 feature-box-icon" aria-hidden="true" />
+                  <h3>100% Francophone</h3>
+                  <p>Une interface entièrement traduite en français avec des termes adaptés à la culture business locale.</p>
+                </div>
+                <div className="solution-feature-box">
+                  <Award className="w-6 h-6 feature-box-icon" aria-hidden="true" />
+                  <h3>Paiements simplifiés</h3>
+                  <p>Intégration future de moyens de paiement mobile money pour faciliter les abonnements.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section id="workflow" className="px-4 sm:px-6 py-12 bg-bg-card/50 border-y border-border-main">
-          <div className="max-w-7xl mx-auto grid lg:grid-cols-[0.8fr_1.2fr] gap-8 items-center">
-            <div>
-              <p className="text-xs font-black text-accent mb-2">Méthode simple</p>
-              <h2 className="text-2xl sm:text-4xl leading-tight tracking-[-0.03em] font-black text-text-main">
-                Une page claire vaut mieux que dix outils ouverts.
-              </h2>
-              <p className="mt-4 text-text-sub text-sm leading-relaxed">
-                WINE garde les données opérationnelles au même endroit et les présente dans des formats faciles à lire, partager et décider.
-              </p>
-              <button
-                onClick={onEnterApp}
-                aria-label="Entrer dans WINE"
-                className="mt-5 h-11 px-4 rounded-lg bg-accent text-[#080d19] font-black hover:bg-[#3fe08f] transition-colors inline-flex items-center gap-1 text-xs cursor-pointer"
+        <section className="section-padding reveal active">
+          <div className="container">
+            <div className="section-header">
+              <span className="section-tag">Les Fonctionnalités</span>
+              <h2 className="section-title">Tout ce dont votre équipe a besoin.</h2>
+              <p>6 modules interconnectés pour rationaliser vos opérations quotidiennes et libérer le potentiel de vos collaborateurs.</p>
+            </div>
+            <div className="modules-grid">
+              <div className="module-card">
+                <div className="module-top">
+                  <div className="module-icon">
+                    <FolderKanban className="w-5 h-5" aria-hidden="true" />
+                  </div>
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                    <span className="module-badge badge-native">Natif</span>
+                    <span className="module-badge badge-connected">Connecté</span>
+                  </div>
+                </div>
+                <h3>Gestion de projets</h3>
+                <p>Créez, suivez et livrez vos projets en temps réel avec des tableaux Kanban interactifs. Synchronisation bidirectionnelle instantanée avec Notion et Trello.</p>
+              </div>
+              <div className="module-card">
+                <div className="module-top">
+                  <div className="module-icon">
+                    <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
+                  </div>
+                  <span className="module-badge badge-native">Natif</span>
+                </div>
+                <h3>Suivi des tâches</h3>
+                <p>Chaque tâche assignée possède ses sous-tâches, sa date d'échéance et son fil de discussion interne. Suivi rigoureux de l'avancement individuel.</p>
+              </div>
+              <div className="module-card">
+                <div className="module-top">
+                  <div className="module-icon">
+                    <Users className="w-5 h-5" aria-hidden="true" />
+                  </div>
+                  <span className="module-badge badge-connected">Connecté</span>
+                </div>
+                <h3>Collaboration Live</h3>
+                <p>Messagerie instantanée d'équipe intégrée et canaux de discussion thématiques. Connecté à vos salons Slack et Google Workspace.</p>
+              </div>
+              <div className="module-card">
+                <div className="module-top">
+                  <div className="module-icon">
+                    <Share2 className="w-5 h-5" aria-hidden="true" />
+                  </div>
+                  <span className="module-badge badge-native">Natif</span>
+                </div>
+                <h3>Gestion des réseaux</h3>
+                <p>Planifiez, rédigez et programmez automatiquement vos publications sur vos canaux sociaux (LinkedIn, Facebook) depuis un calendrier central.</p>
+              </div>
+              <div className="module-card">
+                <div className="module-top">
+                  <div className="module-icon">
+                    <BarChart3 className="w-5 h-5" aria-hidden="true" />
+                  </div>
+                  <span className="module-badge badge-connected">Connecté</span>
+                </div>
+                <h3>Analytique intégrée</h3>
+                <p>Des tableaux de bord complets pour visualiser la productivité de l'équipe et les statistiques clés de vos plateformes tierces connectées.</p>
+              </div>
+              <div className="module-card">
+                <div className="module-top">
+                  <div className="module-icon">
+                    <Award className="w-5 h-5" aria-hidden="true" />
+                  </div>
+                  <span className="module-badge badge-native">Natif</span>
+                </div>
+                <h3>RH &amp; Business</h3>
+                <p>Suivez les opportunités commerciales de vos agences (pipeline CRM) et gérez les fiches de vos talents internes dans une interface unifiée.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-padding reveal active" id="pricing" style={{ background: "rgba(20, 23, 38, 0.2)", borderTop: "1px solid var(--border)" }}>
+          <div className="container">
+            <div className="section-header">
+              <span className="section-tag">Les Prix</span>
+              <h2 className="section-title">Un tarif qui respecte votre réalité.</h2>
+              <p>Débutez gratuitement avec nos modules essentiels ou passez à la vitesse supérieure en débloquant toute la puissance de nos intégrations.</p>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <div className="pricing-toggle">
+                <button 
+                  onClick={() => setBillingPeriod('monthly')}
+                  className={`pricing-toggle-btn ${billingPeriod === 'monthly' ? 'active' : ''}`}
+                >
+                  Mensuel
+                </button>
+                <button 
+                  onClick={() => setBillingPeriod('yearly')}
+                  className={`pricing-toggle-btn ${billingPeriod === 'yearly' ? 'active' : ''}`}
+                >
+                  Annuel (-20%)
+                </button>
+              </div>
+            </div>
+            <div className="pricing-grid">
+              <div className="pricing-card">
+                <h3 className="pricing-name">Freemium</h3>
+                <p className="pricing-desc">Idéal pour tester WINE en équipe réduite et poser les bases de son organisation.</p>
+                <div className="pricing-price">
+                  <span className="price-amount">Gratuit</span>
+                </div>
+                <ul className="pricing-features">
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>Jusqu'à 5 utilisateurs</span>
+                  </li>
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>Modules Tâches &amp; Projets natifs</span>
+                  </li>
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>Messagerie d'équipe basique</span>
+                  </li>
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>1 intégration active</span>
+                  </li>
+                </ul>
+                <button onClick={onEnterApp} className="btn btn-secondary pricing-cta">Démarrer gratuitement</button>
+              </div>
+
+              <div className="pricing-card pricing-card-popular">
+                <span className="popular-badge">Populaire</span>
+                <h3 className="pricing-name">Plan Team</h3>
+                <p className="pricing-desc">Pour les agences et startups en croissance qui nécessitent une collaboration poussée.</p>
+                <div className="pricing-price">
+                  <span className="price-currency">$</span>
+                  <span className="price-amount">{billingPeriod === 'monthly' ? '15' : '12'}</span>
+                  <span className="price-period">{billingPeriod === 'monthly' ? '/ équipe / mois' : '/ équipe / mois (facturé annuellement)'}</span>
+                </div>
+                <ul className="pricing-features">
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>Utilisateurs illimités</span>
+                  </li>
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>Les 6 modules WINE débloqués</span>
+                  </li>
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>Intégrations tierces illimitées</span>
+                  </li>
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>Support prioritaire 24/7</span>
+                  </li>
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>Fichiers partagés illimités</span>
+                  </li>
+                </ul>
+                <button onClick={onEnterApp} className="btn btn-gold pricing-cta">Rejoindre la Beta</button>
+              </div>
+
+              <div className="pricing-card">
+                <h3 className="pricing-name">Enterprise</h3>
+                <p className="pricing-desc">Pour les grandes structures et incubateurs exigeant un contrôle maximal.</p>
+                <div className="pricing-price">
+                  <span className="price-amount">Sur devis</span>
+                </div>
+                <ul className="pricing-features">
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>Instance cloud privée ou sur site</span>
+                  </li>
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>SLA garanti à 99.9%</span>
+                  </li>
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>Sécurité renforcée (SSO/SAML)</span>
+                  </li>
+                  <li className="pricing-feature">
+                    <Check className="w-4 h-4 pricing-feature-icon" aria-hidden="true" />
+                    <span>Responsable de compte dédié</span>
+                  </li>
+                </ul>
+                <button onClick={onEnterApp} className="btn btn-secondary pricing-cta">Contacter l'équipe</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-padding reveal active" id="roadmap">
+          <div className="container">
+            <div className="section-header">
+              <span className="section-tag">Roadmap</span>
+              <h2 className="section-title">L'évolution de WINE.</h2>
+              <p>Suivez le cycle de développement de notre plateforme. Nous construisons en public avec nos utilisateurs.</p>
+            </div>
+            <div className="roadmap-container">
+              <div className="roadmap-line-desktop"></div>
+              <div className="roadmap-grid-desktop">
+                <div className="roadmap-item">
+                  <div className="roadmap-node node-done">
+                    <Check className="w-4 h-4" aria-hidden="true" />
+                  </div>
+                  <div className="roadmap-phase-tag">Phase 1</div>
+                  <h3 className="roadmap-title">Spécifications &amp; Design</h3>
+                  <p className="roadmap-desc">Conception de l'architecture backend, maquettage UI/UX des modules de base.</p>
+                </div>
+                <div className="roadmap-item">
+                  <div className="roadmap-node node-active">
+                    <TrendingUp className="w-4 h-4" aria-hidden="true" />
+                  </div>
+                  <div className="roadmap-phase-tag">Phase 2</div>
+                  <h3 className="roadmap-title">Développement MVP</h3>
+                  <p className="roadmap-desc">Développement actif des modules de gestion de projet, des tâches et de la collaboration synchrone.</p>
+                </div>
+                <div className="roadmap-item">
+                  <div className="roadmap-node node-todo">3</div>
+                  <div className="roadmap-phase-tag">Phase 3</div>
+                  <h3 className="roadmap-title">Beta fermée</h3>
+                  <p className="roadmap-desc">Déploiement expérimental auprès de 3 startups et agences partenaires clés.</p>
+                </div>
+                <div className="roadmap-item">
+                  <div className="roadmap-node node-future">4</div>
+                  <div className="roadmap-phase-tag">Phase 4</div>
+                  <h3 className="roadmap-title">Lancement public</h3>
+                  <p className="roadmap-desc">Sortie publique, activation des modules réseaux, analytique et RH avancés.</p>
+                </div>
+              </div>
+
+              <div className="roadmap-timeline-mobile">
+                <div className="roadmap-item-mobile">
+                  <div className="roadmap-node-mobile node-done">
+                    <Check className="w-4 h-4" aria-hidden="true" />
+                  </div>
+                  <div className="roadmap-content-mobile">
+                    <div className="roadmap-phase-tag">Phase 1 · Terminée</div>
+                    <h3 className="roadmap-title">Spécifications &amp; Design</h3>
+                    <p className="roadmap-desc">Conception de l'architecture backend, maquettage UI/UX des modules de base.</p>
+                  </div>
+                </div>
+                <div className="roadmap-item-mobile">
+                  <div className="roadmap-node-mobile node-active">
+                    <TrendingUp className="w-4 h-4" aria-hidden="true" />
+                  </div>
+                  <div className="roadmap-content-mobile">
+                    <div className="roadmap-phase-tag">Phase 2 · En Cours</div>
+                    <h3 className="roadmap-title">Développement MVP</h3>
+                    <p className="roadmap-desc">Développement actif des modules de gestion de projet, des tâches et de la collaboration synchrone.</p>
+                  </div>
+                </div>
+                <div className="roadmap-item-mobile">
+                  <div className="roadmap-node-mobile node-todo">3</div>
+                  <div className="roadmap-content-mobile">
+                    <div className="roadmap-phase-tag">Phase 3 · À Venir</div>
+                    <h3 className="roadmap-title">Beta fermée</h3>
+                    <p className="roadmap-desc">Déploiement expérimental auprès de 3 startups et agences partenaires clés.</p>
+                  </div>
+                </div>
+                <div className="roadmap-item-mobile">
+                  <div className="roadmap-node-mobile node-future">4</div>
+                  <div className="roadmap-content-mobile">
+                    <div className="roadmap-phase-tag">Phase 4 · À Venir</div>
+                    <h3 className="roadmap-title">Lancement public</h3>
+                    <p className="roadmap-desc">Sortie publique, activation des modules réseaux, analytique et RH avancés.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-padding reveal active" id="team">
+          <div className="container">
+            <div className="section-header">
+              <span className="section-tag">L'Équipe</span>
+              <h2 className="section-title">Les créateurs derrière WINE.</h2>
+              <p>Un collectif passionné d'étudiants en informatique et télécoms de Lokossa, Bénin, unis pour redéfinir la productivité.</p>
+            </div>
+            <div className="team-subtitle">Lokossa, Bénin</div>
+            <div className="team-grid">
+              <div className="team-card">
+                <div className="avatar-wrapper">
+                  <img alt="Mourchid FOLARIN" className="team-avatar-img" src="https://res.cloudinary.com/dla8wr5qj/image/upload/v1781228322/224025435_j7qhdz_szccjx.webp" />
+                </div>
+                <div className="team-info">
+                  <h3 className="team-name">Mourchid FOLARIN</h3>
+                  <div className="team-role">Fondateur &amp; Directeur technique / Cybersecurité &amp; Developpement Backend</div>
+                </div>
+              </div>
+              <div className="team-card">
+                <div className="avatar-wrapper">
+                  <img alt="Octave BAHOUN-HOUTOUKPE" className="team-avatar-img" src="https://res.cloudinary.com/dla8wr5qj/image/upload/v1781010145/octave_j928uo.webp" />
+                </div>
+                <div className="team-info">
+                  <h3 className="team-name">Octave BAHOUN-HOUTOUKPE</h3>
+                  <div className="team-role">Cofondateur / Ingenieur IA , Fullstack Web (Orienté Frontend)</div>
+                </div>
+              </div>
+              <div className="team-card">
+                <div className="avatar-wrapper">
+                  <img alt="Ezechiel TADAGBE" className="team-avatar-img" src="https://res.cloudinary.com/dla8wr5qj/image/upload/v1781228322/ezedev_ycavef_ztuq1a.webp" />
+                </div>
+                <div className="team-info">
+                  <h3 className="team-name">Ezechiel TADAGBE</h3>
+                  <div className="team-role">Ingénieur Cloud /Infrastructure &amp; IA</div>
+                </div>
+              </div>
+              <div className="team-card">
+                <div className="avatar-wrapper">
+                  <img alt="Jean-Baptiste VIGNONFODE" className="team-avatar-img" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&amp;w=800&amp;auto=format&amp;fit=crop" />
+                </div>
+                <div className="team-info">
+                  <h3 className="team-name">Jean-Baptiste VIGNONFODE</h3>
+                  <div className="team-role">Architecte Cybersécurité</div>
+                </div>
+              </div>
+              <div className="team-card">
+                <div className="avatar-wrapper">
+                  <img alt="Wasfade TONOUKOIN" className="team-avatar-img" src="https://res.cloudinary.com/dla8wr5qj/image/upload/v1781228322/wafade_iajqor_hmdpsn.webp" />
+                </div>
+                <div className="team-info">
+                  <h3 className="team-name">Wasfade TONOUKOIN</h3>
+                  <div className="team-role">Développeur Senior Fullstack</div>
+                </div>
+              </div>
+              <div className="team-card">
+                <div className="avatar-wrapper">
+                  <img alt="Cosme MISSIKPODE" className="team-avatar-img" src="https://res.cloudinary.com/dla8wr5qj/image/upload/v1781228322/cosme_csvugm_yf4nvs.webp" />
+                </div>
+                <div className="team-info">
+                  <h3 className="team-name">Cosme MISSIKPODE</h3>
+                  <div className="team-role">Architecte Cybersécurité / Réseau</div>
+                </div>
+              </div>
+            </div>
+            <div className="previous-projects">
+              <h3 className="prev-title">Nos Réalisations Précédentes</h3>
+              <div className="prev-list">
+                <a href="https://le-twin.vercel.app/" target="_blank" rel="noopener noreferrer" className="prev-project">Le TWIN</a>
+                <a href="https://team-d-excellence-hackbyifri-2026.vercel.app/" target="_blank" rel="noopener noreferrer" className="prev-project">Academix</a>
+                <a href="https://fieri-research.org" target="_blank" rel="noopener noreferrer" className="prev-project">Fieri Research</a>
+                <a href="https://nightheart.rf.gd/" target="_blank" rel="noopener noreferrer" className="prev-project">La Nuit du Cœur</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-padding reveal active" id="cta">
+          <div className="container">
+            <div className="cta-box">
+              <h2 className="cta-title">Prêt à travailler avec excellence ?</h2>
+              <p className="cta-subtitle">Rejoignez dès aujourd'hui les premières équipes africaines à piloter leur travail autrement. Inscrivez-vous à la version Beta privée gratuite.</p>
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  onEnterApp();
+                }}
+                className="cta-form"
               >
-                Entrer dans WINE
-                <ChevronRight className="w-4 h-4" aria-hidden="true" />
-              </button>
+                <input 
+                  id="cta-email-input"
+                  name="email"
+                  required 
+                  placeholder="Entrez votre adresse email..." 
+                  className="cta-input" 
+                  type="email" 
+                />
+                <button type="submit" className="btn btn-primary cta-btn-submit">Rejoindre la Beta</button>
+              </form>
+              <div style={{ marginTop: "2.5rem", fontSize: "0.8rem", color: "var(--text-muted)" }}>
+                Vous avez des questions ? Contactez-nous à{" "}
+                <a href="mailto:teamexcellence@gmail.com" style={{ color: "var(--text-secondary)", textDecoration: "underline" }}>
+                  teamexcellence@gmail.com
+                </a>
+              </div>
             </div>
-
-            <div className="grid gap-3">
-              {steps.map(([num, title, text]) => (
-                <div key={num} className="rounded-[16px] bg-bg-card border border-border-main p-4 flex gap-4 items-center">
-                  <div className="w-9 h-9 rounded-lg bg-accent text-[#080d19] flex items-center justify-center font-mono font-black flex-shrink-0 text-sm">
-                    {num}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-black mb-0.5 text-text-main">{title}</h3>
-                    <p className="text-text-sub text-xs leading-relaxed truncate">{text}</p>
-                  </div>
-                  <CheckCircle2 className="w-4 h-4 text-accent ml-auto flex-shrink-0" aria-hidden="true" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Mission Section */}
-        <section id="mission" className="px-4 sm:px-6 py-16 sm:py-24">
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-xs font-black text-accent mb-4 uppercase tracking-widest">Notre Mission</p>
-            <h2 className="text-3xl sm:text-5xl leading-tight tracking-[-0.03em] font-black text-text-main mb-6">
-              L'excellence opérationnelle n'est plus un luxe.
-            </h2>
-            <p className="text-base sm:text-lg text-text-sub leading-relaxed max-w-2xl mx-auto">
-              Nous avons créé WINE pour offrir aux équipes ambitieuses une plateforme où l'exécution rencontre la clarté. Fini le chaos des outils dispersés.
-            </p>
-          </div>
-        </section>
-
-        {/* Roadmap Section */}
-        <section id="roadmap" className="px-4 sm:px-6 py-16 sm:py-24 bg-bg-card/30 border-y border-border-main">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <p className="text-xs font-black text-accent mb-2 uppercase tracking-widest">Roadmap</p>
-              <h2 className="text-2xl sm:text-4xl tracking-[-0.03em] font-black text-text-main">La vision WINE</h2>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {[
-                { phase: "Q1 2026", title: "Fondations & Core", status: "Terminé", items: ["Kanban temps réel", "Gestion des talents", "Design System v1"] },
-                { phase: "Q2 2026", title: "Intelligence WINE", status: "En cours", items: ["Assistant WINE AI", "Génération de rapports", "Automatisations"] },
-                { phase: "Q3 2026", title: "Écosystème", status: "À venir", items: ["App Mobile native", "API Publique", "Intégrations (Slack, Notion)"] }
-              ].map((step, i) => (
-                <div key={i} className="rounded-2xl bg-bg-app border border-border-main p-6 relative overflow-hidden group hover:border-accent/50 transition-colors">
-                  <div className="absolute top-0 right-0 p-4">
-                    <span className={`text-[10px] font-mono font-bold px-2 py-1 rounded-md ${step.status === 'Terminé' ? 'bg-accent/10 text-accent' : step.status === 'En cours' ? 'bg-[#ffd166]/10 text-[#ffd166]' : 'bg-bg-hover text-text-sub'}`}>
-                      {step.status}
-                    </span>
-                  </div>
-                  <p className="text-xs font-mono font-black text-text-sub mb-1">{step.phase}</p>
-                  <h3 className="text-lg font-black text-text-main mb-4">{step.title}</h3>
-                  <ul className="space-y-2">
-                    {step.items.map((item, j) => (
-                      <li key={j} className="flex items-start gap-2 text-sm text-text-sub">
-                        <CheckCircle2 className={`w-4 h-4 flex-shrink-0 mt-0.5 ${step.status === 'Terminé' ? 'text-accent' : 'text-text-dim'}`} aria-hidden="true" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Team Section */}
-        <section id="equipe" className="px-4 sm:px-6 py-16 sm:py-24">
-          <div className="max-w-7xl mx-auto">
-             <div className="text-center mb-12">
-              <p className="text-xs font-black text-accent mb-2 uppercase tracking-widest">L'Équipe</p>
-              <h2 className="text-2xl sm:text-4xl tracking-[-0.03em] font-black text-text-main">Ceux qui construisent WINE</h2>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto" role="list">
-              {[
-                { name: "Mourchid FOLARIN", role: "Fondateur & Directeur technique", img: "/team/mourchid.webp" },
-                { name: "Octave BAHOUN-HOUTOUKPE", role: "Cofondateur / Ingénieur IA & Fullstack", img: "/team/octave.webp" },
-                { name: "Ezechiel TADAGBE", role: "Ingénieur Cloud / Infrastructure & IA", img: "/team/ezechiel.webp" },
-                { name: "Jean-Baptiste VIGNONFODE", role: "Architecte Cybersécurité", img: "/team/jean-baptiste.webp" },
-                { name: "Wasfade TONOUKOIN", role: "Développeur Senior Fullstack", img: "/team/wasfade.webp" },
-                { name: "Cosme MISSIKPODE", role: "Architecte Cybersécurité / Réseau", img: "/team/cosme.webp" }
-              ].map((member, i) => (
-                <div key={i} className="text-center group" role="listitem">
-                  <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden border-2 border-border-main mb-4 group-hover:border-accent transition-colors">
-                    <img src={member.img} alt={member.name} className="w-full h-full object-cover" />
-                  </div>
-                  <h3 className="text-sm font-black text-text-main">{member.name}</h3>
-                  <p className="text-xs text-text-sub font-medium mt-1">{member.role}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="px-4 sm:px-6 py-12 sm:py-16 text-center">
-          <div className="max-w-3xl mx-auto rounded-[20px] bg-bg-card border border-border-main px-5 py-10 sm:p-10 shadow-md">
-            <ShieldCheck className="w-8 h-8 mx-auto text-accent mb-4" aria-hidden="true" />
-            <h2 className="text-2xl sm:text-4xl leading-tight tracking-[-0.03em] font-black text-text-main">
-              Lancez un workspace que votre équipe comprend au premier regard.
-            </h2>
-            <p className="mt-4 text-sm text-text-sub max-w-xl mx-auto">
-              Des projets, des posts, des talents et des rapports alignés dans une expérience lisible, rapide et premium.
-            </p>
-            <button
-              onClick={onEnterApp}
-              aria-label="Lancer la démo WINE"
-              className="mt-6 h-10 px-6 rounded-lg bg-accent text-[#080d19] font-black hover:bg-[#3fe08f] transition-colors inline-flex items-center gap-2 text-sm cursor-pointer"
-            >
-              Lancer la démo WINE
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
-            </button>
           </div>
         </section>
       </main>
 
-      <footer role="contentinfo" className="border-t border-border-main py-6 text-xs text-text-sub bg-bg-card/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="font-black text-text-main">WINE Workspace</div>
-          <div className="flex items-center gap-4 flex-wrap justify-center font-medium">
-            <span>Lokossa</span>
-            <span>Cotonou</span>
-            <span>Bénin</span>
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-grid">
+            <div className="footer-brand">
+              <a href="#" className="logo">
+                <svg className="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="50,12 83,31 83,69 50,88 17,69 17,31" stroke="#00c969" strokeWidth="8" strokeLinejoin="round" fill="none"></polygon>
+                  <circle cx="50" cy="40" r="8" fill="#00c969"></circle>
+                  <circle cx="40" cy="50" r="8" fill="#00c969"></circle>
+                  <circle cx="60" cy="50" r="8" fill="#00c969"></circle>
+                  <circle cx="50" cy="60" r="8" fill="#F5A623"></circle>
+                </svg>
+                <span>WINE</span>
+              </a>
+              <p className="footer-tagline">Work IN Excellence — La plateforme de productivité unifiée pour les équipes digitales d'Afrique.</p>
+              <div className="social-links">
+                <a href="#" className="social-icon" aria-label="LinkedIn">
+                  <span aria-hidden="true" style={{ fontSize: "0.85rem", fontWeight: "bold" }}>in</span>
+                </a>
+                <a href="#" className="social-icon" aria-label="GitHub">
+                  <span aria-hidden="true" style={{ fontSize: "0.85rem", fontWeight: "bold" }}>gh</span>
+                </a>
+                <a href="#" className="social-icon" aria-label="Facebook">
+                  <span aria-hidden="true" style={{ fontSize: "0.85rem", fontWeight: "bold" }}>fb</span>
+                </a>
+              </div>
+            </div>
+            <div>
+              <h3 className="footer-title">Plateforme</h3>
+              <ul className="footer-links">
+                <li className="footer-link-item">
+                  <a href="#features">Fonctionnalités</a>
+                </li>
+                <li className="footer-link-item">
+                  <a href="#pricing">Tarifs</a>
+                </li>
+                <li className="footer-link-item">
+                  <a href="#roadmap">Roadmap</a>
+                </li>
+                <li className="footer-link-item">
+                  <a href="#team">L'Équipe</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="footer-title">Contact</h3>
+              <ul className="footer-links">
+                <li className="footer-link-item">
+                  <a href="mailto:teamexcellence@gmail.com">teamexcellence@gmail.com</a>
+                </li>
+                <li className="footer-link-item">
+                  <a href="#">Version Beta</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="footer-title">Légal</h3>
+              <ul className="footer-links">
+                <li className="footer-link-item">
+                  <a href="#">Confidentialité</a>
+                </li>
+                <li className="footer-link-item">
+                  <a href="#">Conditions d'utilisation</a>
+                </li>
+              </ul>
+            </div>
           </div>
-          <span>© 2026 WINE. Tous droits réservés.</span>
+          <div className="footer-bottom">
+            <span className="footer-copyright">© 2026 Excellence Team · Lokossa, Bénin</span>
+            <span className="footer-extra">
+              Fait avec excellence{" "}
+              <Zap className="w-3 h-3 text-[#f5a623] inline-block align-middle ml-1" />
+            </span>
+          </div>
         </div>
       </footer>
     </div>
