@@ -216,6 +216,8 @@ export default function ChatCollaboration({
         {/* Form message input */}
           <form onSubmit={handleSubmit} className="flex gap-2 relative">
             <input 
+              id="chat-message-input"
+              name="message"
               type="text"
               aria-label="Message"
               placeholder="Envoyer un message ou demander à WINE AI..."
@@ -228,7 +230,7 @@ export default function ChatCollaboration({
               type="submit"
               aria-label="Envoyer le message"
               disabled={isGenerating || !userInput.trim()}
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-bg-sidebar flex items-center justify-center transition-all cursor-pointer hover:shadow-[0_0_10px_rgba(0,201,105,0.25)] active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-lg bg-gradient-to-r from-accent to-accent-hover text-[#080d19] flex items-center justify-center transition-all cursor-pointer hover:shadow-[0_0_10px_rgba(0,201,105,0.25)] active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
             >
               <SendHorizontal className="w-4 h-4 stroke-[2.5px]" aria-hidden="true" />
             </button>

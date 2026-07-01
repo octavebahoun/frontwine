@@ -471,7 +471,7 @@ export default function RapportsAnalytics() {
   };
 
   return (
-    <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto text-text-main">
+    <div className="h-full overflow-y-auto px-4 sm:px-6 py-6 space-y-6 w-full text-text-main">
       {exportSuccess && (
         <div aria-live="polite" className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center justify-between animate-fade-in">
           <div className="flex items-center gap-2">

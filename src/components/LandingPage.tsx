@@ -61,6 +61,159 @@ const steps = [
 ];
 
 export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPageProps) {
+  const [activeMockupTab, setActiveMockupTab] = React.useState<number>(2);
+
+  const renderMockupDashboard = () => (
+    <div className="space-y-4 animate-fade-in text-left">
+      <div>
+        <p className="text-[10px] text-accent font-mono uppercase tracking-widest font-black">Workspace Actif • Sprint Alpha</p>
+        <h2 className="text-xl sm:text-2xl font-black tracking-tight text-text-main">Bonjour, Mourchid FOLARIN !</h2>
+        <p className="text-[11px] text-text-sub mt-1 leading-normal">
+          Votre équipe au Bénin vient de pousser la branche d'intégration API. 5 collaborateurs en ligne.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2">
+        <div className="rounded-lg bg-bg-app border border-border-sub p-2">
+          <p className="font-mono text-base font-black text-text-main">84 pts</p>
+          <p className="text-[8px] text-text-dim uppercase font-mono">Vélocité</p>
+        </div>
+        <div className="rounded-lg bg-bg-app border border-border-sub p-2">
+          <p className="font-mono text-base font-black text-text-main">1 / 4</p>
+          <p className="text-[8px] text-text-dim uppercase font-mono">Tâches</p>
+        </div>
+        <div className="rounded-lg bg-bg-app border border-border-sub p-2">
+          <p className="font-mono text-base font-black text-text-main">5 jours</p>
+          <p className="text-[8px] text-text-dim uppercase font-mono">Échéance</p>
+        </div>
+      </div>
+
+      <div className="rounded-xl bg-bg-app border border-border-main p-3 space-y-2">
+        <p className="text-[10px] font-black text-text-main uppercase font-mono border-b border-border-sub pb-1">Tâches Urgentes</p>
+        <div className="flex items-center justify-between text-[10px]">
+          <span className="text-text-sub font-semibold truncate max-w-[70%] text-text-main">Refonte UI Dashboard</span>
+          <span className="px-1 py-0.5 rounded bg-red-500/10 text-red-500 font-mono text-[7px] font-bold">Prioritaire</span>
+        </div>
+        <div className="flex items-center justify-between text-[10px]">
+          <span className="text-text-sub font-semibold truncate max-w-[70%] text-text-main">API d'intégration</span>
+          <span className="px-1 py-0.5 rounded bg-red-500/10 text-red-500 font-mono text-[7px] font-bold">Prioritaire</span>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderMockupKanban = () => (
+    <div className="space-y-4 animate-fade-in text-left">
+      <div>
+        <p className="text-[10px] text-accent font-mono uppercase tracking-widest font-black">Gestion de projet</p>
+        <h2 className="text-xl sm:text-2xl font-black tracking-tight text-text-main">Tableau Kanban Agile</h2>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 min-h-[180px]">
+        {/* À faire */}
+        <div className="rounded-xl bg-bg-app border border-border-sub p-2 flex flex-col gap-2">
+          <p className="text-[8px] font-bold text-text-dim uppercase tracking-wider font-mono">À faire (1)</p>
+          <div className="rounded-lg bg-bg-card border border-border-main p-2 space-y-1 shadow-sm">
+            <p className="text-[9px] font-black text-text-sub leading-tight">Onboarding Talents</p>
+            <span className="inline-block px-1 py-0.2 rounded bg-yellow-500/10 text-yellow-500 font-mono text-[7px] font-bold">Moyen</span>
+          </div>
+        </div>
+        {/* En cours */}
+        <div className="rounded-xl bg-bg-app border border-border-sub p-2 flex flex-col gap-2">
+          <p className="text-[8px] font-bold text-text-dim uppercase tracking-wider font-mono text-accent">En cours (2)</p>
+          <div className="rounded-lg bg-bg-card border border-border-main p-2 space-y-1 shadow-sm">
+            <p className="text-[9px] font-black text-text-sub leading-tight">Refonte UI</p>
+            <span className="inline-block px-1 py-0.2 rounded bg-red-500/10 text-red-500 font-mono text-[7px] font-bold">Prioritaire</span>
+          </div>
+          <div className="rounded-lg bg-bg-card border border-border-main p-2 space-y-1 shadow-sm">
+            <p className="text-[9px] font-black text-text-sub leading-tight">API intégration</p>
+            <span className="inline-block px-1 py-0.2 rounded bg-red-500/10 text-red-500 font-mono text-[7px] font-bold">Prioritaire</span>
+          </div>
+        </div>
+        {/* Terminé */}
+        <div className="rounded-xl bg-bg-app border border-border-sub p-2 flex flex-col gap-2">
+          <p className="text-[8px] font-bold text-text-dim uppercase tracking-wider font-mono">Terminé (1)</p>
+          <div className="rounded-lg bg-bg-card border border-border-main p-2 space-y-1 shadow-sm opacity-60">
+            <p className="text-[9px] font-black text-text-sub leading-tight line-through">Maquettes UX/UI</p>
+            <span className="inline-block px-1 py-0.2 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[7px] font-bold">Fait</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderMockupWineAI = () => (
+    <div className="space-y-4 flex flex-col h-full justify-between animate-fade-in min-h-[250px] text-left">
+      <div>
+        <p className="text-[10px] text-accent font-mono uppercase tracking-widest font-black">Orchestrateur intelligent</p>
+        <h2 className="text-xl sm:text-2xl font-black tracking-tight text-text-main">WINE AI Assistant</h2>
+      </div>
+
+      <div className="flex-1 overflow-y-auto space-y-3 py-2 text-xs">
+        <div className="flex gap-2 max-w-[85%] mr-auto">
+          <div className="w-5 h-5 rounded-full bg-bg-hover border border-border-main flex items-center justify-center text-[8px] font-black text-accent shrink-0">M</div>
+          <div className="rounded-2xl bg-bg-app border border-border-sub p-2.5 text-[10px] text-text-sub leading-relaxed">
+            WINE AI, peux-tu résumer l'avancement du sprint en cours ?
+          </div>
+        </div>
+        <div className="flex gap-2 max-w-[85%] ml-auto flex-row-reverse">
+          <div className="w-5 h-5 rounded-full bg-accent flex items-center justify-center text-[8px] font-black text-bg-sidebar shrink-0">AI</div>
+          <div className="rounded-2xl bg-accent-muted border border-accent/10 p-2.5 text-[10px] text-accent leading-relaxed">
+            Certainement ! Le **Sprint Alpha** progresse. Nous avons **1 tâche complétée** et **2 en cours**. La vélocité projetée est de **84 points**. La livraison finale est estimée dans **5 jours**.
+          </div>
+        </div>
+      </div>
+
+      <div className="relative shrink-0 mt-2">
+        <input
+          type="text"
+          disabled
+          placeholder="Envoyer un message à WINE AI..."
+          className="w-full h-9 bg-bg-app border border-border-main rounded-xl pl-3 pr-10 text-[10px] text-text-main focus:outline-none"
+        />
+        <div className="absolute right-1 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-accent text-[#080d19] flex items-center justify-center">
+          <ArrowRight className="w-3.5 h-3.5" />
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderMockupRapports = () => (
+    <div className="space-y-4 animate-fade-in text-left">
+      <div>
+        <p className="text-[10px] text-accent font-mono uppercase tracking-widest font-black">Analyses & Statistiques</p>
+        <h2 className="text-xl sm:text-2xl font-black tracking-tight text-text-main">Indicateurs de Vélocité</h2>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        <div className="rounded-xl bg-bg-app border border-border-sub p-3 space-y-3">
+          <p className="text-[9px] font-black text-text-sub uppercase font-mono">Historique Sprints</p>
+          <div className="flex items-end justify-between h-20 px-2 pt-2 border-b border-l border-border-main">
+            <div className="w-3 bg-accent-muted rounded-t h-8" title="Sprint 1: 45 pts" />
+            <div className="w-3 bg-accent/40 rounded-t h-12" title="Sprint 2: 62 pts" />
+            <div className="w-3 bg-accent rounded-t h-16 animate-pulse" title="Sprint 3: 84 pts" />
+          </div>
+          <div className="flex justify-between text-[7px] text-text-dim font-mono">
+            <span>S1 (45)</span>
+            <span>S2 (62)</span>
+            <span>S3 (84)</span>
+          </div>
+        </div>
+
+        <div className="rounded-xl bg-bg-app border border-border-sub p-3 flex flex-col justify-between">
+          <p className="text-[9px] font-black text-text-sub uppercase font-mono">Progression Globale</p>
+          <div className="flex items-center justify-center py-2">
+            <div className="relative w-16 h-16 rounded-full border-4 border-border-sub flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full border-4 border-accent border-r-transparent border-b-transparent rotate-45" />
+              <span className="font-mono text-xs font-black text-text-main">25%</span>
+            </div>
+          </div>
+          <p className="text-[8px] text-text-dim text-center">1 sur 4 tâches fermées</p>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-bg-app text-text-main overflow-x-hidden font-sans selection:bg-accent/25">
       {/* ambient glow */}
@@ -112,8 +265,8 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
             </button>
             <button
               onClick={onEnterApp}
-              aria-label="Entrer dans l'application"
-              className="group h-9 px-3 sm:px-4 rounded-lg bg-accent text-text-main font-bold text-xs transition-all hover:bg-[#3fe08f] flex items-center gap-1.5 cursor-pointer"
+              aria-label="Lancer l'application"
+              className="group h-9 px-3 sm:px-4 rounded-lg bg-accent text-[#080d19] font-bold text-xs transition-all hover:bg-[#3fe08f] flex items-center gap-1.5 cursor-pointer"
             >
               Lancer
               <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
@@ -125,25 +278,25 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
 
       <main>
         <section className="relative px-4 sm:px-6 pt-12 sm:pt-16 pb-8 text-center">
-          <div className="arcade-fade-up inline-flex items-center gap-1.5 rounded-full border border-border-main bg-bg-card px-2.5 py-1 text-xs font-semibold text-text-sub shadow-sm mb-5">
+          <div className="landing-fade-up inline-flex items-center gap-1.5 rounded-full border border-border-main bg-bg-card px-2.5 py-1 text-xs font-semibold text-text-sub shadow-sm mb-5">
             <Sparkles className="w-3 h-3 text-accent" aria-hidden="true" />
             Le workspace qui rend votre travail présentable en quelques minutes
           </div>
 
-          <h1 className="arcade-fade-up arcade-delay-1 max-w-4xl mx-auto text-[2.2rem] sm:text-5xl lg:text-[4rem] leading-[1.05] tracking-[-0.03em] font-black text-text-main">
+          <h1 className="landing-fade-up landing-delay-1 max-w-4xl mx-auto text-[2.2rem] sm:text-5xl lg:text-[4rem] leading-[1.05] tracking-[-0.03em] font-black text-text-main">
             Votre équipe avance.
             <span className="block text-accent">WINE raconte le progrès.</span>
           </h1>
 
-          <p className="arcade-fade-up arcade-delay-2 max-w-2xl mx-auto mt-5 text-sm sm:text-base leading-relaxed text-text-sub">
+          <p className="landing-fade-up landing-delay-2 max-w-2xl mx-auto mt-5 text-sm sm:text-base leading-relaxed text-text-sub">
             Créez un espace clair pour piloter projets, contenus, talents et rapports. Une interface premium, lisible et adaptée aux équipes qui exécutent depuis Lokossa, Cotonou et partout au Bénin.
           </p>
 
-          <div className="arcade-fade-up arcade-delay-3 mt-6 flex flex-col sm:flex-row items-center justify-center gap-2">
+          <div className="landing-fade-up landing-delay-3 mt-6 flex flex-col sm:flex-row items-center justify-center gap-2">
             <button
               onClick={onEnterApp}
-              aria-label="Entrer dans l'application"
-              className="group w-full sm:w-auto h-10 px-5 rounded-lg bg-accent text-text-main font-black text-sm hover:bg-[#3fe08f] transition-all flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(0,201,105,0.15)]"
+              aria-label="Explorer le workspace"
+              className="group w-full sm:w-auto h-10 px-5 rounded-lg bg-accent text-[#080d19] font-black text-sm hover:bg-[#3fe08f] transition-all flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(0,201,105,0.15)]"
             >
               Explorer le workspace
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
@@ -158,7 +311,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
             </button>
           </div>
 
-          <div className="arcade-fade-up arcade-delay-4 mt-10 max-w-5xl mx-auto">
+          <div className="landing-fade-up landing-delay-4 mt-10 max-w-5xl mx-auto">
             <div className="rounded-[20px] border border-border-main bg-bg-card p-3 sm:p-2 shadow-lg">
               <div id="product" className="rounded-[16px] overflow-hidden border border-border-main bg-bg-app text-text-main">
                 <div className="h-11 px-4 border-b border-border-main flex items-center justify-between bg-bg-card/50">
@@ -184,90 +337,100 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                       ["Rapports", BarChart3]
                     ].map(([label, Icon], index) => {
                       const LucideIcon = Icon as typeof Layers;
+                      const isActive = activeMockupTab === index;
                       return (
-                        <div
+                        <button
                           key={label as string}
-                          className={`rounded-lg px-2.5 py-2 flex items-center gap-2 text-xs font-semibold ${index === 2 ? "bg-accent-muted text-accent" : "text-text-sub hover:bg-bg-hover"}`}
+                          onClick={() => setActiveMockupTab(index)}
+                          className={`w-full text-left rounded-lg px-2.5 py-2 flex items-center gap-2 text-xs font-semibold cursor-pointer transition-colors ${isActive ? "bg-accent-muted text-accent" : "text-text-sub hover:bg-bg-hover"}`}
                         >
                           <LucideIcon className="w-3.5 h-3.5" aria-hidden="true" />
                           {label as string}
-                        </div>
+                        </button>
                       );
                     })}
                   </div>
 
-                  <div className="bg-bg-card text-text-main p-4 sm:p-5">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
-                      <div>
-                        <p className="text-[10px] text-accent font-mono uppercase tracking-widest font-black">Marketing & Diffusion</p>
-                        <h2 className="text-xl sm:text-2xl font-black tracking-tight text-text-main">Planification réseaux sociaux</h2>
-                      </div>
-                      <button className="h-8 px-3 rounded-lg bg-accent text-text-main text-xs font-black flex items-center gap-1.5 w-max">
-                        <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
-                        Planifier un post
-                      </button>
-                    </div>
-
-                    <div className="grid lg:grid-cols-12 gap-3 mb-3">
-                      <div className="lg:col-span-7 rounded-xl bg-bg-app border border-border-main p-4 shadow-sm">
-                        <div className="flex items-start justify-between">
+                  <div className="bg-bg-card text-text-main p-4 sm:p-5 flex-1 flex flex-col justify-between min-h-[380px]">
+                    {activeMockupTab === 0 && renderMockupDashboard()}
+                    {activeMockupTab === 1 && renderMockupKanban()}
+                    {activeMockupTab === 2 && (
+                      <div className="animate-fade-in text-left">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
                           <div>
-                            <p className="text-[9px] font-mono uppercase tracking-widest text-accent font-black">Campagne active</p>
-                            <h3 className="mt-1 text-lg font-black tracking-tight text-text-main">Présence digitale WINE</h3>
-                            <p className="mt-1.5 text-xs text-text-sub leading-relaxed">Prochaine diffusion à 11:00 pour LinkedIn et WhatsApp Business.</p>
+                            <p className="text-[10px] text-accent font-mono uppercase tracking-widest font-black">Marketing & Diffusion</p>
+                            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-text-main">Planification réseaux sociaux</h2>
                           </div>
-                          <Sparkles className="w-5 h-5 text-accent" aria-hidden="true" />
+                          <button className="h-8 px-3 rounded-lg bg-accent text-[#080d19] text-xs font-black flex items-center gap-1.5 w-max">
+                            <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
+                            Planifier un post
+                          </button>
                         </div>
-                        <div className="grid grid-cols-3 gap-2 mt-4">
-                          {[
-                            ["3", "Planifiés"],
-                            ["2", "Canaux"],
-                            ["84", "Score"]
-                          ].map(([value, label]) => (
-                            <div key={label} className="rounded-lg bg-bg-card border border-border-sub p-2">
-                              <p className="font-mono text-lg font-black text-text-main">{value}</p>
-                              <p className="text-[10px] sm:text-[9px] text-text-dim uppercase font-mono">{label}</p>
+
+                        <div className="grid lg:grid-cols-12 gap-3 mb-3">
+                          <div className="lg:col-span-7 rounded-xl bg-bg-app border border-border-main p-4 shadow-sm">
+                            <div className="flex items-start justify-between">
+                              <div>
+                                <p className="text-[9px] font-mono uppercase tracking-widest text-accent font-black">Campagne active</p>
+                                <h3 className="mt-1 text-lg font-black tracking-tight text-text-main">Présence digitale WINE</h3>
+                                <p className="mt-1.5 text-xs text-text-sub leading-relaxed">Prochaine diffusion à 11:00 pour LinkedIn et WhatsApp Business.</p>
+                              </div>
+                              <Sparkles className="w-5 h-5 text-accent" aria-hidden="true" />
+                            </div>
+                            <div className="grid grid-cols-3 gap-2 mt-4">
+                              {[
+                                ["3", "Planifiés"],
+                                ["2", "Canaux"],
+                                ["84", "Score"]
+                              ].map(([value, label]) => (
+                                <div key={label} className="rounded-lg bg-bg-card border border-border-sub p-2">
+                                  <p className="font-mono text-lg font-black text-text-main">{value}</p>
+                                  <p className="text-[10px] sm:text-[9px] text-text-dim uppercase font-mono">{label}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="lg:col-span-5 grid sm:grid-cols-2 gap-3">
+                            <div className="rounded-xl bg-accent-muted border border-accent/20 p-4 flex flex-col justify-between">
+                              <Clock className="w-4 h-4 text-accent mb-2" aria-hidden="true" />
+                              <div>
+                                <p className="text-xl font-black font-mono text-text-main">11:00</p>
+                                <p className="text-[10px] text-text-sub mt-1 leading-normal">Recommandé par WINE AI.</p>
+                              </div>
+                            </div>
+                            <div className="rounded-xl bg-bg-app border border-border-main p-4 flex flex-col justify-between">
+                              <Users2 className="w-4 h-4 text-text-sub mb-2" aria-hidden="true" />
+                              <div>
+                                <p className="text-xl font-black font-mono text-text-main">5</p>
+                                <p className="text-[10px] text-text-sub mt-1 leading-normal">collaborateurs actifs.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-3">
+                          {["12 Juin", "13 Juin", "14 Juin"].map((day, index) => (
+                            <div key={day} className="rounded-xl bg-bg-app border border-border-main p-4 sm:p-3 min-h-28 flex flex-col justify-between">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="font-black text-xs text-text-main">{day}</span>
+                                <span className="rounded bg-bg-card px-1.5 py-0.5 text-[9px] font-mono text-text-dim">0{index + 1}</span>
+                              </div>
+                              <div className="rounded-lg border border-border-sub bg-bg-card p-2">
+                                <span className="inline-flex rounded bg-accent text-[#080d19] px-1.5 py-0.5 text-[9px] sm:text-[8px] font-mono mb-1.5 font-bold">
+                                  {index === 0 ? "WA" : index === 1 ? "LI" : "IG"}
+                                </span>
+                                <p className="text-[10px] leading-relaxed text-text-sub">
+                                  {index === 0 ? "Tutoriel d'intégration pour l'équipe produit." : index === 1 ? "Point vélocité et avancement Sprint Alpha." : "Coulisses WINE entre Lokossa et Cotonou."}
+                                </p>
+                              </div>
                             </div>
                           ))}
                         </div>
                       </div>
-
-                      <div className="lg:col-span-5 grid sm:grid-cols-2 gap-3">
-                        <div className="rounded-xl bg-accent-muted border border-accent/20 p-4 flex flex-col justify-between">
-                          <Clock className="w-4 h-4 text-accent mb-2" aria-hidden="true" />
-                          <div>
-                            <p className="text-xl font-black font-mono text-text-main">11:00</p>
-                            <p className="text-[10px] text-text-sub mt-1 leading-normal">Recommandé par WINE AI.</p>
-                          </div>
-                        </div>
-                        <div className="rounded-xl bg-bg-app border border-border-main p-4 flex flex-col justify-between">
-                          <Users2 className="w-4 h-4 text-text-sub mb-2" aria-hidden="true" />
-                          <div>
-                            <p className="text-xl font-black font-mono text-text-main">5</p>
-                            <p className="text-[10px] text-text-sub mt-1 leading-normal">collaborateurs actifs.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-3">
-                      {["12 Juin", "13 Juin", "14 Juin"].map((day, index) => (
-                        <div key={day} className="rounded-xl bg-bg-app border border-border-main p-4 sm:p-3 min-h-28 flex flex-col justify-between">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="font-black text-xs text-text-main">{day}</span>
-                            <span className="rounded bg-bg-card px-1.5 py-0.5 text-[9px] font-mono text-text-dim">0{index + 1}</span>
-                          </div>
-                          <div className="rounded-lg border border-border-sub bg-bg-card p-2">
-                            <span className="inline-flex rounded bg-accent text-text-main px-1.5 py-0.5 text-[9px] sm:text-[8px] font-mono mb-1.5 font-bold">
-                              {index === 0 ? "WA" : index === 1 ? "LI" : "IG"}
-                            </span>
-                            <p className="text-[10px] leading-relaxed text-text-sub">
-                              {index === 0 ? "Tutoriel d'intégration pour l'équipe produit." : index === 1 ? "Point vélocité et avancement Sprint Alpha." : "Coulisses WINE entre Lokossa et Cotonou."}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                    )}
+                    {activeMockupTab === 3 && renderMockupWineAI()}
+                    {activeMockupTab === 4 && renderMockupRapports()}
                   </div>
                 </div>
               </div>
@@ -276,7 +439,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
 
           <p className="mt-6 text-xs text-text-dim font-semibold">Conçu pour les équipes qui veulent montrer le vrai état du travail, simplement.</p>
           <div className="mt-4 overflow-hidden max-w-full">
-            <div className="arcade-marquee flex w-max items-center gap-2">
+            <div className="landing-marquee flex w-max items-center gap-2">
               {[...toolLogos, ...toolLogos].map((logo, index) => (
                 <span key={`${logo}-${index}`} className="rounded-lg border border-border-main bg-bg-card px-3.5 py-1.5 text-xs font-black text-text-sub shadow-sm">
                   {logo}
@@ -327,8 +490,8 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
               </p>
               <button
                 onClick={onEnterApp}
-                aria-label="Entrer dans l'application"
-                className="mt-5 h-11 px-4 rounded-lg bg-accent text-text-main font-black hover:bg-[#3fe08f] transition-colors inline-flex items-center gap-1 text-xs cursor-pointer"
+                aria-label="Entrer dans WINE"
+                className="mt-5 h-11 px-4 rounded-lg bg-accent text-[#080d19] font-black hover:bg-[#3fe08f] transition-colors inline-flex items-center gap-1 text-xs cursor-pointer"
               >
                 Entrer dans WINE
                 <ChevronRight className="w-4 h-4" aria-hidden="true" />
@@ -338,7 +501,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
             <div className="grid gap-3">
               {steps.map(([num, title, text]) => (
                 <div key={num} className="rounded-[16px] bg-bg-card border border-border-main p-4 flex gap-4 items-center">
-                  <div className="w-9 h-9 rounded-lg bg-accent text-text-main flex items-center justify-center font-mono font-black flex-shrink-0 text-sm">
+                  <div className="w-9 h-9 rounded-lg bg-accent text-[#080d19] flex items-center justify-center font-mono font-black flex-shrink-0 text-sm">
                     {num}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -380,7 +543,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
               ].map((step, i) => (
                 <div key={i} className="rounded-2xl bg-bg-app border border-border-main p-6 relative overflow-hidden group hover:border-accent/50 transition-colors">
                   <div className="absolute top-0 right-0 p-4">
-                    <span className={`text-[10px] font-mono font-bold px-2 py-1 rounded-md ${step.status === 'Terminé' ? 'bg-accent/10 text-accent' : step.status === 'En cours' ? 'bg-[#ffd166]/10 text-[#ffd166]' : 'bg-bg-hover text-text-dim'}`}>
+                    <span className={`text-[10px] font-mono font-bold px-2 py-1 rounded-md ${step.status === 'Terminé' ? 'bg-accent/10 text-accent' : step.status === 'En cours' ? 'bg-[#ffd166]/10 text-[#ffd166]' : 'bg-bg-hover text-text-sub'}`}>
                       {step.status}
                     </span>
                   </div>
@@ -439,8 +602,8 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
             </p>
             <button
               onClick={onEnterApp}
-              aria-label="Entrer dans l'application"
-              className="mt-6 h-10 px-6 rounded-lg bg-accent text-text-main font-black hover:bg-[#3fe08f] transition-colors inline-flex items-center gap-2 text-sm cursor-pointer"
+              aria-label="Lancer la démo WINE"
+              className="mt-6 h-10 px-6 rounded-lg bg-accent text-[#080d19] font-black hover:bg-[#3fe08f] transition-colors inline-flex items-center gap-2 text-sm cursor-pointer"
             >
               Lancer la démo WINE
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -449,7 +612,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
         </section>
       </main>
 
-      <footer role="contentinfo" className="border-t border-border-main py-6 text-xs text-text-dim bg-bg-card/30">
+      <footer role="contentinfo" className="border-t border-border-main py-6 text-xs text-text-sub bg-bg-card/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="font-black text-text-main">WINE Workspace</div>
           <div className="flex items-center gap-4 flex-wrap justify-center font-medium">

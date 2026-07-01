@@ -57,6 +57,7 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
                 <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="task-title">Titre</label>
                 <input 
                   id="task-title"
+                  name="title"
                   type="text" 
                   value={editedTask.title}
                   onChange={e => setEditedTask({...editedTask, title: e.target.value})}
@@ -67,6 +68,7 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
                 <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="task-desc">Description</label>
                 <textarea 
                   id="task-desc"
+                  name="description"
                   value={editedTask.description}
                   onChange={e => setEditedTask({...editedTask, description: e.target.value})}
                   className="w-full bg-bg-card border border-border-main rounded-lg p-3 text-sm text-text-main min-h-[150px] focus:outline-none focus:border-accent/50"
@@ -78,6 +80,7 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
                   <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="task-priority">Priorité</label>
                   <select
                     id="task-priority"
+                    name="priority"
                     value={editedTask.priority}
                     onChange={e => setEditedTask({...editedTask, priority: e.target.value as Task['priority']})}
                     className="w-full h-10 bg-bg-card border border-border-main rounded-lg px-3 text-sm text-text-main focus:outline-none"
@@ -91,6 +94,7 @@ export default function TaskModal({ task, isOpen, onClose, onSave }: TaskModalPr
                   <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="task-status">Statut</label>
                   <select
                     id="task-status"
+                    name="status"
                     value={editedTask.status}
                     onChange={e => setEditedTask({...editedTask, status: e.target.value as Task['status']})}
                     className="w-full h-10 bg-bg-card border border-border-main rounded-lg px-3 text-sm text-text-main focus:outline-none"

@@ -76,7 +76,7 @@ export default function RHTalents() {
   ];
 
   return (
-    <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto text-text-main relative">
+    <div className="h-full overflow-y-auto px-4 sm:px-6 py-6 space-y-6 w-full text-text-main relative">
       {notice && (
         <div aria-live="polite" className="p-3 rounded-xl bg-accent-muted border border-accent/20 text-accent text-xs flex items-center justify-between gap-3">
           <span>{notice}</span>

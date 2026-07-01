@@ -136,6 +136,8 @@ export default function AgentWineModule() {
                 <Bot className={`w-4 h-4 ${isProcessing ? "text-accent animate-pulse" : "text-text-dim"}`} />
               </div>
               <input
+                id="agent-command-input"
+                name="command"
                 type="text"
                 aria-label="Commande"
                 value={input}
@@ -149,7 +151,7 @@ export default function AgentWineModule() {
               type="submit"
               aria-label="Exécuter la commande"
               disabled={!input.trim() || isProcessing}
-              className="shrink-0 flex items-center gap-2 px-4 h-11 rounded-xl bg-accent text-bg-sidebar text-sm font-semibold hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="shrink-0 flex items-center gap-2 px-4 h-11 rounded-xl bg-accent text-[#080d19] text-sm font-semibold hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <span className="hidden sm:inline">Exécuter</span>
               <Send className="w-4 h-4" aria-hidden="true" />

@@ -34,6 +34,8 @@ export default function Header({ title, onAddTaskClick, notificationsCount = 2, 
         <div className="relative hidden md:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-dim" aria-hidden="true" />
           <input 
+            id="search-input"
+            name="search"
             type="text" 
             aria-label="Rechercher"
             placeholder="Rechercher une tâche, un projet..." 
@@ -56,7 +58,7 @@ export default function Header({ title, onAddTaskClick, notificationsCount = 2, 
           <button 
             onClick={onAddTaskClick}
             aria-label="Ajouter une tâche rapide"
-            className="h-9 px-3.5 rounded-lg bg-accent text-bg-sidebar font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(0,201,105,0.25)] hover:scale-[1.01] active:scale-95 transition-all cursor-pointer"
+            className="h-9 px-3.5 rounded-lg bg-accent text-[#080d19] font-bold text-xs flex items-center gap-1.5 hover:shadow-[0_0_15px_rgba(0,201,105,0.25)] hover:scale-[1.01] active:scale-95 transition-all cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5 stroke-[3px]" aria-hidden="true" />
             <span className="hidden sm:inline">Nouvelle Tâche</span>

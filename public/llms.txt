@@ -1,0 +1,9 @@
+# WINE Workspace
+
+WINE Workspace is a premium collaborative workspace for managing projects, editorial planification, team talents, and reports.
+
+## Navigation
+- [Home](http://localhost:3000/)
+- [Product Section](http://localhost:3000/#product)
+- [Features](http://localhost:3000/#formats)
+- [Roadmap](http://localhost:3000/#roadmap)
