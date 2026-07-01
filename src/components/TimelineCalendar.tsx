@@ -60,7 +60,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
   };
 
   return (
-    <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="h-full overflow-y-auto px-4 sm:px-6 py-6 space-y-6 w-full">
       {/* Header bar */}
       <div className="flex items-center justify-between">
         <div>
@@ -93,6 +93,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
               <label className="text-[10px] uppercase font-mono text-text-dim" htmlFor="post-content">Contenu du post</label>
               <textarea
                 id="post-content"
+                name="content"
                 required
                 placeholder="Rédigez le texte du post..."
                 value={title}
@@ -105,6 +106,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
                 <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="post-platform">Réseau Social</label>
                 <select
                   id="post-platform"
+                  name="platform"
                   value={platform}
                   onChange={e => setPlatform(e.target.value as CalendarEvent['platform'])}
                   className="w-full h-9 bg-bg-card border border-border-main rounded-lg px-2 text-xs text-text-main"
@@ -119,6 +121,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
                 <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="post-time">Heure de publication</label>
                 <input
                   id="post-time"
+                  name="time"
                   type="time"
                   value={scheduledTime}
                   onChange={e => setScheduledTime(e.target.value)}
@@ -129,6 +132,7 @@ export default function TimelineCalendar({ events, onAddEvent }: TimelineCalenda
                 <label className="text-[10px] uppercase font-mono text-text-dim block mb-1" htmlFor="post-day">Jour du mois</label>
                 <select
                   id="post-day"
+                  name="day"
                   value={selectedDay}
                   onChange={e => setSelectedDay(parseInt(e.target.value))}
                   className="w-full h-9 bg-bg-card border border-border-main rounded-lg px-2 text-xs text-text-main"

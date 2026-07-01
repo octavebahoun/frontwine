@@ -64,7 +64,7 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
   };
 
   return (
-    <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="h-full overflow-y-auto px-4 sm:px-6 py-6 space-y-6 w-full">
       {/* Kanban Actions bar */}
       <div className="flex items-center justify-between">
         <div>
@@ -97,6 +97,7 @@ export default function KanbanBoard({ tasks, onAddTask, onUpdateTaskStatus, onDe
                 <label className="text-[10px] uppercase font-mono text-text-dim" htmlFor="kanban-title">Titre de la tâche</label>
               <input
                 id="kanban-title"
+                name="title"
                 type="text"
                 required
                 placeholder="ex: Refonte Dashboard ou Intégration API"

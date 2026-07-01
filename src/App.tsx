@@ -339,7 +339,7 @@ export default function App() {
       />
 
       <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
-        <div className={`md:hidden h-14 px-4 border-b border-border-sub bg-bg-app/95 flex items-center justify-between`}>
+        <div className={`md:hidden h-14 px-4 border-b border-border-sub bg-bg-app/95 flex items-center justify-between shrink-0`}>
           <button
             type="button"
             aria-label="Ouvrir la navigation"
@@ -355,28 +355,30 @@ export default function App() {
           </div>
         </div>
 
-        <Header 
-          title={getHeaderTitle()} 
-          theme={theme}
-          setTheme={setTheme}
-          onAddTaskClick={activeTab === "kanban" || activeTab === "tasks" ? () => handleAddTask({
-            title: "Nouvelle tâche urgente",
-            description: "Ajoutée depuis le raccourci d'action rapide.",
-            status: "todo",
-            priority: "medium",
-            dueDate: "Auj. 18:00",
-            assignee: {
-              name: "Wasfade TONOUKOIN",
-              avatar: "/team/wasfade.webp"
-            },
-            tags: ["Sprint Alpha"]
-          }) : undefined}
-        />
+        <div className="flex-1 flex flex-col h-full overflow-hidden max-w-[1600px] w-full mx-auto">
+          <Header 
+            title={getHeaderTitle()} 
+            theme={theme}
+            setTheme={setTheme}
+            onAddTaskClick={activeTab === "kanban" || activeTab === "tasks" ? () => handleAddTask({
+              title: "Nouvelle tâche urgente",
+              description: "Ajoutée depuis le raccourci d'action rapide.",
+              status: "todo",
+              priority: "medium",
+              dueDate: "Auj. 18:00",
+              assignee: {
+                name: "Wasfade TONOUKOIN",
+                avatar: "/team/wasfade.webp"
+              },
+              tags: ["Sprint Alpha"]
+            }) : undefined}
+          />
 
-        {/* Dynamic Inner view container */}
-        <main id="main-content" className="flex-1 min-h-0 overflow-hidden bg-bg-app">
-          {renderActiveView()}
-        </main>
+          {/* Dynamic Inner view container */}
+          <main id="main-content" className="flex-1 min-h-0 overflow-hidden bg-bg-app">
+            {renderActiveView()}
+          </main>
+        </div>
       </div>
     </div>
   );

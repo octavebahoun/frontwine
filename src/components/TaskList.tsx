@@ -28,7 +28,7 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUp
   const progressPercent = tasks.length > 0 ? Math.round((doneCount / tasks.length) * 100) : 0;
 
   return (
-    <div className="h-full overflow-y-auto p-4 sm:p-6 space-y-6 max-w-7xl mx-auto">
+    <div className="h-full overflow-y-auto px-4 sm:px-6 py-6 space-y-6 w-full">
       {/* Search and Filters Bar */}
       <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-4">
         {/* Progress Bar Header */}
@@ -54,6 +54,8 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUp
           <div className="md:col-span-2 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-dim" />
             <input 
+              id="task-search-input"
+              name="search"
               type="text" 
               aria-label="Rechercher une tâche"
               placeholder="Rechercher par mot-clé..."
@@ -66,6 +68,8 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUp
           {/* Priority filter */}
           <div>
             <select
+              id="priority-filter"
+              name="priorityFilter"
               value={priorityFilter}
               onChange={e => setPriorityFilter(e.target.value)}
               aria-label="Filtrer par priorité"
@@ -81,6 +85,8 @@ export default function TaskList({ tasks, onToggleTaskStatus, onDeleteTask, onUp
           {/* Status filter */}
           <div>
             <select
+              id="status-filter"
+              name="statusFilter"
               value={statusFilter}
               onChange={e => setStatusFilter(e.target.value)}
               aria-label="Filtrer par statut"

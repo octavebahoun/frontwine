@@ -28,7 +28,7 @@ export default function DashboardHome({ tasks, onToggleTaskStatus, setActiveTab 
   });
 
   return (
-    <div className="h-full overflow-y-auto p-4 sm:p-5 space-y-5 max-w-7xl mx-auto">
+    <div className="h-full overflow-y-auto px-4 sm:px-6 py-5 space-y-5 w-full">
       {/* Top Banner Greeting */}
       <div className="p-5 md:p-6 rounded-2xl bg-bg-card border border-border-main relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 max-w-full bg-accent/5 rounded-full blur-[90px] pointer-events-none" />
