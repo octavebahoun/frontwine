@@ -46,7 +46,7 @@ export default function App() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [chatError, setChatError] = useState<string | null>(null);
-  const [theme, setTheme] = useState<"light" | "dark">(loadTheme());
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   // ============================================================
   // Restore session from localStorage on mount
@@ -282,47 +282,47 @@ export default function App() {
     switch (activeTab) {
       case "dashboard":
         return (
-          <DashboardHome 
-            tasks={tasks} 
-            onToggleTaskStatus={handleToggleTaskStatus} 
+          <DashboardHome
+            tasks={tasks}
+            onToggleTaskStatus={handleToggleTaskStatus}
             setActiveTab={handleSetActiveTab}
             currentUser={currentUser}
           />
         );
       case "kanban":
         return (
-          <KanbanBoard 
-            tasks={tasks} 
-            onAddTask={handleAddTask} 
-            onUpdateTaskStatus={handleUpdateTaskStatus} 
-            onDeleteTask={handleDeleteTask} 
+          <KanbanBoard
+            tasks={tasks}
+            onAddTask={handleAddTask}
+            onUpdateTaskStatus={handleUpdateTaskStatus}
+            onDeleteTask={handleDeleteTask}
             onUpdateFullTask={handleUpdateFullTask}
           />
         );
       case "tasks":
         return (
-          <TaskList 
-            tasks={tasks} 
-            onToggleTaskStatus={handleToggleTaskStatus} 
-            onDeleteTask={handleDeleteTask} 
+          <TaskList
+            tasks={tasks}
+            onToggleTaskStatus={handleToggleTaskStatus}
+            onDeleteTask={handleDeleteTask}
             onUpdateFullTask={handleUpdateFullTask}
           />
         );
       case "chat":
         return (
-          <ChatCollaboration 
-            messages={messages} 
-            onSendMessage={handleSendMessage} 
-            isGenerating={isGenerating} 
+          <ChatCollaboration
+            messages={messages}
+            onSendMessage={handleSendMessage}
+            isGenerating={isGenerating}
             errorMessage={chatError}
             onDismissError={() => setChatError(null)}
           />
         );
       case "timeline":
         return (
-          <TimelineCalendar 
-            events={events} 
-            onAddEvent={handleAddEvent} 
+          <TimelineCalendar
+            events={events}
+            onAddEvent={handleAddEvent}
           />
         );
       case "reports":
@@ -380,8 +380,8 @@ export default function App() {
         />
       )}
 
-      <Sidebar 
-        activeTab={activeTab} 
+      <Sidebar
+        activeTab={activeTab}
         setActiveTab={handleSetActiveTab}
         onExitApp={handleLogout}
         isCollapsed={isSidebarCollapsed}
@@ -423,8 +423,8 @@ export default function App() {
         </div>
 
         <div className="flex-1 flex flex-col h-full overflow-hidden max-w-[1600px] w-full mx-auto">
-          <Header 
-            title={getHeaderTitle()} 
+          <Header
+            title={getHeaderTitle()}
             theme={theme}
             setTheme={setTheme}
             currentUser={currentUser}
