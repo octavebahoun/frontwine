@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Plus, Trash2, ArrowLeft, ArrowRight } from "lucide-react";
-import type { Task } from "../types";
+import { Task } from "../types";
 import TaskModal from "./TaskModal";
 
 interface KanbanBoardProps {

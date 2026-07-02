@@ -12,7 +12,7 @@ import TimelineCalendar from "./components/TimelineCalendar";
 import RapportsAnalytics from "./components/RapportsAnalytics";
 import RHTalents from "./components/RHTalents";
 import AgentWineModule from "./components/AgentWineModule";
-import type { Task, ChatMessage, CalendarEvent, AppNotification } from "./types";
+import { Task, ChatMessage, CalendarEvent } from "./types";
 import {
   type DemoUser,
   INITIAL_TASKS,
@@ -28,10 +28,6 @@ import {
   loadMessages,
   saveTheme,
   loadTheme,
-  saveNotifications,
-  loadNotifications,
-  relativeTime,
-  getMockAIResponse,
   resetDemoData,
 } from "./demoData";
 
@@ -72,38 +68,6 @@ export default function App() {
       document.documentElement.classList.remove("light-theme");
     }
   }, [theme]);
-
-  // ============================================================
-  // Notifications — localStorage persisted, générées par les vraies actions
-  // ============================================================
-  const [notifications, setNotifications] = useState<AppNotification[]>(loadNotifications);
-
-  const pushNotification = useCallback((text: string) => {
-    setNotifications(prev => {
-      const next: AppNotification[] = [
-        { id: `notif_${Math.random().toString(36).substr(2, 9)}`, text, time: "À l'instant", createdAt: Date.now(), unread: true },
-        ...prev,
-      ].slice(0, 30);
-      saveNotifications(next);
-      return next;
-    });
-  }, []);
-
-  const handleMarkAllRead = useCallback(() => {
-    setNotifications(prev => {
-      const next = prev.map(n => ({ ...n, unread: false }));
-      saveNotifications(next);
-      return next;
-    });
-  }, []);
-
-  // Rafraîchit les libellés "il y a X min" affichés, sans changer les données
-  useEffect(() => {
-    const id = setInterval(() => {
-      setNotifications(prev => prev.map(n => ({ ...n, time: relativeTime(n.createdAt) })));
-    }, 60000);
-    return () => clearInterval(id);
-  }, []);
 
   // ============================================================
   // Tasks — localStorage persisted
@@ -183,38 +147,27 @@ export default function App() {
       id: `task_${Math.random().toString(36).substr(2, 9)}`
     };
     persistTasks(prev => [task, ...prev]);
-    pushNotification(`Nouvelle tâche créée : "${task.title}"`);
   };
 
   const handleUpdateTaskStatus = (id: string, newStatus: Task['status']) => {
     persistTasks(prev => prev.map(t => t.id === id ? { ...t, status: newStatus } : t));
-    const task = tasks.find(t => t.id === id);
-    if (task) {
-      const label = newStatus === 'done' ? 'Terminée' : newStatus === 'inprogress' ? 'En cours' : 'À faire';
-      pushNotification(`"${task.title}" déplacée vers ${label}`);
-    }
   };
 
   const handleUpdateFullTask = (updatedTask: Task) => {
     persistTasks(prev => prev.map(t => t.id === updatedTask.id ? updatedTask : t));
-    pushNotification(`Tâche "${updatedTask.title}" mise à jour`);
   };
 
   const handleToggleTaskStatus = (id: string) => {
     persistTasks(prev => prev.map(t => {
       if (t.id === id) {
-        const done = t.status !== 'done';
-        pushNotification(done ? `"${t.title}" marquée comme terminée` : `"${t.title}" réouverte`);
-        return { ...t, status: done ? 'done' : 'todo' };
+        return { ...t, status: t.status === 'done' ? 'todo' : 'done' };
       }
       return t;
     }));
   };
 
   const handleDeleteTask = (id: string) => {
-    const task = tasks.find(t => t.id === id);
     persistTasks(prev => prev.filter(t => t.id !== id));
-    if (task) pushNotification(`Tâche "${task.title}" supprimée`);
   };
 
   // ============================================================
@@ -226,11 +179,10 @@ export default function App() {
       id: `evt_${Math.random().toString(36).substr(2, 9)}`
     };
     persistEvents(prev => [...prev, event]);
-    pushNotification(`Publication planifiée sur ${newEvent.platform} pour ${newEvent.dayName} ${newEvent.scheduledTime}`);
   };
 
   // ============================================================
-  // Chat — 100% mocké, aucun appel réseau (démo offline)
+  // Chat — sends to server-side Gemini Proxy
   // ============================================================
   const handleSendMessage = async (content: string) => {
     const senderName = currentUser?.name ?? "Mourchid FOLARIN";
@@ -249,21 +201,33 @@ export default function App() {
     setChatError(null);
     setIsGenerating(true);
 
-    // Simule un temps de "réflexion" réaliste sans dépendre du réseau
-    const thinkingDelay = 700 + Math.random() * 900;
-    await new Promise(resolve => setTimeout(resolve, thinkingDelay));
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: content, history: [...messages, userMsg] })
+      });
 
-    const aiMsg: ChatMessage = {
-      id: `msg_${Math.random().toString(36).substr(2, 9)}`,
-      sender: "assistant",
-      senderName: "WINE AI",
-      avatar: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=100&auto=format&fit=crop",
-      content: getMockAIResponse(content),
-      timestamp: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-    };
+      if (!response.ok) throw new Error("Failed to communicate with chat server.");
 
-    persistMessages(prev => [...prev, aiMsg]);
-    setIsGenerating(false);
+      const data = await response.json();
+
+      const aiMsg: ChatMessage = {
+        id: `msg_${Math.random().toString(36).substr(2, 9)}`,
+        sender: "assistant",
+        senderName: "WINE AI",
+        avatar: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=100&auto=format&fit=crop",
+        content: data.response,
+        timestamp: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+      };
+
+      persistMessages(prev => [...prev, aiMsg]);
+    } catch (error) {
+      console.error("Error communicating with Gemini Chat backend:", error);
+      setChatError("WINE AI n'a pas pu joindre le serveur. Réessayez dans un instant.");
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   // ============================================================
@@ -428,8 +392,6 @@ export default function App() {
             theme={theme}
             setTheme={setTheme}
             currentUser={currentUser}
-            notifications={notifications}
-            onMarkAllRead={handleMarkAllRead}
             onAddTaskClick={activeTab === "kanban" || activeTab === "tasks" ? () => handleAddTask({
               title: "Nouvelle tâche urgente",
               description: "Ajoutée depuis le raccourci d'action rapide.",

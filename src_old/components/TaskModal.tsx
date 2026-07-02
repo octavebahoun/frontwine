@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X, Calendar, User, Tag, AlertCircle } from "lucide-react";
-import type { Task } from "../types";
+import { Task } from "../types";
 
 interface TaskModalProps {
   task: Task;

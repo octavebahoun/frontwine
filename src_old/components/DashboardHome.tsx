@@ -1,6 +1,6 @@
 import React from "react";
-import { CheckCircle2, Clock, Flame, Calendar, ChevronRight, Kanban, MessageSquare, BarChart3, Bot, Eye, TrendingUp, Users2 } from "lucide-react";
-import type { Task } from "../types";
+import { CheckCircle2, Clock, Flame, Calendar, ChevronRight, Trello, MessageSquare, BarChart3, Bot, Eye, TrendingUp, Users2 } from "lucide-react";
+import { Task } from "../types";
 import { type DemoUser } from "../demoData";
 
 interface DashboardHomeProps {
@@ -127,7 +127,7 @@ function AdminDashboard({ tasks, onToggleTaskStatus, setActiveTab, user }: {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Vélocité Sprint" value="84 pts" sub="↑ +12% vs sprint précédent" icon={Flame} iconBg="bg-accent-muted text-accent border border-accent/20" />
         <KpiCard label="Tâches Complétées" value={`${done.length} / ${tasks.length}`} sub={`${rate}% de completion`} icon={CheckCircle2} iconBg="bg-emerald-500/10 border border-emerald-500/20 text-accent" />
-        <KpiCard label="En cours / À faire" value={<>{inProgress.length} <span className="text-text-dim text-xs">/ {todo.length}</span></>} sub="Backlog actif" subColor="text-text-dim" icon={Kanban} iconBg="bg-indigo-500/10 border border-indigo-500/20 text-indigo-400" />
+        <KpiCard label="En cours / À faire" value={<>{inProgress.length} <span className="text-text-dim text-xs">/ {todo.length}</span></>} sub="Backlog actif" subColor="text-text-dim" icon={Trello} iconBg="bg-indigo-500/10 border border-indigo-500/20 text-indigo-400" />
         <KpiCard label="Échéance Sprint" value="5 jours" sub="Sprint finit le 5 Juil." subColor="text-red-400" icon={Clock} iconBg="bg-red-500/10 border border-red-500/20 text-red-400" />
       </div>
 
@@ -186,7 +186,7 @@ function LeadDashboard({ tasks, onToggleTaskStatus, setActiveTab, user }: {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Tâches Équipe" value={`${done.length}/${myTasks.length}`} sub="Complétées ce sprint" icon={CheckCircle2} iconBg="bg-emerald-500/10 border border-emerald-500/20 text-accent" />
-        <KpiCard label="En cours" value={inProgress.length} sub="Tâches actives" subColor="text-text-dim" icon={Kanban} iconBg="bg-indigo-500/10 border border-indigo-500/20 text-indigo-400" />
+        <KpiCard label="En cours" value={inProgress.length} sub="Tâches actives" subColor="text-text-dim" icon={Trello} iconBg="bg-indigo-500/10 border border-indigo-500/20 text-indigo-400" />
         <KpiCard label="Vélocité" value="84 pts" sub="↑ +12% sprint préc." icon={TrendingUp} iconBg="bg-accent-muted border border-accent/20 text-accent" />
         <KpiCard label="Deadline" value="5 jours" sub="Fin Sprint Alpha" subColor="text-red-400" icon={Clock} iconBg="bg-red-500/10 border border-red-500/20 text-red-400" />
       </div>
@@ -211,7 +211,7 @@ function LeadDashboard({ tasks, onToggleTaskStatus, setActiveTab, user }: {
         <div className="p-5 rounded-2xl bg-bg-card border border-border-main space-y-3">
           <h3 className="text-sm font-black text-text-main border-b border-border-sub pb-2.5">Outils Lead</h3>
           <div className="grid grid-cols-2 gap-2">
-            <Shortcut tab="kanban"     label="Sprint Agile"   icon={Kanban}       color="text-accent"     setActiveTab={setActiveTab} />
+            <Shortcut tab="kanban"     label="Sprint Agile"   icon={Trello}       color="text-accent"     setActiveTab={setActiveTab} />
             <Shortcut tab="reports"    label="Analytics"      icon={BarChart3}    color="text-blue-400"   setActiveTab={setActiveTab} />
             <Shortcut tab="chat"       label="Chat Équipe"    icon={MessageSquare} color="text-emerald-400" setActiveTab={setActiveTab} />
             <Shortcut tab="agent-wine" label="Agent WINE"     icon={Bot}          color="text-purple-400" setActiveTab={setActiveTab} />

@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Home,
-  Kanban,
+  Trello,
   CheckSquare,
   MessageSquare,
   Calendar,
@@ -30,7 +30,7 @@ interface SidebarProps {
 // Full catalogue — only items in currentUser.permissions are rendered
 const ALL_MENU_ITEMS = [
   { id: "dashboard",   label: "Tableau de bord",   icon: Home },
-  { id: "kanban",      label: "Tableau Kanban",     icon: Kanban },
+  { id: "kanban",      label: "Tableau Kanban",     icon: Trello },
   { id: "tasks",       label: "Liste des tâches",   icon: CheckSquare },
   { id: "chat",        label: "Chat Collaboratif",  icon: MessageSquare, badge: "Gemini" },
   { id: "agent-wine",  label: "Agent WINE",         icon: Bot,           badge: "IA" },

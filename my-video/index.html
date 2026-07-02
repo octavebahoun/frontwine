@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>WINE App Walkthrough</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Fira+Code:wght@500;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #000;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      background: radial-gradient(circle at center, #10131f 0%, #06070c 100%);
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+      overflow: hidden;
+    }
+
+    .glow-sphere { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.14; pointer-events: none; }
+    .glow-green { width: 600px; height: 600px; background: #00c969; top: -200px; left: -200px; }
+    .glow-purple { width: 800px; height: 800px; background: #7c3aed; bottom: -300px; right: -200px; }
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    .clip { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; }
+
+    /* ---------- App chrome (browser + sidebar shell reused across scenes) ---------- */
+    .app-window {
+      width: 1600px;
+      height: 860px;
+      background: #0b0e17;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.55);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .app-topbar {
+      height: 52px;
+      background: #0d1119;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 10px;
+      padding: 0 20px;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ff6b6b; } .dot-yellow { background: #ffd166; } .dot-green { background: #00c969; }
+    .app-url { margin-left: 12px; font-family: 'Fira Code', monospace; font-size: 12px; color: #64748b; }
+
+    .app-body { flex: 1; display: flex; }
+    .app-sidebar {
+      width: 230px;
+      background: #0a0d15;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: 20px 14px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 6px 8px 22px; }
+    .sidebar-logo-box { width: 34px; height: 34px; border-radius: 9px; background: #00c969; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #06090f; font-family: 'Fira Code', monospace; }
+    .sidebar-logo-text { font-weight: 900; font-size: 14px; letter-spacing: 0.04em; }
+    .sidebar-logo-sub { font-size: 9px; color: #00c969; letter-spacing: 0.15em; font-family: 'Fira Code', monospace; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; color: #64748b; }
+    .nav-item.active { background: rgba(0,201,105,0.12); color: #00c969; }
+
+    .app-main { flex: 1; padding: 28px 34px; overflow: hidden; }
+    .app-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+    .app-page-title { font-size: 22px; font-weight: 800; }
+    .app-badge { font-size: 10px; font-weight: 700; color: #00c969; background: rgba(0,201,105,0.12); padding: 4px 10px; border-radius: 999px; margin-left: 10px; font-family: 'Fira Code', monospace; }
+
+    /* ---------- Scene section header (used for outro-style titles above app window) ---------- */
+    .section-header { text-align: center; margin-bottom: 34px; }
+    .badge {
+      display: inline-flex; align-items: center; padding: 8px 16px; border-radius: 9999px;
+      background: rgba(0,201,105,0.1); border: 1px solid rgba(0,201,105,0.2); color: #00c969;
+      font-size: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px;
+      font-family: 'Fira Code', monospace;
+    }
+    .scene-title { font-size: 46px; font-weight: 900; letter-spacing: -0.02em; }
+
+    /* ---------- Scene 2: Dashboard ---------- */
+    .greeting-card {
+      background: linear-gradient(135deg, #0f1a2e 0%, #0b1220 100%);
+      border: 1px solid rgba(0,201,105,0.15);
+      border-radius: 14px; padding: 22px 26px; margin-bottom: 18px;
+    }
+    .greeting-tag { font-family: 'Fira Code', monospace; font-size: 11px; font-weight: 700; color: #00c969; text-transform: uppercase; letter-spacing: 0.1em; }
+    .greeting-title { font-size: 24px; font-weight: 800; margin-top: 6px; }
+    .greeting-desc { font-size: 13px; color: #94a3b8; margin-top: 6px; max-width: 720px; }
+
+    .stat-row { display: flex; gap: 16px; margin-bottom: 18px; }
+    .stat-card { flex: 1; background: #101625; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px 18px; }
+    .stat-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .stat-value { font-size: 26px; font-weight: 900; font-family: 'Fira Code', monospace; }
+    .stat-value.green { color: #00c969; }
+
+    .task-panel { background: #101625; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px 20px; }
+    .task-panel-title { font-size: 13px; font-weight: 800; margin-bottom: 12px; }
+    .task-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+    .task-name { font-size: 13px; font-weight: 700; }
+    .task-tag { font-size: 9px; font-weight: 800; color: #ff6b6b; background: rgba(255,107,107,0.12); padding: 3px 8px; border-radius: 5px; margin-right: 10px; font-family: 'Fira Code', monospace; }
+
+    /* ---------- Scene 3: Kanban (reused pattern) ---------- */
+    .kanban-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .kanban-column { display: flex; flex-direction: column; gap: 12px; }
+    .column-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .column-title { font-size: 11px; font-weight: 800; color: #64748b; letter-spacing: 0.08em; text-transform: uppercase; }
+    .column-count { font-size: 11px; font-weight: 800; background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 6px; color: #94a3b8; }
+    .kanban-card { background: #101625; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 14px 16px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
+    .card-tag { font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; width: max-content; margin-bottom: 8px; text-transform: uppercase; font-family: 'Fira Code', monospace; }
+    .tag-purple { background: rgba(124,58,237,0.15); color: #a78bfa; }
+    .tag-red { background: rgba(255,107,107,0.15); color: #ff9b9b; }
+    .tag-green { background: rgba(0,201,105,0.15); color: #34d399; }
+    .card-title { font-size: 13px; font-weight: 700; line-height: 1.4; }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 10px; color: #64748b; }
+    #moving-card { position: absolute; width: 300px; z-index: 10; }
+
+    /* ---------- Scene 4: Reports ---------- */
+    .report-row { display: flex; gap: 16px; margin-bottom: 18px; }
+    .report-stat { flex: 1; background: #101625; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px 18px; }
+    .report-stat-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; }
+    .report-stat-value { font-size: 24px; font-weight: 900; font-family: 'Fira Code', monospace; margin-top: 6px; }
+    .report-stat-sub { font-size: 10px; color: #00c969; margin-top: 4px; font-weight: 700; }
+
+    .chart-panel { flex: 1; background: #101625; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px 20px; }
+    .chart-title { font-size: 12px; font-weight: 800; margin-bottom: 4px; }
+    .chart-sub { font-size: 10px; color: #64748b; margin-bottom: 16px; }
+    .bar-chart { display: flex; align-items: flex-end; gap: 18px; height: 160px; padding: 0 6px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .bar { width: 34px; border-radius: 6px 6px 0 0; transform-origin: bottom; }
+    .bar-green { background: linear-gradient(180deg, #00c969 0%, #059669 100%); }
+    .bar-purple { background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%); }
+    .line-chart-svg { width: 100%; height: 160px; }
+
+    /* ---------- Scene 1: Intro / Scene 5: Outro ---------- */
+    .logo-container { display: flex; flex-direction: column; align-items: center; gap: 22px; }
+    .logo-box { width: 130px; height: 130px; border-radius: 30px; background: linear-gradient(135deg, #162235 0%, #0d1527 100%); border: 2px solid rgba(0,201,105,0.4); box-shadow: 0 0 50px rgba(0,201,105,0.2); display: flex; justify-content: center; align-items: center; }
+    .logo-letter { font-size: 74px; font-weight: 900; color: #00c969; font-family: 'Fira Code', monospace; text-shadow: 0 0 20px rgba(0,201,105,0.4); }
+    .logo-tag { font-family: 'Fira Code', monospace; font-size: 13px; font-weight: 700; letter-spacing: 0.3em; color: #00c969; text-transform: uppercase; }
+    .intro-title { font-size: 78px; font-weight: 900; letter-spacing: -0.03em; background: linear-gradient(to bottom, #ffffff 40%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
+    .intro-subtitle { font-size: 26px; color: #94a3b8; font-weight: 400; margin-top: 14px; }
+
+    .outro-text-big { font-size: 88px; font-weight: 900; letter-spacing: -0.04em; background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 22px; }
+    .outro-text-sub { font-size: 30px; color: #00c969; font-weight: 700; font-family: 'Fira Code', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 44px; }
+  </style>
+</head>
+<body>
+
+  <div data-hf-id="hf-root" id="root" data-composition-id="wine-app-walkthrough" data-width="1920" data-height="1080" data-start="0">
+    <div data-hf-id="hf-g1" class="glow-sphere glow-green"></div>
+    <div data-hf-id="hf-g2" class="glow-sphere glow-purple"></div>
+    <div data-hf-id="hf-g3" class="grid-bg"></div>
+
+    <!-- SCENE 1: INTRO (0s -> 3s) -->
+    <div data-hf-id="hf-s1" class="clip" id="scene-intro" data-start="0" data-duration="3" data-track-index="1">
+      <div data-hf-id="hf-s1a" class="logo-container">
+        <div data-hf-id="hf-s1b" class="logo-box" id="intro-logo-box"><span data-hf-id="hf-s1c" class="logo-letter">W</span></div>
+        <span data-hf-id="hf-s1d" class="logo-tag" id="intro-logo-tag">Workspace</span>
+        <h1 data-hf-id="hf-s1e" class="intro-title" id="intro-title">WINE WORKSPACE</h1>
+        <p data-hf-id="hf-s1f" class="intro-subtitle" id="intro-subtitle">La plateforme de productivité unifiée pour l'Afrique.</p>
+      </div>
+    </div>
+
+    <!-- SCENE 2: DASHBOARD (3s -> 8s) -->
+    <div data-hf-id="hf-s2" class="clip" id="scene-dashboard" data-start="3" data-duration="5" data-track-index="1">
+      <div data-hf-id="hf-s2h" class="section-header">
+        <div data-hf-id="hf-s2i" class="badge">Vue d'ensemble</div>
+        <h2 data-hf-id="hf-s2j" class="scene-title">Un tableau de bord qui parle vrai</h2>
+      </div>
+
+      <div data-hf-id="hf-s2w" class="app-window" id="dashboard-window">
+        <div data-hf-id="hf-s2t" class="app-topbar">
+          <span data-hf-id="hf-s2t1" class="dot dot-red"></span><span data-hf-id="hf-s2t2" class="dot dot-yellow"></span><span data-hf-id="hf-s2t3" class="dot dot-green"></span>
+          <span data-hf-id="hf-s2t4" class="app-url">wine-ebon.vercel.app</span>
+        </div>
+        <div data-hf-id="hf-s2b" class="app-body">
+          <div data-hf-id="hf-s2sb" class="app-sidebar">
+            <div data-hf-id="hf-s2l1" class="sidebar-logo">
+              <div data-hf-id="hf-s2l2" class="sidebar-logo-box">W</div>
+              <div data-hf-id="hf-s2l3"><div data-hf-id="hf-s2l4" class="sidebar-logo-text">WINE</div><div data-hf-id="hf-s2l5" class="sidebar-logo-sub">WORKSPACE</div></div>
+            </div>
+            <div data-hf-id="hf-s2n1" class="nav-item active">Tableau de bord</div>
+            <div data-hf-id="hf-s2n2" class="nav-item">Tableau Kanban</div>
+            <div data-hf-id="hf-s2n3" class="nav-item">Liste des tâches</div>
+            <div data-hf-id="hf-s2n4" class="nav-item">Chat Collabo…</div>
+            <div data-hf-id="hf-s2n5" class="nav-item">Planification</div>
+            <div data-hf-id="hf-s2n6" class="nav-item">Rapports &amp; Stats</div>
+          </div>
+          <div data-hf-id="hf-s2m" class="app-main">
+            <div data-hf-id="hf-s2hr" class="app-header-row">
+              <div data-hf-id="hf-s2pt" class="app-page-title">Tableau de bord principal<span data-hf-id="hf-s2bd" class="app-badge">SPRINT ACTUEL</span></div>
+            </div>
+
+            <div data-hf-id="hf-s2gc" class="greeting-card" id="dash-greeting">
+              <div data-hf-id="hf-s2gt" class="greeting-tag">WORKSPACE ACTIF • SPRINT ALPHA</div>
+              <div data-hf-id="hf-s2gti" class="greeting-title">Bonjour, Mourchid FOLARIN !</div>
+              <div data-hf-id="hf-s2gd" class="greeting-desc">Votre équipe de développement au Bénin vient de pousser la branche d'intégration API.</div>
+            </div>
+
+            <div data-hf-id="hf-s2sr" class="stat-row">
+              <div data-hf-id="hf-s2sc1" class="stat-card dash-stat"><div data-hf-id="hf-s2sl1" class="stat-label">Vélocité Sprint</div><div data-hf-id="hf-s2sv1" class="stat-value green">84 pts</div></div>
+              <div data-hf-id="hf-s2sc2" class="stat-card dash-stat"><div data-hf-id="hf-s2sl2" class="stat-label">Tâches Complétées</div><div data-hf-id="hf-s2sv2" class="stat-value">1 / 4</div></div>
+              <div data-hf-id="hf-s2sc3" class="stat-card dash-stat"><div data-hf-id="hf-s2sl3" class="stat-label">En cours / À faire</div><div data-hf-id="hf-s2sv3" class="stat-value">2 / 1</div></div>
+              <div data-hf-id="hf-s2sc4" class="stat-card dash-stat"><div data-hf-id="hf-s2sl4" class="stat-label">Échéance Sprint</div><div data-hf-id="hf-s2sv4" class="stat-value">5 jours</div></div>
+            </div>
+
+            <div data-hf-id="hf-s2tp" class="task-panel" id="dash-tasks">
+              <div data-hf-id="hf-s2tpt" class="task-panel-title">Tâches Urgentes Assignées</div>
+              <div data-hf-id="hf-s2tr1" class="task-row"><div data-hf-id="hf-s2tr1a"><span data-hf-id="hf-s2tg1" class="task-tag">PRIORITAIRE</span><span data-hf-id="hf-s2tn1" class="task-name">Refonte Dashboard UI</span></div></div>
+              <div data-hf-id="hf-s2tr2" class="task-row"><div data-hf-id="hf-s2tr2a"><span data-hf-id="hf-s2tg2" class="task-tag">PRIORITAIRE</span><span data-hf-id="hf-s2tn2" class="task-name">API d'intégration</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENE 3: KANBAN (8s -> 13s) -->
+    <div data-hf-id="hf-s3" class="clip" id="scene-kanban" data-start="8" data-duration="5" data-track-index="1">
+      <div data-hf-id="hf-s3h" class="section-header">
+        <div data-hf-id="hf-s3i" class="badge">Agile Kanban</div>
+        <h2 data-hf-id="hf-s3j" class="scene-title">Pilotez vos sprints sans friction</h2>
+      </div>
+
+      <div data-hf-id="hf-s3w" class="app-window" id="kanban-window">
+        <div data-hf-id="hf-s3t" class="app-topbar">
+          <span data-hf-id="hf-s3t1" class="dot dot-red"></span><span data-hf-id="hf-s3t2" class="dot dot-yellow"></span><span data-hf-id="hf-s3t3" class="dot dot-green"></span>
+          <span data-hf-id="hf-s3t4" class="app-url">wine-ebon.vercel.app/kanban</span>
+        </div>
+        <div data-hf-id="hf-s3b" class="app-body">
+          <div data-hf-id="hf-s3sb" class="app-sidebar">
+            <div data-hf-id="hf-s3l1" class="sidebar-logo">
+              <div data-hf-id="hf-s3l2" class="sidebar-logo-box">W</div>
+              <div data-hf-id="hf-s3l3"><div data-hf-id="hf-s3l4" class="sidebar-logo-text">WINE</div><div data-hf-id="hf-s3l5" class="sidebar-logo-sub">WORKSPACE</div></div>
+            </div>
+            <div data-hf-id="hf-s3n1" class="nav-item">Tableau de bord</div>
+            <div data-hf-id="hf-s3n2" class="nav-item active">Tableau Kanban</div>
+            <div data-hf-id="hf-s3n3" class="nav-item">Liste des tâches</div>
+            <div data-hf-id="hf-s3n4" class="nav-item">Chat Collabo…</div>
+            <div data-hf-id="hf-s3n5" class="nav-item">Planification</div>
+            <div data-hf-id="hf-s3n6" class="nav-item">Rapports &amp; Stats</div>
+          </div>
+          <div data-hf-id="hf-s3m" class="app-main">
+            <div data-hf-id="hf-s3hr" class="app-header-row">
+              <div data-hf-id="hf-s3pt" class="app-page-title">Sprint Alpha Board<span data-hf-id="hf-s3bd" class="app-badge">SPRINT ACTUEL</span></div>
+            </div>
+
+            <div data-hf-id="hf-s3kb" class="kanban-board">
+              <div data-hf-id="hf-s3c1" class="kanban-column">
+                <div data-hf-id="hf-s3c1h" class="column-header"><span data-hf-id="hf-s3c1t" class="column-title">À Faire</span><span data-hf-id="hf-s3c1c" class="column-count">1</span></div>
+                <div data-hf-id="hf-s3c1cards" class="column-cards">
+                  <div data-hf-id="hf-s3card1" class="kanban-card">
+                    <div data-hf-id="hf-s3card1tag" class="card-tag tag-purple">Important</div>
+                    <p data-hf-id="hf-s3card1t" class="card-title">Onboarding de Talents</p>
+                    <div data-hf-id="hf-s3card1f" class="card-footer"><span data-hf-id="hf-s3card1f1">👤 Ezechiel</span><span data-hf-id="hf-s3card1f2">30 Juin</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div data-hf-id="hf-s3c2" class="kanban-column">
+                <div data-hf-id="hf-s3c2h" class="column-header"><span data-hf-id="hf-s3c2t" class="column-title">En Cours</span><span data-hf-id="hf-s3c2c" class="column-count" id="count-in-progress">2</span></div>
+                <div data-hf-id="hf-s3c2cards" class="column-cards" id="column-in-progress">
+                  <div data-hf-id="hf-s3card2" class="kanban-card">
+                    <div data-hf-id="hf-s3card2tag" class="card-tag tag-red">Prioritaire</div>
+                    <p data-hf-id="hf-s3card2t" class="card-title">Refonte Dashboard UI</p>
+                    <div data-hf-id="hf-s3card2f" class="card-footer"><span data-hf-id="hf-s3card2f1">👤 Mourchid</span><span data-hf-id="hf-s3card2f2">Auj. 18h</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div data-hf-id="hf-s3c3" class="kanban-column">
+                <div data-hf-id="hf-s3c3h" class="column-header"><span data-hf-id="hf-s3c3t" class="column-title">Terminé</span><span data-hf-id="hf-s3c3c" class="column-count" id="count-done">1</span></div>
+                <div data-hf-id="hf-s3c3cards" class="column-cards" id="column-done">
+                  <div data-hf-id="hf-s3card3" class="kanban-card">
+                    <div data-hf-id="hf-s3card3tag" class="card-tag tag-green">Secondaire</div>
+                    <p data-hf-id="hf-s3card3t" class="card-title">Maquettes UX/UI validées</p>
+                    <div data-hf-id="hf-s3card3f" class="card-footer"><span data-hf-id="hf-s3card3f1">👤 Jean-Baptiste</span><span data-hf-id="hf-s3card3f2">Hier</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- moving card animated from "En cours" to "Terminé" -->
+            <div data-hf-id="hf-s3mc" class="kanban-card" id="moving-card">
+              <div data-hf-id="hf-s3mctag" class="card-tag tag-red">Prioritaire</div>
+              <p data-hf-id="hf-s3mct" class="card-title">API d'intégration</p>
+              <div data-hf-id="hf-s3mcf" class="card-footer"><span data-hf-id="hf-s3mcf1">👤 Octave</span><span data-hf-id="hf-s3mcf2">Demain 12h</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENE 4: RAPPORTS & STATS (13s -> 18s) -->
+    <div data-hf-id="hf-s4" class="clip" id="scene-reports" data-start="13" data-duration="5" data-track-index="1">
+      <div data-hf-id="hf-s4h" class="section-header">
+        <div data-hf-id="hf-s4i" class="badge">Analytics</div>
+        <h2 data-hf-id="hf-s4j" class="scene-title">Des chiffres qui racontent la progression</h2>
+      </div>
+
+      <div data-hf-id="hf-s4w" class="app-window" id="reports-window">
+        <div data-hf-id="hf-s4t" class="app-topbar">
+          <span data-hf-id="hf-s4t1" class="dot dot-red"></span><span data-hf-id="hf-s4t2" class="dot dot-yellow"></span><span data-hf-id="hf-s4t3" class="dot dot-green"></span>
+          <span data-hf-id="hf-s4t4" class="app-url">wine-ebon.vercel.app/rapports</span>
+        </div>
+        <div data-hf-id="hf-s4b" class="app-body">
+          <div data-hf-id="hf-s4sb" class="app-sidebar">
+            <div data-hf-id="hf-s4l1" class="sidebar-logo">
+              <div data-hf-id="hf-s4l2" class="sidebar-logo-box">W</div>
+              <div data-hf-id="hf-s4l3"><div data-hf-id="hf-s4l4" class="sidebar-logo-text">WINE</div><div data-hf-id="hf-s4l5" class="sidebar-logo-sub">WORKSPACE</div></div>
+            </div>
+            <div data-hf-id="hf-s4n1" class="nav-item">Tableau de bord</div>
+            <div data-hf-id="hf-s4n2" class="nav-item">Tableau Kanban</div>
+            <div data-hf-id="hf-s4n3" class="nav-item">Liste des tâches</div>
+            <div data-hf-id="hf-s4n4" class="nav-item">Chat Collabo…</div>
+            <div data-hf-id="hf-s4n5" class="nav-item">Planification</div>
+            <div data-hf-id="hf-s4n6" class="nav-item active">Rapports &amp; Stats</div>
+          </div>
+          <div data-hf-id="hf-s4m" class="app-main">
+            <div data-hf-id="hf-s4hr" class="app-header-row">
+              <div data-hf-id="hf-s4pt" class="app-page-title">Rapports &amp; Statistiques Sprints<span data-hf-id="hf-s4bd" class="app-badge">SPRINT ACTUEL</span></div>
+            </div>
+
+            <div data-hf-id="hf-s4sr" class="report-row">
+              <div data-hf-id="hf-s4rs1" class="report-stat report-stat-item"><div data-hf-id="hf-s4rl1" class="report-stat-label">Vélocité finale</div><div data-hf-id="hf-s4rv1" class="report-stat-value">84 pts</div><div data-hf-id="hf-s4rsub1" class="report-stat-sub">+14% vs objectif</div></div>
+              <div data-hf-id="hf-s4rs2" class="report-stat report-stat-item"><div data-hf-id="hf-s4rl2" class="report-stat-label">Taux d'achèvement</div><div data-hf-id="hf-s4rv2" class="report-stat-value">88%</div><div data-hf-id="hf-s4rsub2" class="report-stat-sub">Sprint Alpha S2</div></div>
+              <div data-hf-id="hf-s4rs3" class="report-stat report-stat-item"><div data-hf-id="hf-s4rl3" class="report-stat-label">Temps cycle moyen</div><div data-hf-id="hf-s4rv3" class="report-stat-value">3.2 j</div><div data-hf-id="hf-s4rsub3" class="report-stat-sub">Tâche critique</div></div>
+            </div>
+
+            <div data-hf-id="hf-s4cr" class="report-row" style="height: 220px;">
+              <div data-hf-id="hf-s4cp1" class="chart-panel">
+                <div data-hf-id="hf-s4cp1t" class="chart-title">Vélocité Historique des Sprints</div>
+                <div data-hf-id="hf-s4cp1s" class="chart-sub">Points accomplis par sprint de 2 semaines</div>
+                <svg data-hf-id="hf-s4svg" class="line-chart-svg" viewBox="0 0 400 160" preserveAspectRatio="none">
+                  <path data-hf-id="hf-s4path" id="velocity-line" d="M0,120 C60,110 90,90 140,78 C190,66 230,50 280,42 C330,34 370,30 400,28" fill="none" stroke="#00c969" stroke-width="3"/>
+                </svg>
+              </div>
+              <div data-hf-id="hf-s4cp2" class="chart-panel">
+                <div data-hf-id="hf-s4cp2t" class="chart-title">Répartition des Tâches par Collaborateur</div>
+                <div data-hf-id="hf-s4cp2s" class="chart-sub">Volume de travail accompli et en cours</div>
+                <div data-hf-id="hf-s4bars" class="bar-chart">
+                  <div data-hf-id="hf-b1" class="bar bar-green report-bar" style="height: 140px;"></div>
+                  <div data-hf-id="hf-b2" class="bar bar-purple report-bar" style="height: 40px;"></div>
+                  <div data-hf-id="hf-b3" class="bar bar-green report-bar" style="height: 110px;"></div>
+                  <div data-hf-id="hf-b4" class="bar bar-purple report-bar" style="height: 30px;"></div>
+                  <div data-hf-id="hf-b5" class="bar bar-green report-bar" style="height: 85px;"></div>
+                  <div data-hf-id="hf-b6" class="bar bar-purple report-bar" style="height: 24px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENE 5: OUTRO (18s -> 22s) -->
+    <div data-hf-id="hf-s5" class="clip" id="scene-outro" data-start="18" data-duration="4" data-track-index="1">
+      <h2 data-hf-id="hf-s5a" class="outro-text-big" id="outro-main">WINE raconte le progrès.</h2>
+      <p data-hf-id="hf-s5b" class="outro-text-sub" id="outro-sub">Work IN Excellence</p>
+      <div data-hf-id="hf-s5c" class="logo-container" id="outro-logo-container" style="transform: scale(0.9); opacity: 0;">
+        <div data-hf-id="hf-s5d" class="logo-box"><span data-hf-id="hf-s5e" class="logo-letter">W</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // Column X positions relative to kanban board (approximate, board columns are 1/3 width each)
+    const startX = 655;   // "En cours" column X inside app-main
+    const endX = 1055;    // "Terminé" column X inside app-main
+    const cardY = 150;    // Y offset for moving card
+
+    // ================= SCENE 1: INTRO (0-3s) =================
+    tl.set("#scene-intro", { opacity: 1 }, 0);
+    tl.from("#intro-logo-box", { scale: 0, rotation: -90, duration: 1.2, ease: "elastic.out(1, 0.75)" }, 0.2);
+    tl.from("#intro-logo-tag", { opacity: 0, y: 15, duration: 0.8 }, 0.8);
+    tl.from("#intro-title", { opacity: 0, y: 30, duration: 1, ease: "power3.out" }, 1.0);
+    tl.from("#intro-subtitle", { opacity: 0, y: 20, duration: 1, ease: "power3.out" }, 1.2);
+    tl.to("#scene-intro", { opacity: 0, scale: 0.95, duration: 0.4, ease: "power2.in" }, 2.8);
+
+    // ================= SCENE 2: DASHBOARD (3-8s) =================
+    tl.set("#scene-dashboard", { opacity: 1 }, 2.9);
+    tl.from("#scene-dashboard .section-header", { opacity: 0, y: -30, duration: 0.8, ease: "power3.out" }, 3.1);
+    tl.from("#dashboard-window", { opacity: 0, y: 60, scale: 0.97, duration: 1.0, ease: "power3.out" }, 3.2);
+    tl.from("#dash-greeting", { opacity: 0, y: 20, duration: 0.6, ease: "power2.out" }, 4.0);
+    tl.from(".dash-stat", { opacity: 0, y: 20, duration: 0.5, stagger: 0.12, ease: "power2.out" }, 4.4);
+    tl.from("#dash-tasks", { opacity: 0, y: 20, duration: 0.6, ease: "power2.out" }, 5.2);
+    tl.to("#scene-dashboard", { opacity: 0, scale: 1.03, duration: 0.4, ease: "power2.in" }, 7.6);
+
+    // ================= SCENE 3: KANBAN (8-13s) =================
+    tl.set("#scene-kanban", { opacity: 1 }, 7.7);
+    tl.from("#scene-kanban .section-header", { opacity: 0, y: -30, duration: 0.8, ease: "power3.out" }, 7.9);
+    tl.from("#kanban-window", { opacity: 0, y: 60, scale: 0.97, duration: 1.0, ease: "power3.out" }, 8.0);
+
+    tl.set("#moving-card", { x: startX, y: cardY, opacity: 0, scale: 0.9 }, 7.7);
+    tl.to("#moving-card", { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }, 9.2);
+
+    tl.to("#moving-card", { x: endX, y: cardY - 30, scale: 1.05, rotation: 3, duration: 1.2, ease: "power2.inOut" }, 10.2);
+    tl.to("#moving-card", { y: cardY + 110, scale: 1, rotation: 0, duration: 0.4, ease: "bounce.out" }, 11.4);
+
+    tl.to("#count-in-progress", { innerText: 1, snap: { innerText: 1 }, duration: 0.2 }, 10.6);
+    tl.to("#count-done", { innerText: 2, snap: { innerText: 1 }, duration: 0.2 }, 11.5);
+
+    tl.to("#scene-kanban", { opacity: 0, scale: 1.03, duration: 0.4, ease: "power2.in" }, 12.6);
+
+    // ================= SCENE 4: REPORTS (13-18s) =================
+    tl.set("#scene-reports", { opacity: 1 }, 12.7);
+    tl.from("#scene-reports .section-header", { opacity: 0, y: -30, duration: 0.8, ease: "power3.out" }, 12.9);
+    tl.from("#reports-window", { opacity: 0, y: 60, scale: 0.97, duration: 1.0, ease: "power3.out" }, 13.0);
+    tl.from(".report-stat-item", { opacity: 0, y: 20, duration: 0.5, stagger: 0.1, ease: "power2.out" }, 13.8);
+
+    // Line chart draw-on animation
+    tl.set("#velocity-line", { strokeDasharray: 500, strokeDashoffset: 500 }, 13.0);
+    tl.to("#velocity-line", { strokeDashoffset: 0, duration: 1.4, ease: "power2.out" }, 14.4);
+
+    // Bars grow from 0
+    tl.from(".report-bar", { height: 0, duration: 0.7, stagger: 0.08, ease: "power3.out" }, 14.6);
+
+    tl.to("#scene-reports", { opacity: 0, scale: 1.03, duration: 0.4, ease: "power2.in" }, 17.6);
+
+    // ================= SCENE 5: OUTRO (18-22s) =================
+    tl.set("#scene-outro", { opacity: 1 }, 17.7);
+    tl.from("#outro-main", { opacity: 0, y: 40, duration: 1.0, ease: "power3.out" }, 18.0);
+    tl.from("#outro-sub", { opacity: 0, letterSpacing: "0.3em", duration: 1.2, ease: "power2.out" }, 18.6);
+    tl.to("#outro-logo-container", { opacity: 1, scale: 1.1, duration: 1.0, ease: "back.out(1.5)" }, 19.3);
+
+    window.__timelines = window.__timelines || {};
+    window.__timelines["wine-app-walkthrough"] = tl;
+  </script>
+</body>
+</html>
+Terminé

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Plus, Clock, Image as ImageIcon, Sparkles, Radio, Send, TrendingUp, ChevronLeft, ChevronRight } from "lucide-react";
-import type { CalendarEvent } from "../types";
+import { CalendarEvent } from "../types";
 
 interface TimelineCalendarProps {
   events: CalendarEvent[];

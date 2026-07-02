@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Hash, Sparkles, AlertCircle, RefreshCw, SendHorizontal, X } from "lucide-react";
-import type { ChatMessage } from "../types";
+import { ChatMessage } from "../types";
 
 interface ChatCollaborationProps {
   messages: ChatMessage[];

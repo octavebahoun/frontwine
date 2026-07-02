@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Check, Search, Trash2, Calendar } from "lucide-react";
-import type { Task } from "../types";
+import { Task } from "../types";
 import TaskModal from "./TaskModal";
 
 interface TaskListProps {

@@ -14,7 +14,7 @@ export interface Task {
 
 export interface ChatMessage {
   id: string;
-  sender: 'user' | 'assistant' | 'octave' | 'mourchid' | 'ezechiel' | 'jb';
+  sender: 'user' | 'assistant' | 'elara' | 'julian' | 'maya';
   senderName: string;
   avatar: string;
   content: string;
@@ -42,12 +42,4 @@ export interface TeamMember {
   entryDate: string; // Date d'entrée
   recentActivity: string;
   email: string;
-}
-
-export interface AppNotification {
-  id: string;
-  text: string;
-  time: string;
-  createdAt: number;
-  unread: boolean;
 }

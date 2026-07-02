@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Users2, Calendar, FileText, Mail, Plus, X } from "lucide-react";
-import type { TeamMember } from "../types";
+import { TeamMember } from "../types";
 
 export default function RHTalents() {
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);

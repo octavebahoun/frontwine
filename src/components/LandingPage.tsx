@@ -10,23 +10,13 @@ import {
   MessageSquare,
   Play,
   Sparkles,
-  Trello,
+  Kanban,
   Users2,
   Zap,
   Sun,
   Moon,
-  Eye,
-  DollarSign,
-  FolderKanban,
-  Briefcase,
-  Users,
-  Check,
-  TrendingUp,
-  Share2,
-  Lock,
-  Globe,
-  Award
 } from "lucide-react";
+import LandingSections from "./LandingSections";
 
 interface LandingPageProps {
   onEnterApp: () => void;
@@ -34,11 +24,30 @@ interface LandingPageProps {
   setTheme: (theme: "light" | "dark") => void;
 }
 
-const toolLogos = ["Notion", "GitHub", "WhatsApp", "Figma", "Slack", "Drive", "LinkedIn", "Meta"];
+const LOGO_ROW_1 = [
+  { name: "Notion",     color: "#FFFFFF", bg: "rgba(255,255,255,0.04)" },
+  { name: "GitHub",     color: "#E8EBF0", bg: "rgba(232,235,240,0.05)" },
+  { name: "Slack",      color: "#E01E5A", bg: "rgba(224,30,90,0.07)"   },
+  { name: "Figma",      color: "#A259FF", bg: "rgba(162,89,255,0.07)"  },
+  { name: "Google Drive",color:"#34A853", bg: "rgba(52,168,83,0.07)"   },
+  { name: "WhatsApp",   color: "#25D366", bg: "rgba(37,211,102,0.07)"  },
+  { name: "LinkedIn",   color: "#0A66C2", bg: "rgba(10,102,194,0.09)"  },
+  { name: "Trello",     color: "#0052CC", bg: "rgba(0,82,204,0.09)"    },
+];
+const LOGO_ROW_2 = [
+  { name: "Meta",       color: "#0082FB", bg: "rgba(0,130,251,0.08)"   },
+  { name: "Jira",       color: "#2684FF", bg: "rgba(38,132,255,0.08)"  },
+  { name: "Asana",      color: "#F06A6A", bg: "rgba(240,106,106,0.08)" },
+  { name: "Zapier",     color: "#FF4A00", bg: "rgba(255,74,0,0.08)"    },
+  { name: "Stripe",     color: "#635BFF", bg: "rgba(99,91,255,0.08)"   },
+  { name: "Airtable",   color: "#18BFFF", bg: "rgba(24,191,255,0.07)"  },
+  { name: "Discord",    color: "#5865F2", bg: "rgba(88,101,242,0.08)"  },
+  { name: "Canva",      color: "#00C4CC", bg: "rgba(0,196,204,0.07)"   },
+];
 
 const MOCKUP_TABS = [
   { label: "Tableau de bord", icon: Layers },
-  { label: "Kanban", icon: Trello },
+  { label: "Kanban", icon: Kanban },
   { label: "Planification", icon: Calendar },
   { label: "WINE AI", icon: MessageSquare },
   { label: "Rapports", icon: BarChart3 }
@@ -203,8 +212,8 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                 {index === 0
                   ? "Tutoriel d'intégration pour l'équipe produit."
                   : index === 1
-                  ? "Point vélocité et avancement Sprint Alpha."
-                  : "Coulisses WINE entre Lokossa et Cotonou."}
+                    ? "Point vélocité et avancement Sprint Alpha."
+                    : "Coulisses WINE entre Lokossa et Cotonou."}
               </p>
             </div>
           </div>
@@ -301,6 +310,7 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
         @keyframes barGrow { from { height: 0 !important; opacity: 0.4; } }
         @keyframes ringSweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @keyframes marquee-reverse { from { transform: translateX(-50%); } to { transform: translateX(0); } }
         @keyframes progressBar { from { width: 0%; } to { width: 100%; } }
         @keyframes glowPulse { 0%, 100% { opacity: 0.06; } 50% { opacity: 0.1; } }
 
@@ -310,8 +320,10 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
         .kanban-col { animation: fadeSlideIn 0.4s ease both; }
         .bar-grow { animation: barGrow 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
         .ring-sweep { animation: ringSweep 3s linear infinite; }
-        .landing-marquee { animation: marquee 22s linear infinite; }
-        .landing-marquee:hover { animation-play-state: paused; }
+        .landing-marquee { animation: marquee 28s linear infinite; }
+        .landing-marquee-rev { animation: marquee-reverse 28s linear infinite; }
+        .landing-marquee:hover, .landing-marquee-rev:hover { animation-play-state: paused; }
+        .marquee-track { -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); }
         .tab-progress-fill { animation: progressBar linear forwards; }
         .ambient-glow { animation: glowPulse 6s ease-in-out infinite; }
       `}</style>
@@ -343,7 +355,6 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
               <a href="#features" className="hover:text-accent transition-colors">Modules</a>
               <a href="#roadmap" className="hover:text-accent transition-colors">Roadmap</a>
               <a href="#team" className="hover:text-accent transition-colors">Équipe</a>
-              <a href="#pricing" className="hover:text-accent transition-colors">Tarifs</a>
             </div>
 
             <div className="flex items-center gap-2">
@@ -436,9 +447,8 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
                         <button
                           key={label}
                           onClick={() => selectTab(index)}
-                          className={`relative w-full text-left rounded-lg px-2.5 py-2 flex items-center gap-2 text-xs font-semibold cursor-pointer transition-colors min-h-[44px] overflow-hidden ${
-                            isActive ? "bg-accent-muted text-accent" : "text-text-sub hover:bg-bg-hover"
-                          }`}
+                          className={`relative w-full text-left rounded-lg px-2.5 py-2 flex items-center gap-2 text-xs font-semibold cursor-pointer transition-colors min-h-[44px] overflow-hidden ${isActive ? "bg-accent-muted text-accent" : "text-text-sub hover:bg-bg-hover"
+                            }`}
                         >
                           <Icon className="w-3.5 h-3.5 shrink-0" />
                           <span className="relative z-10">{label}</span>
@@ -474,443 +484,77 @@ export default function LandingPage({ onEnterApp, theme, setTheme }: LandingPage
             </div>
           </div>
 
-          <p className="mt-6 text-xs text-text-dim font-semibold">Conçu pour les équipes qui veulent montrer le vrai état du travail, simplement.</p>
-          <div className="mt-4 overflow-hidden max-w-full">
-            <div className="landing-marquee flex w-max items-center gap-2">
-              {[...toolLogos, ...toolLogos].map((logo, index) => (
-                <span key={`${logo}-${index}`} className="rounded-lg border border-border-main bg-bg-card px-3.5 py-1.5 text-xs font-black text-text-sub shadow-sm">
-                  {logo}
-                </span>
+          <p className="mt-8 text-xs text-text-dim font-semibold tracking-wide uppercase font-mono">Connecté aux outils que vous utilisez déjà</p>
+
+          {/* Dual-row premium marquee */}
+          <div className="mt-5 space-y-3 overflow-hidden marquee-track">
+            {/* Row 1 — forward */}
+            <div className="flex w-max items-center gap-3 landing-marquee">
+              {[...LOGO_ROW_1, ...LOGO_ROW_1].map(({ name, color, bg }, i) => (
+                <div key={`r1-${i}`} className="flex items-center gap-2 rounded-xl border border-border-main px-4 py-2 text-[11px] font-black whitespace-nowrap" style={{ background: bg, borderColor: color + '33' }}>
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: color }} />
+                  <span style={{ color }}>{name}</span>
+                </div>
+              ))}
+            </div>
+            {/* Row 2 — reverse */}
+            <div className="flex w-max items-center gap-3 landing-marquee-rev">
+              {[...LOGO_ROW_2, ...LOGO_ROW_2].map(({ name, color, bg }, i) => (
+                <div key={`r2-${i}`} className="flex items-center gap-2 rounded-xl border border-border-main px-4 py-2 text-[11px] font-black whitespace-nowrap" style={{ background: bg, borderColor: color + '33' }}>
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: color }} />
+                  <span style={{ color }}>{name}</span>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        <div className="new-landing-sections-wrapper">
-          <section className="section-padding reveal active">
-            <div className="container">
-              <div className="section-header">
-                <span className="section-tag">Le Constat</span>
-                <h2 className="section-title">Votre énergie créative mérite mieux que le chaos.</h2>
-                <p>Piloter une équipe de développement ou une agence en Afrique francophone impose des défis uniques de coût, d'organisation et de connectivité.</p>
-              </div>
-              <div className="problem-grid">
-                <div className="problem-card">
-                  <div className="problem-icon-wrapper">
-                    <MessageSquare className="w-6 h-6" />
-                  </div>
-                  <h3>Dispersion &amp; Pertes</h3>
-                  <p>Les informations, décisions et retours clients s'éparpillent continuellement entre les groupes WhatsApp, les chaînes d'emails et les notes personnelles.</p>
-                </div>
-                <div className="problem-card">
-                  <div className="problem-icon-wrapper">
-                    <Eye className="w-6 h-6" />
-                  </div>
-                  <h3>Zéro Visibilité</h3>
-                  <p>Impossible d'obtenir une vue d'ensemble fiable sur l'avancement global des sprints. Vos collaborateurs et clients manquent de transparence.</p>
-                </div>
-                <div className="problem-card">
-                  <div className="problem-icon-wrapper">
-                    <DollarSign className="w-6 h-6" />
-                  </div>
-                  <h3>Abonnements prohibitifs</h3>
-                  <p>Notion, Slack, Trello, Jira : des prix en devises étrangères inadaptés, des fonctionnalités superflues et aucun support de paiement local.</p>
-                </div>
-              </div>
-              <div className="problem-conclusion">"Les outils existent. Le problème, c'est leur <span>éparpillement</span>."</div>
-            </div>
-          </section>
+        <LandingSections onEnterApp={onEnterApp} billingPeriod={billingPeriod} setBillingPeriod={setBillingPeriod} />
 
-          <section className="section-padding reveal active" id="features" style={{ background: "rgba(20, 23, 38, 0.3)" }}>
-            <div className="container">
-              <div className="solution-grid">
-                <div className="solution-left">
-                  <span className="section-tag">La Solution</span>
-                  <h2 className="section-title">Un hub ouvert. Natif ou connecté. Toujours unifié.</h2>
-                  <p className="solution-desc">WINE ne vous force pas à choisir. Soit vous utilisez nos outils natifs ultra-performants et légers, soit vous importez vos tableaux et espaces de travail existants en un clic.</p>
-                  <p className="solution-accent-text">Un système d'exploitation de travail pensé pour minimiser la consommation de bande passante et maximiser l'efficacité.</p>
-                  <div className="solution-pills">
-                    <span className="solution-pill"><FolderKanban className="w-3.5 h-3.5" />Gestion de projets</span>
-                    <span className="solution-pill"><CheckCircle2 className="w-3.5 h-3.5" />Suivi de tâches</span>
-                    <span className="solution-pill"><MessageSquare className="w-3.5 h-3.5" />Collaboration directe</span>
-                    <span className="solution-pill"><Share2 className="w-3.5 h-3.5" />Planification réseaux</span>
-                    <span className="solution-pill"><BarChart3 className="w-3.5 h-3.5" />Rapports analytiques</span>
-                    <span className="solution-pill"><Briefcase className="w-3.5 h-3.5" />Modules RH &amp; Talents</span>
-                  </div>
-                </div>
-                <div className="solution-right">
-                  <div className="solution-feature-box">
-                    <Zap className="w-6 h-6 feature-box-icon" />
-                    <h3>Rapidité extrême</h3>
-                    <p>Architecture optimisée pour les connexions mobiles instables et chargement instantané.</p>
-                  </div>
-                  <div className="solution-feature-box">
-                    <Lock className="w-6 h-6 feature-box-icon" />
-                    <h3>Sécurité &amp; RGPD</h3>
-                    <p>Authentification robuste par tokens JWT cryptés et hébergement cloud ultra-sécurisé.</p>
-                  </div>
-                  <div className="solution-feature-box">
-                    <Globe className="w-6 h-6 feature-box-icon" />
-                    <h3>100% Francophone</h3>
-                    <p>Une interface entièrement traduite en français avec des termes adaptés à la culture business locale.</p>
-                  </div>
-                  <div className="solution-feature-box">
-                    <Award className="w-6 h-6 feature-box-icon" />
-                    <h3>Paiements simplifiés</h3>
-                    <p>Intégration future de moyens de paiement mobile money pour faciliter les abonnements.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="section-padding reveal active">
-            <div className="container">
-              <div className="section-header">
-                <span className="section-tag">Les Fonctionnalités</span>
-                <h2 className="section-title">Tout ce dont votre équipe a besoin.</h2>
-                <p>6 modules interconnectés pour rationaliser vos opérations quotidiennes et libérer le potentiel de vos collaborateurs.</p>
-              </div>
-              <div className="modules-grid">
-                <div className="module-card">
-                  <div className="module-top">
-                    <div className="module-icon"><FolderKanban className="w-5 h-5" /></div>
-                    <div style={{ display: "flex", gap: "0.5rem" }}>
-                      <span className="module-badge badge-native">Natif</span>
-                      <span className="module-badge badge-connected">Connecté</span>
-                    </div>
-                  </div>
-                  <h3>Gestion de projets</h3>
-                  <p>Créez, suivez et livrez vos projets en temps réel avec des tableaux Kanban interactifs. Synchronisation bidirectionnelle instantanée avec Notion et Trello.</p>
-                </div>
-                <div className="module-card">
-                  <div className="module-top">
-                    <div className="module-icon"><CheckCircle2 className="w-5 h-5" /></div>
-                    <span className="module-badge badge-native">Natif</span>
-                  </div>
-                  <h3>Suivi des tâches</h3>
-                  <p>Chaque tâche assignée possède ses sous-tâches, sa date d'échéance et son fil de discussion interne. Suivi rigoureux de l'avancement individuel.</p>
-                </div>
-                <div className="module-card">
-                  <div className="module-top">
-                    <div className="module-icon"><Users className="w-5 h-5" /></div>
-                    <span className="module-badge badge-connected">Connecté</span>
-                  </div>
-                  <h3>Collaboration Live</h3>
-                  <p>Messagerie instantanée d'équipe intégrée et canaux de discussion thématiques. Connecté à vos salons Slack et Google Workspace.</p>
-                </div>
-                <div className="module-card">
-                  <div className="module-top">
-                    <div className="module-icon"><Share2 className="w-5 h-5" /></div>
-                    <span className="module-badge badge-native">Natif</span>
-                  </div>
-                  <h3>Gestion des réseaux</h3>
-                  <p>Planifiez, rédigez et programmez automatiquement vos publications sur vos canaux sociaux (LinkedIn, Facebook) depuis un calendrier central.</p>
-                </div>
-                <div className="module-card">
-                  <div className="module-top">
-                    <div className="module-icon"><BarChart3 className="w-5 h-5" /></div>
-                    <span className="module-badge badge-connected">Connecté</span>
-                  </div>
-                  <h3>Analytique intégrée</h3>
-                  <p>Des tableaux de bord complets pour visualiser la productivité de l'équipe et les statistiques clés de vos plateformes tierces connectées.</p>
-                </div>
-                <div className="module-card">
-                  <div className="module-top">
-                    <div className="module-icon"><Award className="w-5 h-5" /></div>
-                    <span className="module-badge badge-native">Natif</span>
-                  </div>
-                  <h3>RH &amp; Business</h3>
-                  <p>Suivez les opportunités commerciales de vos agences (pipeline CRM) et gérez les fiches de vos talents internes dans une interface unifiée.</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="section-padding reveal active" id="pricing" style={{ background: "rgba(20, 23, 38, 0.2)", borderTop: "1px solid var(--border)" }}>
-            <div className="container">
-              <div className="section-header">
-                <span className="section-tag">Les Prix</span>
-                <h2 className="section-title">Un tarif qui respecte votre réalité.</h2>
-                <p>Débutez gratuitement avec nos modules essentiels ou passez à la vitesse supérieure en débloquant toute la puissance de nos intégrations.</p>
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <div className="pricing-toggle">
-                  <button onClick={() => setBillingPeriod("monthly")} className={`pricing-toggle-btn ${billingPeriod === "monthly" ? "active" : ""}`}>Mensuel</button>
-                  <button onClick={() => setBillingPeriod("yearly")} className={`pricing-toggle-btn ${billingPeriod === "yearly" ? "active" : ""}`}>Annuel (-20%)</button>
-                </div>
-              </div>
-              <div className="pricing-grid">
-                <div className="pricing-card">
-                  <h3 className="pricing-name">Freemium</h3>
-                  <p className="pricing-desc">Idéal pour tester WINE en équipe réduite et poser les bases de son organisation.</p>
-                  <div className="pricing-price"><span className="price-amount">Gratuit</span></div>
-                  <ul className="pricing-features">
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>Jusqu'à 5 utilisateurs</span></li>
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>Modules Tâches &amp; Projets natifs</span></li>
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>Messagerie d'équipe basique</span></li>
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>1 intégration active</span></li>
-                  </ul>
-                  <button onClick={onEnterApp} className="btn btn-secondary pricing-cta">Démarrer gratuitement</button>
-                </div>
-
-                <div className="pricing-card pricing-card-popular">
-                  <span className="popular-badge">Populaire</span>
-                  <h3 className="pricing-name">Plan Team</h3>
-                  <p className="pricing-desc">Pour les agences et startups en croissance qui nécessitent une collaboration poussée.</p>
-                  <div className="pricing-price">
-                    <span className="price-currency">$</span>
-                    <span className="price-amount">{billingPeriod === "monthly" ? "15" : "12"}</span>
-                    <span className="price-period">{billingPeriod === "monthly" ? "/ équipe / mois" : "/ équipe / mois (facturé annuellement)"}</span>
-                  </div>
-                  <ul className="pricing-features">
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>Utilisateurs illimités</span></li>
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>Les 6 modules WINE débloqués</span></li>
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>Intégrations tierces illimitées</span></li>
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>Support prioritaire 24/7</span></li>
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>Fichiers partagés illimités</span></li>
-                  </ul>
-                  <button onClick={onEnterApp} className="btn btn-gold pricing-cta">Rejoindre la Beta</button>
-                </div>
-
-                <div className="pricing-card">
-                  <h3 className="pricing-name">Enterprise</h3>
-                  <p className="pricing-desc">Pour les grandes structures et incubateurs exigeant un contrôle maximal.</p>
-                  <div className="pricing-price"><span className="price-amount">Sur devis</span></div>
-                  <ul className="pricing-features">
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>Instance cloud privée ou sur site</span></li>
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>SLA garanti à 99.9%</span></li>
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>Sécurité renforcée (SSO/SAML)</span></li>
-                    <li className="pricing-feature"><Check className="w-4 h-4 pricing-feature-icon" /><span>Responsable de compte dédié</span></li>
-                  </ul>
-                  <button onClick={onEnterApp} className="btn btn-secondary pricing-cta">Contacter l'équipe</button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="section-padding reveal active" id="roadmap">
-            <div className="container">
-              <div className="section-header">
-                <span className="section-tag">Roadmap</span>
-                <h2 className="section-title">L'évolution de WINE.</h2>
-                <p>Suivez le cycle de développement de notre plateforme. Nous construisons en public avec nos utilisateurs.</p>
-              </div>
-              <div className="roadmap-container">
-                <div className="roadmap-line-desktop"></div>
-                <div className="roadmap-grid-desktop">
-                  <div className="roadmap-item">
-                    <div className="roadmap-node node-done"><Check className="w-4 h-4" /></div>
-                    <div className="roadmap-phase-tag">Phase 1</div>
-                    <h3 className="roadmap-title">Spécifications &amp; Design</h3>
-                    <p className="roadmap-desc">Conception de l'architecture backend, maquettage UI/UX des modules de base.</p>
-                  </div>
-                  <div className="roadmap-item">
-                    <div className="roadmap-node node-active"><TrendingUp className="w-4 h-4" /></div>
-                    <div className="roadmap-phase-tag">Phase 2</div>
-                    <h3 className="roadmap-title">Développement MVP</h3>
-                    <p className="roadmap-desc">Développement actif des modules de gestion de projet, des tâches et de la collaboration synchrone.</p>
-                  </div>
-                  <div className="roadmap-item">
-                    <div className="roadmap-node node-todo">3</div>
-                    <div className="roadmap-phase-tag">Phase 3</div>
-                    <h3 className="roadmap-title">Beta fermée</h3>
-                    <p className="roadmap-desc">Déploiement expérimental auprès de 3 startups et agences partenaires clés.</p>
-                  </div>
-                  <div className="roadmap-item">
-                    <div className="roadmap-node node-future">4</div>
-                    <div className="roadmap-phase-tag">Phase 4</div>
-                    <h3 className="roadmap-title">Lancement public</h3>
-                    <p className="roadmap-desc">Sortie publique, activation des modules réseaux, analytique et RH avancés.</p>
-                  </div>
-                </div>
-
-                <div className="roadmap-timeline-mobile">
-                  <div className="roadmap-item-mobile">
-                    <div className="roadmap-node-mobile node-done"><Check className="w-4 h-4" /></div>
-                    <div className="roadmap-content-mobile">
-                      <div className="roadmap-phase-tag">Phase 1 · Terminée</div>
-                      <h3 className="roadmap-title">Spécifications &amp; Design</h3>
-                      <p className="roadmap-desc">Conception de l'architecture backend, maquettage UI/UX des modules de base.</p>
-                    </div>
-                  </div>
-                  <div className="roadmap-item-mobile">
-                    <div className="roadmap-node-mobile node-active"><TrendingUp className="w-4 h-4" /></div>
-                    <div className="roadmap-content-mobile">
-                      <div className="roadmap-phase-tag">Phase 2 · En Cours</div>
-                      <h3 className="roadmap-title">Développement MVP</h3>
-                      <p className="roadmap-desc">Développement actif des modules de gestion de projet, des tâches et de la collaboration synchrone.</p>
-                    </div>
-                  </div>
-                  <div className="roadmap-item-mobile">
-                    <div className="roadmap-node-mobile node-todo">3</div>
-                    <div className="roadmap-content-mobile">
-                      <div className="roadmap-phase-tag">Phase 3 · À Venir</div>
-                      <h3 className="roadmap-title">Beta fermée</h3>
-                      <p className="roadmap-desc">Déploiement expérimental auprès de 3 startups et agences partenaires clés.</p>
-                    </div>
-                  </div>
-                  <div className="roadmap-item-mobile">
-                    <div className="roadmap-node-mobile node-future">4</div>
-                    <div className="roadmap-content-mobile">
-                      <div className="roadmap-phase-tag">Phase 4 · À Venir</div>
-                      <h3 className="roadmap-title">Lancement public</h3>
-                      <p className="roadmap-desc">Sortie publique, activation des modules réseaux, analytique et RH avancés.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="section-padding reveal active" id="team">
-            <div className="container">
-              <div className="section-header">
-                <span className="section-tag">L'Équipe</span>
-                <h2 className="section-title">Les créateurs derrière WINE.</h2>
-                <p>Un collectif passionné d'étudiants en informatique et télécoms de Lokossa, Bénin, unis pour redéfinir la productivité.</p>
-              </div>
-              <div className="team-subtitle">Lokossa, Bénin</div>
-              <div className="team-grid">
-                <div className="team-card">
-                  <div className="avatar-wrapper">
-                    <img alt="Mourchid FOLARIN" className="team-avatar-img" src="https://res.cloudinary.com/dla8wr5qj/image/upload/v1781228322/224025435_j7qhdz_szccjx.webp" />
-                  </div>
-                  <div className="team-info">
-                    <h3 className="team-name">Mourchid FOLARIN</h3>
-                    <div className="team-role">Fondateur &amp; Directeur technique / Cybersecurité &amp; Developpement Backend</div>
-                  </div>
-                </div>
-                <div className="team-card">
-                  <div className="avatar-wrapper">
-                    <img alt="Octave BAHOUN-HOUTOUKPE" className="team-avatar-img" src="https://res.cloudinary.com/dla8wr5qj/image/upload/v1781010145/octave_j928uo.webp" />
-                  </div>
-                  <div className="team-info">
-                    <h3 className="team-name">Octave BAHOUN-HOUTOUKPE</h3>
-                    <div className="team-role">Cofondateur / Ingenieur IA , Fullstack Web (Orienté Frontend)</div>
-                  </div>
-                </div>
-                <div className="team-card">
-                  <div className="avatar-wrapper">
-                    <img alt="Ezechiel TADAGBE" className="team-avatar-img" src="https://res.cloudinary.com/dla8wr5qj/image/upload/v1781228322/ezedev_ycavef_ztuq1a.webp" />
-                  </div>
-                  <div className="team-info">
-                    <h3 className="team-name">Ezechiel TADAGBE</h3>
-                    <div className="team-role">Ingénieur Cloud /Infrastructure &amp; IA</div>
-                  </div>
-                </div>
-                <div className="team-card">
-                  <div className="avatar-wrapper">
-                    <img alt="Jean-Baptiste VIGNONFODE" className="team-avatar-img" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop" />
-                  </div>
-                  <div className="team-info">
-                    <h3 className="team-name">Jean-Baptiste VIGNONFODE</h3>
-                    <div className="team-role">Architecte Cybersécurité</div>
-                  </div>
-                </div>
-                <div className="team-card">
-                  <div className="avatar-wrapper">
-                    <img alt="Wasfade TONOUKOIN" className="team-avatar-img" src="https://res.cloudinary.com/dla8wr5qj/image/upload/v1781228322/wafade_iajqor_hmdpsn.webp" />
-                  </div>
-                  <div className="team-info">
-                    <h3 className="team-name">Wasfade TONOUKOIN</h3>
-                    <div className="team-role">Développeur Senior Fullstack</div>
-                  </div>
-                </div>
-                <div className="team-card">
-                  <div className="avatar-wrapper">
-                    <img alt="Cosme MISSIKPODE" className="team-avatar-img" src="https://res.cloudinary.com/dla8wr5qj/image/upload/v1781228322/cosme_csvugm_yf4nvs.webp" />
-                  </div>
-                  <div className="team-info">
-                    <h3 className="team-name">Cosme MISSIKPODE</h3>
-                    <div className="team-role">Architecte Cybersécurité / Réseau</div>
-                  </div>
-                </div>
-              </div>
-              <div className="previous-projects">
-                <h3 className="prev-title">Nos Réalisations Précédentes</h3>
-                <div className="prev-list">
-                  <a href="https://le-twin.vercel.app/" target="_blank" rel="noopener noreferrer" className="prev-project">Le TWIN</a>
-                  <a href="https://team-d-excellence-hackbyifri-2026.vercel.app/" target="_blank" rel="noopener noreferrer" className="prev-project">Academix</a>
-                  <a href="https://fieri-research.org" target="_blank" rel="noopener noreferrer" className="prev-project">Fieri Research</a>
-                  <a href="https://nightheart.rf.gd/" target="_blank" rel="noopener noreferrer" className="prev-project">La Nuit du Cœur</a>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="section-padding reveal active" id="cta">
-            <div className="container">
-              <div className="cta-box">
-                <h2 className="cta-title">Prêt à travailler avec excellence ?</h2>
-                <p className="cta-subtitle">Rejoignez dès aujourd'hui les premières équipes africaines à piloter leur travail autrement. Inscrivez-vous à la version Beta privée gratuite.</p>
-                <form onSubmit={(e) => { e.preventDefault(); onEnterApp(); }} className="cta-form">
-                  <input id="cta-email-input" name="email" required placeholder="Entrez votre adresse email..." className="cta-input" type="email" />
-                  <button type="submit" className="btn btn-primary cta-btn-submit">Rejoindre la Beta</button>
-                </form>
-                <div style={{ marginTop: "2.5rem", fontSize: "0.8rem", color: "var(--text-muted)" }}>
-                  Vous avez des questions ? Contactez-nous à{" "}
-                  <a href="mailto:teamexcellence@gmail.com" style={{ color: "var(--text-secondary)", textDecoration: "underline" }}>teamexcellence@gmail.com</a>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
       </main>
 
-      <div className="new-landing-sections-wrapper">
-        <footer className="footer">
-          <div className="container">
-            <div className="footer-grid">
-              <div className="footer-brand">
-                <a href="#" className="logo">
-                  <svg className="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <polygon points="50,12 83,31 83,69 50,88 17,69 17,31" stroke="#00c969" strokeWidth="8" strokeLinejoin="round" fill="none"></polygon>
-                    <circle cx="50" cy="40" r="8" fill="#00c969"></circle>
-                    <circle cx="40" cy="50" r="8" fill="#00c969"></circle>
-                    <circle cx="60" cy="50" r="8" fill="#00c969"></circle>
-                    <circle cx="50" cy="60" r="8" fill="#F5A623"></circle>
-                  </svg>
-                  <span>WINE</span>
-                </a>
-                <p className="footer-tagline">Work IN Excellence — La plateforme de productivité unifiée pour les équipes digitales d'Afrique.</p>
-                <div className="social-links">
-                  <a href="#" className="social-icon" aria-label="LinkedIn"><span style={{ fontSize: "0.85rem", fontWeight: "bold" }}>in</span></a>
-                  <a href="#" className="social-icon" aria-label="GitHub"><span style={{ fontSize: "0.85rem", fontWeight: "bold" }}>gh</span></a>
-                  <a href="#" className="social-icon" aria-label="Facebook"><span style={{ fontSize: "0.85rem", fontWeight: "bold" }}>fb</span></a>
+      {/* ── FOOTER ──────────────────────────────────────── */}
+      <footer className="border-t border-border-main bg-bg-card/20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+          <div className="grid sm:grid-cols-4 gap-8 mb-10">
+            <div className="sm:col-span-2 space-y-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-accent to-[#40e682] flex items-center justify-center">
+                  <span className="font-mono font-black text-bg-sidebar text-sm">W</span>
                 </div>
+                <span className="font-black text-text-main tracking-wider uppercase">WINE</span>
               </div>
-              <div>
-                <h3 className="footer-title">Plateforme</h3>
-                <ul className="footer-links">
-                  <li className="footer-link-item"><a href="#features">Fonctionnalités</a></li>
-                  <li className="footer-link-item"><a href="#pricing">Tarifs</a></li>
-                  <li className="footer-link-item"><a href="#roadmap">Roadmap</a></li>
-                  <li className="footer-link-item"><a href="#team">L'Équipe</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="footer-title">Contact</h3>
-                <ul className="footer-links">
-                  <li className="footer-link-item"><a href="mailto:teamexcellence@gmail.com">teamexcellence@gmail.com</a></li>
-                  <li className="footer-link-item"><a href="#">Version Beta</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="footer-title">Légal</h3>
-                <ul className="footer-links">
-                  <li className="footer-link-item"><a href="#">Confidentialité</a></li>
-                  <li className="footer-link-item"><a href="#">Conditions d'utilisation</a></li>
-                </ul>
+              <p className="text-xs text-text-sub leading-relaxed max-w-xs">Work IN Excellence — La plateforme de productivité unifiée pour les équipes digitales d'Afrique.</p>
+              <div className="flex gap-2">
+                {["in","gh","fb"].map(s => (
+                  <a key={s} href="#" aria-label={s} className="w-8 h-8 rounded-lg border border-border-main bg-bg-app flex items-center justify-center text-[11px] font-black text-text-sub hover:border-accent/40 hover:text-accent transition-colors">{s}</a>
+                ))}
               </div>
             </div>
-            <div className="footer-bottom">
-              <span className="footer-copyright">© 2026 Excellence Team · Lokossa, Bénin</span>
-              <span className="footer-extra">Fait avec excellence <Zap className="w-3 h-3 text-[#f5a623] inline-block align-middle ml-1" /></span>
+            <div>
+              <h3 className="text-xs font-black text-text-main uppercase tracking-widest mb-4">Plateforme</h3>
+              <ul className="space-y-2">
+                {[["#features","Fonctionnalités"],["#pricing","Tarifs"],["#roadmap","Roadmap"],["#team","L'Équipe"]].map(([href,label]) => (
+                  <li key={href}><a href={href} className="text-xs text-text-sub hover:text-text-main transition-colors">{label}</a></li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xs font-black text-text-main uppercase tracking-widest mb-4">Contact</h3>
+              <ul className="space-y-2">
+                <li><a href="mailto:teamexcellence@gmail.com" className="text-xs text-text-sub hover:text-text-main transition-colors">teamexcellence@gmail.com</a></li>
+                <li><a href="#" className="text-xs text-text-sub hover:text-text-main transition-colors">Version Beta</a></li>
+                <li><a href="#" className="text-xs text-text-sub hover:text-text-main transition-colors">Confidentialité</a></li>
+              </ul>
             </div>
           </div>
-        </footer>
-      </div>
+          <div className="pt-6 border-t border-border-sub flex flex-col sm:flex-row items-center justify-between gap-2">
+            <span className="text-[11px] text-text-dim">© 2026 Excellence Team · Lokossa, Bénin</span>
+            <span className="text-[11px] text-text-dim flex items-center gap-1">Fait avec excellence <Zap className="w-3 h-3 text-yellow-400 inline" /></span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
+

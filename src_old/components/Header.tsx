@@ -1,28 +1,31 @@
 import React, { useState } from "react";
-import { Search, Bell, Plus, Sun, Moon, Shield, Users, Code2, Eye } from "lucide-react";
+import { Search, Bell, Plus, Sun, Moon, Shield, Briefcase, Code2, Palette } from "lucide-react";
 import { type DemoUser, ROLE_LABELS, ROLE_BADGES, type UserRole } from "../demoData";
-import type { AppNotification } from "../types";
 
 const ROLE_ICONS: Record<UserRole, React.ReactNode> = {
   admin: <Shield style={{ width: "10px", height: "10px" }} />,
-  lead: <Users style={{ width: "10px", height: "10px" }} />,
-  member: <Code2 style={{ width: "10px", height: "10px" }} />,
-  observer: <Eye style={{ width: "10px", height: "10px" }} />,
+  manager: <Briefcase style={{ width: "10px", height: "10px" }} />,
+  developer: <Code2 style={{ width: "10px", height: "10px" }} />,
+  designer: <Palette style={{ width: "10px", height: "10px" }} />,
 };
 
 interface HeaderProps {
   title: string;
   onAddTaskClick?: () => void;
+  notificationsCount?: number;
   theme: "light" | "dark";
   setTheme: (theme: "light" | "dark") => void;
   currentUser?: DemoUser | null;
-  notifications: AppNotification[];
-  onMarkAllRead: () => void;
 }
 
-export default function Header({ title, onAddTaskClick, theme, setTheme, currentUser, notifications, onMarkAllRead }: HeaderProps) {
+export default function Header({ title, onAddTaskClick, notificationsCount = 2, theme, setTheme, currentUser }: HeaderProps) {
   const [showNotifications, setShowNotifications] = useState(false);
-  const notificationsCount = notifications.filter(n => n.unread).length;
+  
+  const notifications = [
+    { id: 1, text: "Octave a déplacé 'Design System' vers En cours", time: "Il y a 5 min", unread: true },
+    { id: 2, text: "Mourchid vous a assigné 'Refonte Dashboard'", time: "Il y a 1 h", unread: true },
+    { id: 3, text: "Nouveau post planifié avec succès pour LinkedIn", time: "Il y a 2 h", unread: false },
+  ];
 
   return (
     <header role="banner" className="h-14 sm:h-16 border border-border-main bg-bg-sidebar/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between relative z-30 mx-0 sm:mx-4 mt-2 sm:mt-4 mb-2 rounded-[10px] shadow-sm">
@@ -96,29 +99,17 @@ export default function Header({ title, onAddTaskClick, theme, setTheme, current
               <div 
                 role="region" 
                 aria-label="Notifications" 
-                onKeyDown={(e) => { if (e.key === "Escape") setShowNotifications(false); }}
                 className="absolute right-0 mt-2 w-[calc(100vw-2rem)] max-w-80 rounded-xl bg-bg-card border border-border-main p-4 shadow-[0_10px_30px_rgba(0,0,0,0.15)] z-50"
               >
                 <div className="flex items-center justify-between mb-3 pb-2 border-b border-border-sub">
                   <span className="text-xs font-bold text-text-main">Notifications</span>
-                  {notificationsCount > 0 && (
-                    <button
-                      type="button"
-                      onClick={onMarkAllRead}
-                      className="text-[10px] text-accent font-semibold cursor-pointer hover:underline bg-transparent border-0 p-0"
-                    >
-                      Marquer comme lu
-                    </button>
-                  )}
+                  <span className="text-[10px] text-accent font-semibold cursor-pointer hover:underline">Marquer comme lu</span>
                 </div>
-                <div className="space-y-3 max-h-72 overflow-y-auto">
-                  {notifications.length === 0 && (
-                    <p className="text-xs text-text-dim text-center py-4">Aucune notification pour le moment.</p>
-                  )}
+                <div className="space-y-3">
                   {notifications.map((notif) => (
                     <div key={notif.id} className="text-xs space-y-1 hover:bg-bg-hover p-1.5 rounded-lg transition-colors">
                       <div className="flex items-start gap-2">
-                        {notif.unread && <div className="w-1.5 h-1.5 rounded-full bg-accent mt-1 flex-shrink-0" aria-hidden="true" />}
+                        {notif.unread && <div className="w-1.5 h-1.5 rounded-full bg-accent mt-1 flex-shrink-0" />}
                         <p className="text-text-sub leading-normal">{notif.text}</p>
                       </div>
                       <span className="text-[10px] text-text-dim font-mono block pl-3.5">{notif.time}</span>
